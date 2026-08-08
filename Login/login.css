@@ -32,15 +32,6 @@ select{
     box-sizing: border-box;
 }
 
-/* .imgel{
-    margin:100px 90px 50px;
-    padding:20px;
-    right: 20px;
-    border: 2px;
-    border-color: black;
-    margin-right: 70px;
-
-} */
 .imgel{
     width: 20px;
     display: flex;
@@ -65,9 +56,8 @@ select{
 
 }
 
-#Ocupación{
-    margin-bottom: 0.5px;
-   
+#Ocupacion{
+    margin-bottom: 0.5px;   
 }
 
 

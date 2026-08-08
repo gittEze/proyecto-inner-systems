@@ -4,7 +4,6 @@
 }
 
 #superior{
-    /* text-decoration: none; */
     background: white;
     color: white;
     padding: 10px;
@@ -14,6 +13,7 @@
     align-items: center;
     display: flex;
     gap: 20px;
+    flex-wrap: wrap;
 }
 
 #buscador {
@@ -43,8 +43,6 @@
 .loginBottons:hover{
     background-color: brown;
     color:white
-
-
 }
 
 
@@ -55,8 +53,6 @@ a {
 }
 
 .Serv{
-    /* margin: 50px; */
-    /* font-style: none; */
     display: inline-block;
     padding: 10px 20px;
     color: black;
@@ -65,27 +61,10 @@ a {
 }
 
  #logo{
-    /* float: left; */
-    /* position:absolute; */
     width: 8%;
     object-fit: contain;
-    /* margin: 12px;
-    margin-left: auto;
-    position: relative;
-    box-sizing: border-box; */
  }
 
-/* #divImg{
-   
-    background: white;
-    color: white;
-    padding: 10px;
-    margin: 5px;
-    text-align: left;
-    margin: 5px;
-    display: flex;
- 
-} */
 
     
     
