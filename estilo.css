@@ -65,6 +65,33 @@ a {
     object-fit: contain;
  }
 
+ footer{
+    margin-top:50px;
+
+    text-align:center;
+
+    padding:50px 20px;
+
+    background: blue;
+    
+}
+
+footer p, footer h3{
+    color:aliceblue;
+    margin-left:20px;
+    text-align:left;
+}
+
+#conct{
+    color: black;
+    text-align:left;
+    margin-left: 15px;
+
+
+}
+
+
+
 
     
     
