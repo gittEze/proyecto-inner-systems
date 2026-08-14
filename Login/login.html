@@ -10,41 +10,42 @@
     <main>
         <section class="contenedor">
 
+            <div id= "imgel"><img width="90" src="Logo.png"></div>
+
             <h2>Formulario de Registro</h2> <a class="loginBottons" href="../index.html">Volver</a>
 
-            <form id="miFormulario" action="" method="post">
+            <form id="login" action="" method="post">
+                <label for="username">Nombre de usuario:</label>
+                <input type="text" id="username" name="username" placeholder="Ingrese su usuario" required>
 
-                <div id= "imgel">
-                <img width="90" height="90" src="Logo.png">
-                </div>
+                <label for="password">Contraseña:</label>
+                <input type="password" id="password" name="password" placeholder="Ingrese su contraseña" required>
+
+                <button type="submit" class="btn">Iniciar Sesion</button>
+            </form> 
+            
+            <!-- <form id="miFormulario" action="" method="post">
                 
-                <!-- Campo para ingresar el nombre (Register) -->
                 <label for="Nm">Nombre</label required>
                 <input type="text" id="Nm" name="Nombre" placeholder="Ej: Juan">
 
-                <!-- Campo para ingresar el apellido (Register) -->
                 <label for="Ap">Apellido</label required>
                 <input type="text" id="Ap" name="Apellido" placeholder="Ej: Zorrila">
 
-                <!--Campo para ingresar el username (Register)-->
                 <label for="Usuario">Nombre de Usuario</label required>
                 <input type="text" id="Usuario" name="Usuario" placeholder="Ingrese su usuario" required>
                 
-                <!--Campo para ingresar el correo electrónico (Register) -->
                 <label for="Correo">Correo electrónico</label required>
                 <input type="email" id="Correo" name="Correo" placeholder="ejemplo@correo.com" required>
 
-                <!--Campo para ingresar la contraseña (Register)-->
                 <label for="Contrasena">Contraseña</label required>
                 <input type="password" id="Contrasena" name="Contrasena" placeholder="Ingrese su contraseña" required>
 
-                <!--Campo para ingresar el número de contacto (Register)-->
                 <label for="Contacto">Contacto</label required>
                 <input type="tel" id="Contacto" name="Contacto" placeholder="099123456">
 
-                <!--Campo para ingresar la ocupación (Register)-->
                 <label for="Ocupacion">Ocupación</label required>
-                <select id="Ocupación">
+                <select id="Ocupacion">
                     <option value="opcion2"> Docente </option>
                     <option value="opcion3"> Estudiante</option>
                 </select>
@@ -53,9 +54,7 @@
                 <button type="submit" class="btn">Agregar</button>
                 <button type="reset" class="btn">Limpiar</button>
 
-                
-
-            </form>
+            </form>  -->
         </section>
     </main>
 </body>
