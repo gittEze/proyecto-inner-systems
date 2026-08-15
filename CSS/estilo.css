@@ -23,8 +23,8 @@ html, body {
 #buscador {
     display: flex;
     align-items:center;
-    background:#f7f2eb;
-    border:1px solid #e8d8c6;
+    background:#ebf3f7;
+    border:1px solid #ebf3f7;
     border-radius:20px;
     padding: 13px;
     width: fit-content;
@@ -34,8 +34,8 @@ html, body {
 }
 
 .loginBottons {
-    color: brown;
-    border: 2px solid brown;
+    color: #1e88e5;
+    border: 2px solid #1e88e5;
     border-radius: 50px;
     background-color: white;
     reading-flow: 10px;
@@ -49,7 +49,7 @@ html, body {
 .loginBottons:hover{
     transform: scale(1.1); 
 
-    background-color: brown;
+    background-color: #1e88e5;
     color:white
 }
 
@@ -69,7 +69,7 @@ a {
     transition: all 250ms ease;
 }
 .Serv:hover {
-    background-color: brown;
+    background-color: #1e88e5;
     color: white;
     padding: auto;
 
@@ -77,7 +77,8 @@ a {
 }
 
 #logo{
-    width: 8%;
+    margin-top: 15px;
+    width: 7%;
     object-fit: contain;
     
     transition: transform 0.3s ease;
@@ -94,7 +95,7 @@ a {
     justify-content: space-evenly;
     align-items: center;
     padding: 20px;
-    background-color: brown;
+    background: linear-gradient(#1e88e5, #0d47a1);
 }
 
 
