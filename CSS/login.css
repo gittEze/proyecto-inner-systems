@@ -9,7 +9,7 @@ html, body {
 }
 
 body {
-    background-image: url("background.png");
+    background-image: url("../IMG/background.png");
     background-size: 700px;
 }
 
@@ -18,7 +18,7 @@ body {
     height: calc(100% + 50px);
     margin: 40px auto;
     padding: 20px;
-    background-color: brown;
+    background: linear-gradient(#1e88e5, #0d47a1);
     border-radius: 10px;
 }
 
@@ -44,19 +44,14 @@ select{
     box-sizing: border-box;
 }
 
-.imgel{
-    width: 20px;
+#logoLogin{
+    height: 110px;
+    justify-content: center;
     display: flex;
-    position: relative;
-    left: 900px;  /* La mueve 40px hacia la derecha */
-    top: -20px;  /* La mueve 20px hacia arriba */
-    padding: 20px;
-    border: 2px solid black;
-    justify-content: end;
-
 }
 
 .btn{
+    color: black;
     margin-top: 30px;
     padding: 10px;
     cursor: pointer;
