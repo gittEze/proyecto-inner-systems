@@ -1,13 +1,24 @@
 * {
     font-family: Ubuntu, sans-serif;
+    font-size: 15px;
+
 }
 
-html, body {
+html, .bodyMain {
     padding: 0;
     margin: 0;
 }
 
-#superior{
+/* .logo:hover {
+    animation: levitar 2.5s ease-in-out infinite;
+} */
+
+.logo:hover {
+    animation: pulse 1s ease-in-out infinite; 
+}
+
+/* ----- MAIN ----- */
+.contenedorMain {
     background: white;
     color: white;
     padding: 10px;
@@ -33,7 +44,7 @@ html, body {
 
 }
 
-.loginBottons {
+.loginBtn {
     color: #1e88e5;
     border: 2px solid #1e88e5;
     border-radius: 50px;
@@ -42,22 +53,16 @@ html, body {
     padding: 12px;
     justify-content: space-around;
     margin-right: 10px;
+    text-decoration: none;
 
     transition: all 500ms ease;
 }
 
-.loginBottons:hover{
+.loginBtn:hover{
     transform: scale(1.1); 
 
     background-color: #1e88e5;
     color:white
-}
-
-
-a {
-    padding: 30px;
-    color: black;
-    text-decoration: none;
 }
 
 .Serv{
@@ -76,30 +81,173 @@ a {
     transform: scale(1.1); 
 }
 
-#logo{
-    margin-top: 15px;
+#logoMain{
+    margin-top: 18px;
+    margin-left: 5px;
     width: 7%;
     object-fit: contain;
     
     transition: transform 0.3s ease;
 }
 
-#logo:hover {
-    animation: levitar 2.5s ease-in-out infinite;
-}
-
- footer{
+.footerMain {
     color: white;
-    margin-top:50px;
+    margin-top: 50px;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
+    padding: 35px 20px;
+    background: linear-gradient(#1e88e5, #0d47a1);
+}
+
+.footerItem {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.footerIcono {
+    width: 55px;
+    height: 55px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.15);
+    border-radius: 50%;
+    font-size: 25px;
+}
+
+.footerItem h3 {
+    margin: 0 0 8px 0;
+    font-size: 18px;
+}
+.footerItem p {
+    margin: 0;
+    font-size: 14px;
+}
+
+.footerItem:hover {
+    .footerIcono {
+    box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.5);
+    }
+    .footerItem p, .footerItem h3 {
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+
+    }
+    transform: scale(1.1);
+    transition: all 500ms ease;
+}
+
+
+/* -------------------- */
+
+/* ----- LOGIN ----- */
+
+.bodyLogin {
+    background-image: url("../IMG/background.png");
+    background-size: 700px;
+}
+
+.contenedorLogin {
+    color: white;
+    width: 900px;
+    height: calc(100% + 50px);
+    margin: 40px auto;
     padding: 20px;
     background: linear-gradient(#1e88e5, #0d47a1);
+    border-radius: 10px;
+}
+
+h2 {
+    text-align: left;
+}
+
+label {
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
+input {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+select{
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+#logoLogin{
+    margin-top: 18px;
+    height: 90px;
+    justify-content: center;
+    display: flex;
+}
+
+#Ocupacion{
+    margin-bottom: 0.5px;   
+}
+
+#recuperarContrasenia {
+    display: inline-block;
+    color: white;
+    /* text-align: right; */
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+#recuperarContrasenia:hover {
+    color: #54adfa;
+}
+
+#btnIniciarSesion {
+    margin-top: 10px;
+    display: block;
+    color: white;
+    border: 2px solid white;
+    border-radius: 50px;
+    background-color: #1e88e5;
+    padding: 10px 15px;
+    text-decoration: none;
+    transition: all 500ms ease;
+}
+#btnIniciarSesion:hover {
+    transform: scale(1.1);
+    background-color: white;
+    color: #1e88e5;
+}
+
+#volver {
+    display: block;
+    width: fit-content;
+    color: white;
+    border: 2px solid white;
+    border-radius: 50px;
+    background-color: #1e88e5;
+
+    padding: 10px 15px;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: 0;
+    text-decoration: none;
+    transition: all 500ms ease;
+}
+#volver:hover, #btnIniciarSesion:hover {
+    transform: scale(1.1);
+    background-color: white;
+    color: #1e88e5;
+}
+
+#btnIniciarSesion {
+    display: block;
 }
 
 
 
+/* -------------------- */
 
 
     
