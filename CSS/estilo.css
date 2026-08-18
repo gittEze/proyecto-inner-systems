@@ -9,10 +9,6 @@ html, .bodyMain {
     margin: 0;
 }
 
-/* .logo:hover {
-    animation: levitar 2.5s ease-in-out infinite;
-} */
-
 .logo:hover {
     animation: pulse 1s ease-in-out infinite; 
 }
