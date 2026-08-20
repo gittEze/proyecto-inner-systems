@@ -1,10 +1,6 @@
 * {
     font-family: Ubuntu, sans-serif;
     font-size: 15px;
-
-}
-
-html, .bodyMain {
     padding: 0;
     margin: 0;
 }
@@ -246,16 +242,14 @@ select{
     display: block;
 }
 
-
-
 /* -------------------- */
+
+/* ----- CURSOS ----- */
 
 .h1cur{
     font-size: 30px;
 
 }
-
-    
     
 .contenedor{
     display: grid;
@@ -272,13 +266,12 @@ select{
     padding-left: 20px;
     align-content: center;
 
-
 }
 
 .contenedor div{
-    background-color: peru;
+    background-color: #1e88e5;
     border-radius: 20px;
-    border: solid 4px brown;
+    border: solid 4px #0d47a1;
     text-align: center;
     padding-bottom: 100px;
     width: auto;
@@ -289,16 +282,12 @@ select{
     margin-left: 20px; ;
     margin-right: 20px;
  
-    
-
 }
-
 
 h1{
     text-align: center;
     
 }
-
 
 .buscadoreishon{
     align-items: center;
@@ -308,7 +297,6 @@ h1{
     padding-bottom: 30px;
     margin: auto;
 }
-
 
 .buscador2{
     display: flex;
@@ -321,9 +309,9 @@ h1{
     box-sizing: border-box;
     margin-right: 10px;
     align-items: center;
-
-
 }
+
+/* -------------------- */
 
 
     
