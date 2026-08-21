@@ -9,12 +9,16 @@
     animation: pulse 1s ease-in-out infinite; 
 }
 
+main {
+    background-image: url("../IMG/background.png");
+    background-size: 700px;
+}
+
 /* ----- MAIN ----- */
 .contenedorMain {
     background: white;
     color: white;
     padding: 10px;
-    margin-right: 15px;
     text-align: center;
     justify-content: space-evenly;
     align-items: center;
@@ -74,7 +78,8 @@
 }
 
 #logoMain{
-    margin-top: 18px;
+    margin-top: 10px;
+    margin-bottom: 10px;
     margin-left: 5px;
     width: 7%;
     object-fit: contain;
@@ -95,6 +100,7 @@
     align-items: center;
     padding: 35px 20px;
     background: linear-gradient(#1e88e5, #0d47a1);
+    margin-top: 0;
 }
 
 .footerItem {
@@ -134,7 +140,6 @@
     transform: scale(1.1);
     transition: all 500ms ease;
 }
-
 
 /* -------------------- */
 
@@ -251,7 +256,7 @@ select{
 
 }
     
-.contenedor{
+.contenedorCursos {
     display: grid;
     gap: 15px;
     height: auto;
@@ -268,7 +273,7 @@ select{
 
 }
 
-.contenedor div{
+.contenedorCursos div{
     background-color: #1e88e5;
     border-radius: 20px;
     border: solid 4px #0d47a1;
@@ -286,6 +291,7 @@ select{
 
 h1{
     text-align: center;
+    padding: 40px 25px 25px 25px;
     
 }
 
@@ -302,14 +308,15 @@ h1{
     display: flex;
     align-items:center;
     background:#f7f2eb;
-    border:1px solid #e8d8c6;
+    border: 2px solid #0d47a1;
     border-radius:20px;
     padding: 13px;
-    width: 300px;
+    width: 1000px;
     box-sizing: border-box;
     margin-right: 10px;
     align-items: center;
 }
+
 
 /* -------------------- */
 
