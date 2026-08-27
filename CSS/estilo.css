@@ -1,10 +1,6 @@
 * {
     font-family: Ubuntu, sans-serif;
     font-size: 15px;
-
-}
-
-html, .bodyMain {
     padding: 0;
     margin: 0;
 }
@@ -13,12 +9,16 @@ html, .bodyMain {
     animation: pulse 1s ease-in-out infinite; 
 }
 
+main {
+    background-image: url("../IMG/background2.png");
+    background-size: 700px;
+}
+
 /* ----- MAIN ----- */
 .contenedorMain {
     background: white;
     color: white;
     padding: 10px;
-    margin-right: 15px;
     text-align: center;
     justify-content: space-evenly;
     align-items: center;
@@ -78,7 +78,8 @@ html, .bodyMain {
 }
 
 #logoMain{
-    margin-top: 18px;
+    margin-top: 10px;
+    margin-bottom: 10px;
     margin-left: 5px;
     width: 7%;
     object-fit: contain;
@@ -86,14 +87,32 @@ html, .bodyMain {
     transition: transform 0.3s ease;
 }
 
+#logoMainImg {
+    width: 100%;
+    height: auto;
+}
+
 .footerMain {
     color: white;
-    margin-top: 50px;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    padding: 35px 20px;
+    flex-wrap: wrap;
+    padding: 20px 10px;
     background: linear-gradient(#1e88e5, #0d47a1);
+}
+
+.footerNombre{
+    margin-bottom: 20px;
+    color: #FFFFFF;
+}
+.footerNombre h2{
+    font-size: 25px;
+    margin-bottom: 10px;
+}
+.footer-col p{
+    color: #CCCCCC;
+    line-height: 1.8;
 }
 
 .footerItem {
@@ -122,25 +141,193 @@ html, .bodyMain {
     font-size: 14px;
 }
 
-.footerItem:hover {
-    .footerIcono {
-    box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.5);
-    }
+.footerItem:hover, .footerNombre:hover {
     .footerItem p, .footerItem h3 {
         text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
-
     }
     transform: scale(1.1);
     transition: all 500ms ease;
 }
 
+.copyright {
+    width: 100%;
+    text-align: center;
+    padding-top: 20px;
+    margin-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.copyright p {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0;
+}
+
+.contenedorInicio {
+    width: 100%;
+    padding: 80px 0;
+    background: linear-gradient(to left,#1e88e5, #0d47a1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 60px;
+}
+
+.textoPrincipal {
+    margin-left: 150px;
+}
+
+.textoPrincipal h2, span {
+    font-size: 4rem;
+    font-weight: 700;
+    color: white;
+    line-height: 1.2;
+    margin-bottom: 25px;
+}
+
+.textoPrincipal h2 span {
+    color: #93cdff;
+}
+
+.textoPrincipal p{
+    font-size: 1.1rem;
+    color: white;
+    max-width: 550px;
+    margin-bottom: 35px;
+}
+
+.imagenPrincipal {
+    display: flex;
+    justify-content: center;
+    margin-right: 150px;
+}
+
+.imagenPrincipal img{
+    width: 92%;
+    max-width: 820px;
+    transition: .4s;
+}
+.imagenPrincipal img:hover{
+    transform: scale(1.04);
+}
+
+.btnPrincipal {
+    font-size: 20px;
+    height: 30px;
+    width: 250px;
+    align-items: center;
+    margin-top: 10px;
+    display: flex;
+    color: white;
+    border: 2px solid white;
+    border-radius: 8px;
+    background: linear-gradient(to right,#1e88e5, #115ccc);
+    padding: 10px 15px;
+    text-decoration: none;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    transition: all 500ms ease;
+}
+.btnPrincipal:hover {
+    transform: translateY(-5px);
+    background: linear-gradient(to right,white, white);
+    color: #1e88e5;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.cursosPopularesTitulo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 80px;
+    margin-top: 45px;
+    margin-bottom: 30px;
+    padding: 0 20px;
+}
+
+.cursosPopularesTitulo h2 {
+    font-size: 30px;
+    color: #0d47a1;
+    margin: 0;
+}
+
+.cursosPopularesTitulo a {
+    color: #1e88e5;
+    font-size: 16px;
+    text-decoration: none;
+}
+
+.cursosPopularesTitulo a:hover {
+    text-decoration: underline;
+}
+
+.cursosPopulares {
+    /* max-width: 1200px; */
+    margin: 0 80px;
+    padding: 0 20px 50px;
+    display: flex;
+    gap: 35px;
+}
+
+.tarjetaCurso {
+    background-color: white;
+    border: 2px solid #dceaf5;
+    border-radius: 15px;
+    text-decoration: none;
+    color: black;
+    /* box-shadow: 0 4px 12px rgba(0, 0, 0, 0.10); */
+
+    transition: 300ms ease;
+}
+
+.tarjetaCurso:hover {
+    transform: translateY(-7px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+}
+
+.imagenCurso {
+    border-radius: 14px 14px 0 0;
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+}
+
+.imagenCurso img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+
+    transition: 300ms ease;
+}
+
+.informacionCurso {
+    padding: 20px;
+}
+
+.informacionCurso h3 {
+    color: #0d47a1;
+    font-size: 21px;
+    margin-bottom: 10px;
+}
+
+.informacionCurso p {
+    color: #555;
+    font-size: 15px;
+    line-height: 1.5;
+    margin-bottom: 15px;
+}
+
+.nivelCurso {
+    color: #1e88e5;
+    font-size: 14px;
+    font-weight: bold;
+}
 
 /* -------------------- */
 
 /* ----- LOGIN ----- */
 
 .bodyLogin {
-    background-image: url("../IMG/background.png");
+    background-image: url("../IMG/background2.png");
     background-size: 700px;
 }
 
@@ -190,7 +377,6 @@ select{
 #recuperarContrasenia {
     display: inline-block;
     color: white;
-    /* text-align: right; */
     margin-top: 10px;
     margin-bottom: 15px;
 }
@@ -216,6 +402,7 @@ select{
     color: #1e88e5;
 }
 
+
 #volver {
     display: block;
     width: fit-content;
@@ -231,6 +418,7 @@ select{
     text-decoration: none;
     transition: all 500ms ease;
 }
+
 #volver:hover, #btnIniciarSesion:hover {
     transform: scale(1.1);
     background-color: white;
@@ -241,18 +429,16 @@ select{
     display: block;
 }
 
-
-
 /* -------------------- */
+
+/* ----- CURSOS ----- */
 
 .h1cur{
     font-size: 30px;
 
 }
-
     
-    
-.contenedor{
+.contenedorCursos {
     display: grid;
     gap: 15px;
     height: auto;
@@ -267,13 +453,12 @@ select{
     padding-left: 20px;
     align-content: center;
 
-
 }
 
-.contenedor div{
-    background-color: peru;
+.contenedorCursos div{
+    background-color: #1e88e5;
     border-radius: 20px;
-    border: solid 4px brown;
+    border: solid 4px #0d47a1;
     text-align: center;
     padding-bottom: 100px;
     width: auto;
@@ -284,16 +469,13 @@ select{
     margin-left: 20px; ;
     margin-right: 20px;
  
-    
-
 }
-
 
 h1{
     text-align: center;
+    padding: 40px 25px 25px 25px;
     
 }
-
 
 .buscadoreishon{
     align-items: center;
@@ -304,27 +486,338 @@ h1{
     margin: auto;
 }
 
-
 .buscador2{
     display: flex;
     align-items:center;
     background:#f7f2eb;
-    border:1px solid #e8d8c6;
+    border: 2px solid #0d47a1;
     border-radius:20px;
     padding: 13px;
-    width: 300px;
+    width: 1000px;
     box-sizing: border-box;
     margin-right: 10px;
     align-items: center;
+}
 
+
+#Crearbot{
+    display: block;
+    border-radius: 10px;
+    padding: 15px 40px;
+    color: white;
+    font-weight: bold;
+    margin-bottom:  20px;
+
+    
+}
+
+#Crearbot button{
+    background-color: white;
+    color:midnightblue;
+    width: 130px;
+    height: 40px;
+    border: solid blue;
+    border-radius: 15px;
+    font-weight: bold;
+
+}
+#envcur:hover{
+    transform: translateY(-5px);
+    background: linear-gradient(to right,white, white);
+    color: #1e88e5;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    cursor:pointer;
+
+    
+}
+
+
+
+/* -------------------- */
+
+/* ELEMENTOS DE CREACIÓN DE CURSOS: */
+
+#contotal{
+    height: auto;
+    width: 90%;
+    border-radius: 10px;
+    gap: 15px;
+    display: flex;
+    flex-direction:row;
+    align-items: stretch;
+    min-height: 800px;
+    margin-left: 50px;
+    flex-wrap: wrap;
+    
+    
+
+}
+
+#contotal textarea{
+    resize: none;
+    border-radius: 5px;
+}
+
+#titulocur{
+    font-size: 30px;
+    text-align: left;
+    margin-left: 0;
+    margin-right: 0;
+    
+}
+
+.pcur{
+    margin-bottom: 12px;
+    margin-top: 12px;
+    margin-left: 25px;
+}
+    
+
+#Crearcurso{
+    flex: 1;
+    border: 1px solid gray;
+    border-radius: 10px;
+    padding: 15px;
+    min-width: 0;
+    margin: 0;
 
 }
 
 
-    
-    
+.Curscre{
+    margin-bottom: 10px;
+    margin-top: 10px;
+    margin-left: 10px;
+    font-size: 25px;
+}
+
+
+#nombrecur{
+    width: 315px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    margin-left: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 5px;
+    border-color: blue;
+}
 
 
     
+#NivCurso{
+    margin-bottom: 10px;
+    margin-top: 10px;
+    text-align: center;
+}
+
+#botones{
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    
+    
+}
  
 
+#botoncur1{
+    background-color: blue;
+}
+
+
+#botoncur2{
+    margin-left: 10px;
+    margin-right: 10px;
+    background-color: orange;
+}
+
+#botoncur3{
+    background-color: red;
+}
+
+#botones button{
+    display: block;
+    border: 2px solid white;
+    border-radius: 10px;
+    padding: 15px 40px;
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    margin-bottom:  20px;
+    
+}
+
+
+
+#Crearcurso h2{
+    margin-left: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+
+#Crearcurso textarea{
+    margin-left: 10px;
+    max-width: 90%;
+    
+}
+
+#curnum{
+    width: 300px;
+}
+
+
+#horarios{
+    display: flex;                           
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#curplata{
+    width: 300px;
+}
+
+#Plata{
+    display: flex;                           
+    margin-top: 10px;
+    margin-bottom: 10px;    
+}
+
+
+.Visprev{
+    flex: 1;
+    border: 1px solid gray;
+    border-radius: 10px;
+    padding: 15px;
+    margin: 0;
+}
+
+.Visprev textarea{
+    resize: none;
+    border: none;
+    outline: none;
+}
+
+#curfile{
+    font-weight: bold;
+    font-size: 15px;
+    margin-right: 15px;
+}
+
+#curfile::file-selector-button{
+background-color: #fff;
+    border: 1px solid gray;
+    border-radius: 5px;
+    padding: 6px 12px;
+    cursor: pointer;
+    margin-right: 10px;
+    transition: 0.2s;
+}
+
+#curfile::file-selector-button:hover{
+    background-color: beige;
+}
+
+
+#titlecur{
+    margin-top: 20px;
+    margin-bottom: 10px;
+    width: 300px;
+    height: 30px;
+    resize: none;
+}
+
+#textcam{
+    
+}
+
+.Vispr{
+    font-size: 25px;
+    font-weight: bold;
+
+}
+
+#Visbut{
+    background-color: white;
+    color:crimson;
+    width: 130px;
+    height: 40px;
+    border: solid black;
+    border-radius: 15px;
+    font-weight: bold;
+    margin-top: 30px;
+    margin-left: 300px;
+}
+
+
+#Visbut:hover{
+    transform: translateY(-5px);
+    background: linear-gradient(to right,white, white);
+    color: blue;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    cursor:pointer;
+}
+
+
+#titlecur{
+    font-size: 20px;
+    font-weight: bold;
+   
+}
+
+.infoprev{
+    display: flex;
+
+    
+}
+
+.infoprev textarea{
+    margin-left: 20px;
+    width: 60px;
+}
+
+.infoprev h2{
+    margin-left: 20px;
+}
+
+#barra{
+    margin-bottom: 50px;
+    height: 2px;
+    background-color: black;
+}
+
+#Prec{
+    font-size: 50px;
+    color: blue;
+}
+
+
+.infoprev #precio{
+    width: 300px;
+    font-size: 50px ;
+    margin-right: 50px;
+    
+}
+.infoprev #peso{
+    font-size: 50px ;
+    color: green;
+}
+
+.contimg{
+    height: 300px;
+    width: 95%;
+    border: solid black 10px;
+    object-fit: cover;
+
+    
+}
+
+#curso{
+    width: 100%;
+    height: 100%;
+    
+
+
+}
+/* ACA TERMINA LO DE CREAR CURSOS */
