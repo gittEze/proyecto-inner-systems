@@ -500,13 +500,325 @@ h1{
 }
 
 
+#Crearbot{
+    display: block;
+    border-radius: 10px;
+    padding: 15px 40px;
+    color: white;
+    font-weight: bold;
+    margin-bottom:  20px;
+
+    
+}
 /* -------------------- */
 
+#Crearbot button{
+    background-color: white;
+    color:midnightblue;
+    width: 130px;
+    height: 40px;
+    border: solid blue;
+    border-radius: 15px;
+    font-weight: bold;
 
+}
+#envcur:hover{
+    transform: translateY(-5px);
+    background: linear-gradient(to right,white, white);
+    color: #1e88e5;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    cursor:pointer;
+
+    
+}
+
+
+
+/* -------------------- */
+
+/* ELEMENTOS DE CREACIÓN DE CURSOS: */
+
+#contotal{
+    height: auto;
+    width: 90%;
+    border-radius: 10px;
+    gap: 15px;
+    display: flex;
+    flex-direction:row;
+    align-items: stretch;
+    min-height: 800px;
+    margin-left: 50px;
+    flex-wrap: wrap;
     
     
 
+}
+
+#contotal textarea{
+    resize: none;
+    border-radius: 5px;
+}
+
+#titulocur{
+    font-size: 30px;
+    text-align: left;
+    margin-left: 0;
+    margin-right: 0;
+    
+}
+
+.pcur{
+    margin-bottom: 12px;
+    margin-top: 12px;
+    margin-left: 25px;
+}
+    
+
+#Crearcurso{
+    flex: 1;
+    border: 1px solid gray;
+    border-radius: 10px;
+    padding: 15px;
+    min-width: 0;
+    margin: 0;
+
+}
+
+
+.Curscre{
+    margin-bottom: 10px;
+    margin-top: 10px;
+    margin-left: 10px;
+    font-size: 25px;
+}
+
+
+#nombrecur{
+    width: 315px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    margin-left: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 5px;
+    border-color: blue;
+}
+
 
     
+#NivCurso{
+    margin-bottom: 10px;
+    margin-top: 10px;
+    text-align: center;
+}
+
+#botones{
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    
+    
+}
  
 
+#botoncur1{
+    background-color: blue;
+}
+
+
+#botoncur2{
+    margin-left: 10px;
+    margin-right: 10px;
+    background-color: orange;
+}
+
+#botoncur3{
+    background-color: red;
+}
+
+#botones button{
+    display: block;
+    border: 2px solid white;
+    border-radius: 10px;
+    padding: 15px 40px;
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    margin-bottom:  20px;
+    
+}
+
+
+
+#Crearcurso h2{
+    margin-left: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+
+#Crearcurso textarea{
+    margin-left: 10px;
+    max-width: 90%;
+    
+}
+
+#curnum{
+    width: 300px;
+}
+
+
+#horarios{
+    display: flex;                           
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#curplata{
+    width: 300px;
+}
+
+#Plata{
+    display: flex;                           
+    margin-top: 10px;
+    margin-bottom: 10px;    
+}
+
+
+.Visprev{
+    flex: 1;
+    border: 1px solid gray;
+    border-radius: 10px;
+    padding: 15px;
+    margin: 0;
+}
+
+.Visprev textarea{
+    resize: none;
+    border: none;
+    outline: none;
+}
+
+#curfile{
+    font-weight: bold;
+    font-size: 15px;
+    margin-right: 15px;
+}
+
+#curfile::file-selector-button{
+background-color: #fff;
+    border: 1px solid gray;
+    border-radius: 5px;
+    padding: 6px 12px;
+    cursor: pointer;
+    margin-right: 10px;
+    transition: 0.2s;
+}
+
+#curfile::file-selector-button:hover{
+    background-color: beige;
+}
+
+
+#titlecur{
+    margin-top: 20px;
+    margin-bottom: 10px;
+    width: 300px;
+    height: 30px;
+    resize: none;
+}
+
+#textcam{
+    
+}
+
+.Vispr{
+    font-size: 25px;
+    font-weight: bold;
+
+}
+
+#Visbut{
+    background-color: white;
+    color:crimson;
+    width: 130px;
+    height: 40px;
+    border: solid black;
+    border-radius: 15px;
+    font-weight: bold;
+    margin-top: 30px;
+    margin-left: 300px;
+}
+
+
+#Visbut:hover{
+    transform: translateY(-5px);
+    background: linear-gradient(to right,white, white);
+    color: blue;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    cursor:pointer;
+}
+
+
+#titlecur{
+    font-size: 20px;
+    font-weight: bold;
+   
+}
+
+.infoprev{
+    display: flex;
+
+    
+}
+
+.infoprev textarea{
+    margin-left: 20px;
+    width: 60px;
+}
+
+.infoprev h2{
+    margin-left: 20px;
+}
+
+#barra{
+    margin-bottom: 50px;
+    height: 2px;
+    background-color: black;
+}
+
+#Prec{
+    font-size: 50px;
+    color: blue;
+}
+
+
+.infoprev #precio{
+    width: 300px;
+    font-size: 50px ;
+    margin-right: 50px;
+    
+}
+.infoprev #peso{
+    font-size: 50px ;
+    color: green;
+}
+
+.contimg{
+    height: 300px;
+    width: 95%;
+    border: solid black 10px;
+    object-fit: cover;
+
+    
+}
+
+#curso{
+    width: 100%;
+    height: 100%;
+    
+
+
+}
+/* ACA TERMINA LO DE CREAR CURSOS */
