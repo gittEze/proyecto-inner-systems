@@ -22,8 +22,8 @@
             <a class="Serv" href="">Mentorías </a>
             <input id="buscador" type="search" placeholder="Buscar">
 
-            <a class="loginBtn" href="login.html">Iniciar sesion</a>
-            <a class="loginBtn" href="login.html">Registrarse</a>
+            <a class="loginBtn" href="login.php">Iniciar sesion</a>
+            <a class="loginBtn" href="login.php">Registrarse</a>
         </div>
 
         <main>

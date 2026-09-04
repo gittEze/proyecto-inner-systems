@@ -28,6 +28,8 @@
 
                     <button type="submit" id="btnIniciarSesion">Iniciar Sesion</button>
                 </form>
+
+                
                 
                 <!-- <form id="contenedorRegister" action="" method="post">
                     
@@ -46,8 +48,8 @@
                     <label for="Contrasena">Contraseña</label required>
                     <input type="password" id="Contrasena" name="Contrasena" placeholder="Ingrese su contraseña" required>
 
-                    <label for="Contacto">Contacto</label required>
-                    <input type="tel" id="Contacto" name="Contacto" placeholder="099123456">
+                    <label for="Telefono">Teléfono</label required>
+                    <input type="tel" id="Telefono" name="Telefono" placeholder="099123456">
 
                     <label for="Ocupacion">Ocupación</label required>
                     <select id="Ocupacion">
@@ -55,6 +57,15 @@
                         <option value="opcion3"> Estudiante</option>
                     </select>
 
+                    <label for="Gen">Genero</label required>
+                        <select id="Gen">
+                        <option value="opcion2"> Masculino </option>
+                        <option value="opcion3"> Femenino</option>
+                    </select>
+
+            
+                  
+                
 
                     <button type="submit" class="btn">Agregar</button>
                     <button type="reset" class="btn">Limpiar</button>
@@ -64,3 +75,4 @@
         </main>
     </body>
 </html>
+
