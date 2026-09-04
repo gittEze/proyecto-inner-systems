@@ -11,35 +11,38 @@
 </head>
 <body>
     <main>
+    
     <div class="contenedorMain">  
         <a class="logo" id="logoMain" href="../main.html">
             <img id="logoMainImg" src="../IMG/Logo.png" alt="Logo de Aprendomo">
         </a>   
-        <a class="Serv" href="../main.html">Inicio</a>
-        <a class="Serv" href="cursos.html">Cursos</a>
+        <a class="Serv" href="../main.php">Inicio</a>
+        <a class="Serv" href="cursos.php">Cursos</a>
         <a class="Serv" href="">Proyectos educativos</a>
         <a class="Serv" href="">Mentorías</a>
         <input id="buscador" type="search" placeholder="Buscar">
 
-        <a class="loginBtn" href="login.html">Iniciar sesion</a>
-        <a class="loginBtn" href="login.html">Registrarse</a>
+        <a class="loginBtn" href="login.php">Iniciar sesion</a>
+        <a class="loginBtn" href="login.php">Registrarse</a>
     </div>    
     
     <h1 id="titulocur">Crear nuevo curso</h1>
     <p class="pcur">Completa los detalles de tu curso y visualiza cómo se verá para los estudiantes.</p>
 
 
-    <div id="contotal"> 
+    <div id="contotal">
+    
    
         <div id="Crearcurso">
+            <form action=""></form>
             <h2 class="Curscre">Título del curso</h2>
-            <input type="text" id= "nombrecur" name="titcur" maxlength="50" placeholder="ej: Desarrollo de paginas webs">
+            <input type="text" id= "nombrecur" name="Titulo_curso" maxlength="50" placeholder="ej: Desarrollo de paginas webs">
 
             <h2>Descripción del curso:</h2>
-            <textarea id="Desc" name="descripcion"  rows="8" cols="50"></textarea>
+            <textarea id="Desc" name="Descripcion_curso"  rows="8" cols="50"></textarea>
 
             <h2 id="NivCurso">Nivel del curso:</h2>
-            <div id="botones">
+            <div id="botones" name="Nivel_Curso">
                 <button id="botoncur1">Bajo</button>
                 <button id="botoncur2">Medio</button>
                 <button id="botoncur3">Alto</button>
@@ -47,17 +50,17 @@
                 
             <h2>Duración estimada:</h2> 
             <div id="horarios">  
-                <input type="number" id="curnum" name="Curnum" min="10" max="100" placeholder="Ej: 12"> 
+                <input type="number" id="curnum" name="Duracion_estimada" min="10" max="100" placeholder="Ej: 12"> 
                 <h2 id="horas">Horas</h2>
             </div> 
 
             <h2>Precio:</h2> 
             <div id="Plata">  
-                <input type="number" id="curplata" name="Curplata" min="1000" max="100000" placeholder="Ej: 10000"> 
+                <input type="number" id="curplata" name="Precio" min="1000" max="100000" placeholder="Ej: 10000"> 
                 <h2 id="pesos">Pesos</h2>
             </div> 
             <h2 class="Curscre">Adjunta la imagen de tu curso</h2>
-            <input type="file" id="curfile" name="namefile" accept="image/*" />
+            <input type="file" id="Dataso" name="namefile" accept="image/*" />
 
             <button type="button" id="Visbut"> Vista previa </button>
         </div> 
@@ -89,7 +92,7 @@
         </div>
         </div>
 
-        
+  
 
     </div> 
     </main>
