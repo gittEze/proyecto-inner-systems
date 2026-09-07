@@ -12,17 +12,17 @@
 
     <body class="bodyMain">
         <div class="contenedorMain">  
-            <a class="logo" id="logoMain" href="main.html">
+            <a class="logo" id="logoMain" href="main.php">
                 <img id="logoMainImg" src="IMG/Logo.png" alt="Logo de Aprendomo">
             </a>            
-            <a class="Serv" href="main.html">Inicio</a>
-            <a class="Serv" href="HTML/cursos.html">Cursos</a>
+            <a class="Serv" href="main.php">Inicio</a>
+            <a class="Serv" href="HTML/cursos.php">Cursos</a>
             <a class="Serv" href="">Proyectos educativos</a>
             <a class="Serv" href="">Mentorías </a>
             <input id="buscador" type="search" placeholder="Buscar cursos, servicios...">
 
-            <a class="loginBtn" href="HTML/login.html">Iniciar sesion</a>
-            <a class="loginBtn" href="HTML/login.html">Registrarse</a>
+            <a class="loginBtn" href="HTML/login.php?pagina=login">Iniciar sesion</a>
+            <a class="loginBtn" href="HTML/login.php?pagina=register">Registrarse</a>
         </div>
 
         <main>
