@@ -16,8 +16,16 @@
 
                 <div class="logo" id="logoLogin"><img src="../IMG/LogoBlanco.png"></div>
 
-                <a  id="volver" href="../main.html">Volver</a> <h2>Formulario de Registro</h2> 
+                <a  id="volver" href="../main.php">Volver</a> <h2>Formulario de Registro</h2> 
 
+                <?php
+                $envio = $_GET["pagina"];
+                ?>
+
+
+                <?php if ($envio == "login"){
+
+                ?>    
                 <form id="login" action="" method="post">
                     <label for="username">Nombre de usuario:</label>
                     <input type="text" id="username" name="username" placeholder="Ingrese su usuario" required>
@@ -29,48 +37,53 @@
                     <button type="submit" id="btnIniciarSesion">Iniciar Sesion</button>
                 </form>
 
-                
-                
-                <!-- <form id="contenedorRegister" action="" method="post">
+                <?php
+                }
+                ?>
+
+                <?php if ($envio == "register"){
+
+                ?>    
+                <form id="contenedorRegister" action="" method="post">
                     
-                    <label for="Nm">Nombre</label required>
+                    <label for="Nm">Nombre</label>
                     <input type="text" id="Nm" name="Nombre" placeholder="Ej: Juan">
 
-                    <label for="Ap">Apellido</label required>
+                    <label for="Ap">Apellido</label>
                     <input type="text" id="Ap" name="Apellido" placeholder="Ej: Zorrila">
 
-                    <label for="Usuario">Nombre de Usuario</label required>
+                    <label for="Usuario">Nombre de Usuario</label>
                     <input type="text" id="Usuario" name="Usuario" placeholder="Ingrese su usuario" required>
                     
-                    <label for="Correo">Correo electrónico</label required>
+                    <label for="Correo">Correo electrónico</label>
                     <input type="email" id="Correo" name="Correo" placeholder="ejemplo@correo.com" required>
 
-                    <label for="Contrasena">Contraseña</label required>
+                    <label for="Contrasena">Contraseña</label>
                     <input type="password" id="Contrasena" name="Contrasena" placeholder="Ingrese su contraseña" required>
 
-                    <label for="Telefono">Teléfono</label required>
+                    <label for="Telefono">Teléfono</label>
                     <input type="tel" id="Telefono" name="Telefono" placeholder="099123456">
 
-                    <label for="Ocupacion">Ocupación</label required>
-                    <select id="Ocupacion">
+                    <label for="Ocupacion">Ocupación</label>
+                    <select id="Ocupacion" name="Ocupacion">
                         <option value="opcion2"> Docente </option>
                         <option value="opcion3"> Estudiante</option>
                     </select>
 
-                    <label for="Gen">Genero</label required>
-                        <select id="Gen">
+                    <label for="Gen">Genero</label>
+                        <select id="Gen" name="Genero">
                         <option value="opcion2"> Masculino </option>
                         <option value="opcion3"> Femenino</option>
                     </select>
 
-            
-                  
-                
+                    <button type="submit" class="btndato">Registrarse</button>
 
-                    <button type="submit" class="btn">Agregar</button>
-                    <button type="reset" class="btn">Limpiar</button>
+                </form> 
 
-                </form> -->
+                <?php
+                }
+                ?>
+
             </section>
         </main>
     </body>
