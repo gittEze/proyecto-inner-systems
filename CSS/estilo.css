@@ -40,6 +40,17 @@ main {
 
 }
 
+.botones {
+    display: flex;
+    gap: 10px;
+}
+
+.textoBoton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .loginBtn {
     color: #1e88e5;
     border: 2px solid #1e88e5;
@@ -343,6 +354,7 @@ main {
 
 h2 {
     text-align: left;
+    font-size: 18px;
 }
 
 label {
@@ -429,7 +441,7 @@ select{
     display: block;
 }
 
-.btndato{
+.btnDato {
     margin-top: 10px;
     display: block;
     color: white;
@@ -440,7 +452,11 @@ select{
     text-decoration: none;
     transition: all 500ms ease;
 }
-
+.btnDato:hover {
+    transform: scale(1.1);
+    background-color: white;
+    color: #1e88e5;
+}
 
 
 /* -------------------- */
@@ -630,8 +646,6 @@ h1{
     align-items: center;
     display: flex;
     justify-content: center;
-    
-    
 }
  
 
