@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Cursos</title>
+        <title>Aprendomo - Cursos</title>
         
         <link rel="stylesheet" href="../CSS/animaciones.css">
         <link rel="stylesheet" href="../CSS/estilo.css">
@@ -11,26 +11,14 @@
     </head>
     
     <body>
-        
-        <div class="contenedorMain">  
-            <a class="logo" id="logoMain" href="../main.html">
-                <img id="logoMainImg" src="../IMG/Logo.png" alt="Logo de Aprendomo">
-            </a>   
-            <a class="Serv" href="../main.html">Inicio</a>
-            <a class="Serv" href="cursos.html">Cursos</a>
-            <a class="Serv" href="">Proyectos educativos</a>
-            <a class="Serv" href="">Mentorías </a>
-            <input id="buscador" type="search" placeholder="Buscar">
 
-            <a class="loginBtn" href="login.php">Iniciar sesion</a>
-            <a class="loginBtn" href="login.php">Registrarse</a>
-        </div>
+        <?php include 'menu.php'; ?>
 
         <main>
             <h1 class="h1cur"> Cursos </h1>
 
         <div id="Crearbot">
-            <a href="crear.html">
+            <a href="crear.php">
                 <button id="envcur" type="button"> Crear Curso</button>
             </a>
         </div>
@@ -79,35 +67,9 @@
             </div>
         </main>
 
-        <footer class="footerMain"> 
-
-            <div class="footerNombre">
-                <div class="footerLogo">
-                    <h2>Aprendomo</h2>
-                </div>
-                <p>
-                    Plataforma dedicada a la formación tecnológica mediante <br>
-                    cursos, mentorías y proyectos educativos para estudiantes.
-                </p>
-            </div>
-
-            <div class="footerItem"> 
-                <div class="footerIcono">✉</div> 
-                <div><h3>Contacto:</h3><p>aprendomo.contacto@gmail.com</p></div> 
-            </div> 
-        
-            <div class="footerItem"> 
-                <div class="footerIcono">☎</div> 
-                <div><h3>Teléfono:</h3><p>+598 97 213 298</p></div> 
-            </div> 
-        
-            <div class="footerItem"> 
-                <div class="footerIcono">●</div> 
-                <div><h3>Ubicación:</h3><p>Casa de Luquitas</p></div> 
-            </div> 
-        </footer>
+        <?php include 'footer.php'; ?>
         
     </body>
 
-    <link rel="stylesheet" href="/JS/Botones.js">
+    <link rel="stylesheet" href="../JS/Botones.js">
 </html>

@@ -3,13 +3,12 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Formulario de Registro</title>
-        
+
         <link rel="stylesheet" href="../CSS/animaciones.css">
         <link rel="stylesheet" href="../CSS/estilo.css">
         <link rel="icon" href="../IMG/Icono.ico">
     </head>
-    
+
     <body class="bodyLogin">
         <main>
             <section class="contenedorLogin">
