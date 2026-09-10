@@ -13,7 +13,7 @@
     <main>
     
     <div class="contenedorMain">  
-        <a class="logo" id="logoMain" href="../main.html">
+        <a class="logo" id="logoMain" href="../main.php">
             <img id="logoMainImg" src="../IMG/Logo.png" alt="Logo de Aprendomo">
         </a>   
         <a class="Serv" href="../main.php">Inicio</a>

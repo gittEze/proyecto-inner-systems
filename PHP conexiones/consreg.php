@@ -1,0 +1,40 @@
+<?php
+
+require 'conexion.php';
+
+
+//Insertar filas para el registro.
+
+if($_SERVER['REQUEST_METHOD'] == 'POST'){
+    $sql = 'INSERT INTO usuarios (Nombre, Apellido, Cedula, Fecha_de_Nacimiento, Correo, Contraseña, Telefono, Genero, Ocupacion) VALUES (:nombre, :apellido, :cedula, :fecha_nacimiento, :correo, :contrasena, :telefono, :genero, :rol)';
+    $consulta = $pdo->prepare($sql);
+
+    $consulta->bindParam(':nombre', $_POST['Nombre'], PDO::PARAM_STR);
+
+    $consulta->bindParam(':apellido', $_POST['Apellido'], PDO::PARAM_STR);
+
+    $consulta->bindParam(':cedula', $_POST['Cedula'], PDO::PARAM_INT);
+
+    $consulta->bindParam(':fecha_nacimiento', $_POST['Fecha_de_Nacimiento'], PDO::PARAM_STR);
+
+    $consulta->bindParam(':correo', $_POST['Correo'], PDO::PARAM_STR);
+
+    $consulta->bindParam(':contrasena', $_POST['Contraseña'], PDO::PARAM_STR);
+
+    $consulta->bindParam(':telefono', $_POST['Telefono'], PDO::PARAM_INT);
+
+    $consulta->bindParam(':genero', $_POST['Genero'], PDO::PARAM_STR);
+
+    $consulta->bindParam(':rol', $_POST['Rol'], PDO::PARAM_STR);
+  
+
+
+    $consulta->execute();
+}
+
+
+
+
+
+
+?>
