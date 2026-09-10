@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="es">
     <head>
@@ -11,6 +14,8 @@
     </head>
 
     <body class="bodyMain">
+
+        
         <div class="contenedorMain">  
             <a class="logo" id="logoMain" href="main.php">
                 <img id="logoMainImg" src="IMG/Logo.png" alt="Logo de Aprendomo">
@@ -21,8 +26,12 @@
             <a class="Serv" href="">Mentorías </a>
             <input id="buscador" type="search" placeholder="Buscar cursos, servicios...">
 
-            <a class="loginBtn" href="HTML/login.php?pagina=login">Iniciar sesion</a>
-            <a class="loginBtn" href="HTML/login.php?pagina=register">Registrarse</a>
+        <?php if (isset($_SESSION['Sesion'])) { ?>
+            <a class="LoginbBtn" href="../PHP conexiones/logout.php">Cerrar sesion</a>
+        <?php } else { ?>    
+            <a class="loginBtn" href="PHP/login.php?pagina=login">Iniciar sesion</a>
+            <a class="loginBtn" href="PHP/login.php?pagina=register">Registrarse</a>
+        <?php } ?>
         </div>
 
         <main>
@@ -135,5 +144,6 @@
                 <p>© 2026 Aprendomo. Todos los derechos reservados.</p>
             </div>
         </footer>
+        
     </body>
 </html> 
