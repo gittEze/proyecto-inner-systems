@@ -15,18 +15,18 @@ require 'conexion.php';
 
                 $Correo = $consulta->fetch(PDO::FETCH_ASSOC);
             }
-                if($Correo){
-                    $_SESSION['Sesion'] = $Correo['Correo'];
-                    header("Location: ../PHP/main.php");
-                    exit();
+            if($Correo){
+                $_SESSION['Sesion'] = $Correo['Correo'];
+                header("Location: ../PHP/main.php");
+                exit();
 
-                } else {
-                    echo "<script>
-                    alert('Correo o contraseña incorrectos..');
-                    window.location.href='../PHP/login.php?pagina=login';
-                    </script>";
-                    exit();
-                }
+            } else {
+                echo "<script>
+                alert('Correo o contraseña incorrectos..');
+                window.location.href='../PHP/login.php?pagina=login';
+                </script>";
+                exit();
+            }
+
 
 ?>
-

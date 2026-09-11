@@ -15,16 +15,7 @@ session_start();
 
     <body class="bodyMain">
 
-        <?php include 'menu.php'; ?>  
-      
-
-        <?php if (isset($_SESSION['Sesion'])) { ?>
-            <a class="LoginbBtn" href="../PHP conexiones/logout.php">Cerrar sesion</a>
-        <?php } else { ?>    
-            <a class="loginBtn" href="PHP/login.php?pagina=login">Iniciar sesion</a>
-            <a class="loginBtn" href="PHP/login.php?pagina=register">Registrarse</a>
-        <?php } ?>
-        </div>
+        <?php include 'menu.php'; ?>
 
         <main>
             <div class="contenedorInicio">
