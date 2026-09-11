@@ -18,34 +18,13 @@
                 </div>
 
                 <a id="volver" href="main.php">Volver</a>
-
-                <?php $envio = $_POST["btnRegister"] ?? $_POST["btnLogin"]; ?> 
-                 
+                
+                <?php $envio = $_POST['btnRegister'] ?? $_POST['btnLogin'] ?? $_GET['pagina'] ?? 'login'; ?>
 
                 <?php if ($envio == "login") { ?>
 
-                    <title>Iniciar sesión</title>
+                    <title>Iniciar sesión - Aprendomo</title>
                     <h2>Iniciar Sesión</h2>
-
-                    <form id="login" action="" method="post">
-                        <label for="username">Nombre de usuario:</label>
-                        <input type="text" id="username" name="username" placeholder="Ingrese su usuario" required>
-
-                        <label for="password">Contraseña:</label>
-                        <input type="password" id="password" name="password" placeholder="Ingrese su contraseña" required>
-
-                        <a id="recuperarContrasenia" href="">Recuperar contraseña</a>
-
-                        <div class="botones">
-                            <button type="submit" id="btnIniciarSesion">Iniciar Sesion</button>
-                            <a href="main.php" class="btnDato">Cancelar</a>
-<?php $envio = $_POST['btnRegister'] ?? $_POST['btnLogin'] ?? $_GET['pagina'] ?? 'login'; ?>
-
-<?php if ($envio == "login") { ?>
-
-    <title>Iniciar sesión - Aprendomo</title>
-    <h2>Iniciar Sesión</h2>
-
 
                     <form id="login" action="../PHP conexiones/conlogin.php" method="post">
 
@@ -65,7 +44,6 @@
                         
                         <div class="botones">
                             <button type="submit" id="btnIniciarSesion">Iniciar Sesion</button>
->>>>>>> Stashed changes
                         </div>
                         
                     </form>
@@ -81,14 +59,12 @@
 
                         <label for="Ap">Apellido</label>
                         <input type="text" id="Ap" name="Apellido" placeholder="Ej: Zorrilla">
+                        
                         <label for="Cedula">Cédula</label>
                         <input type="text" id="Cedula" name="Cedula" placeholder="Ej: 1234567890">
 
                         <label for="Fecha">Fecha de nacimiento</label>
                         <input type="date" id="Fecha" name="Fecha_de_Nacimiento" placeholder="Ej: 01/01/2000">
-
-                        <label for="Usuario">Nombre de Usuario</label>
-                        <input type="text" id="Usuario" name="Usuario" placeholder="Ingrese su usuario" required>
 
                         <label for="Correo">Correo electrónico</label>
                         <input type="email" id="Correo" name="Correo" placeholder="ejemplo@correo.com" required>
@@ -99,12 +75,8 @@
                         <label for="Telefono">Teléfono</label>
                         <input type="tel" id="Telefono" name="Telefono" placeholder="099123456">
 
-                        <label for="Ocupacion">Ocupación</label>
-                        <select id="Ocupacion" name="Ocupacion">
-=======
-                        <label for="Ocupacion">Ocupación</label>
-                        <select id="Ocupacion" name="Ocupacion">
->>>>>>> 1fd2bf836842ee630c05996d2fba2758590c484e
+                        <label for="rol">Ocupación</label>
+                        <select id="rol" name="Rol">
                             <option value="docente">Docente</option>
                             <option value="estudiante">Estudiante</option>
                         </select>
