@@ -18,6 +18,7 @@
                 </div>
 
                 <a id="volver" href="main.php">Volver</a>
+<<<<<<< Updated upstream
 
                 <?php $envio = $_POST["btnRegister"] ?? $_POST["btnLogin"]; ?> 
                  
@@ -39,24 +40,68 @@
                         <div class="botones">
                             <button type="submit" id="btnIniciarSesion">Iniciar Sesion</button>
                             <a href="main.php" class="btnDato">Cancelar</a>
+=======
+                
+                <?php $envio = $_POST['btnRegister'] ?? $_POST['btnLogin'] ?? $_GET['pagina'] ?? 'login'; ?>
+
+                <?php if ($envio == "login") { ?>
+
+                    <title>Iniciar sesión - Aprendomo</title>
+                    <h2>Iniciar Sesión</h2>
+
+                    <form id="login" action="../PHP conexiones/conlogin.php" method="post">
+
+                        <label for="Correo">Correo electrónico:</label>
+                        <input type="email" id="Correo" name="Correo" placeholder="Ingrese su correo">
+
+                        <label for="Contrasena">Contraseña:</label>
+                        <input type="password" id="Contrasena" name="Contrasena" placeholder="Ingrese su contraseña">
+
+                        <a id="recuperarContrasenia" href="">Recuperar contraseña.</a>
+
+                        <p class="regisAqui">¿No tienes cuenta aún?
+                            <a href="login.php?pagina=register" class="linkRegistro">
+                                Regístrate aquí.
+                            </a>
+                        </p>                    
+                        
+                        <div class="botones">
+                            <button type="submit" id="btnIniciarSesion">Iniciar Sesion</button>
+>>>>>>> Stashed changes
                         </div>
                         
                     </form>
 
                 <?php } elseif ($envio == "register") { ?>
 
+<<<<<<< Updated upstream
                     <title>Registro</title>
                     <h2>Formulario de Registro</h2>
 
                     <form id="contenedorRegister" action="" method="post">
+=======
+                    <title>Registro - Aprendomo</title>
+                    <h2>Formulario de Registro</h2>
+
+                    <form id="contenedorRegister" action="../PHP conexiones/consreg.php" method="post">
+>>>>>>> Stashed changes
                         <label for="Nm">Nombre</label>
                         <input type="text" id="Nm" name="Nombre" placeholder="Ej: Juan">
 
                         <label for="Ap">Apellido</label>
                         <input type="text" id="Ap" name="Apellido" placeholder="Ej: Zorrilla">
+<<<<<<< Updated upstream
 
                         <label for="Usuario">Nombre de Usuario</label>
                         <input type="text" id="Usuario" name="Usuario" placeholder="Ingrese su usuario" required>
+=======
+                        
+                        <label for="Cedula">Cédula</label>
+                        <input type="text" id="Cedula" name="Cedula" placeholder="Ej: 1234567890">
+
+                        <label for="Fecha">Fecha de nacimiento</label>
+                        <input type="date" id="Fecha" name="Fecha_de_Nacimiento" placeholder="Ej: 01/01/2000">
+>>>>>>> Stashed changes
 
                         <label for="Correo">Correo electrónico</label>
                         <input type="email" id="Correo" name="Correo" placeholder="ejemplo@correo.com" required>
@@ -67,8 +112,13 @@
                         <label for="Telefono">Teléfono</label>
                         <input type="tel" id="Telefono" name="Telefono" placeholder="099123456">
 
+<<<<<<< Updated upstream
                         <label for="Ocupacion">Ocupación</label>
                         <select id="Ocupacion" name="Ocupacion">
+=======
+                        <label for="rol">Ocupación</label>
+                        <select id="rol" name="Rol">
+>>>>>>> Stashed changes
                             <option value="docente">Docente</option>
                             <option value="estudiante">Estudiante</option>
                         </select>

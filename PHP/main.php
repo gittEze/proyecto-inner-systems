@@ -12,7 +12,13 @@
 
     <body class="bodyMain">
 
+<<<<<<< Updated upstream
         <?php include 'menu.php'; ?>
+=======
+        <?php include 'menu.php'; ?>  
+      
+        </div>
+>>>>>>> Stashed changes
 
         <main>
             <div class="contenedorInicio">

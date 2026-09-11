@@ -1,4 +1,11 @@
 <?php
+<<<<<<< Updated upstream
+=======
+$host = 'localhost';
+$usuario = 'root';
+$contraseña = '';
+$baseDatos = 'softwaredesarrollo';
+>>>>>>> Stashed changes
 
 $server = "localhost";
 $user = "Aprendomo";
