@@ -15,7 +15,7 @@
 
                 <div class="logo" id="logoLogin"><img src="../IMG/LogoBlanco.png"></div>
 
-                <a  id="volver" href="../PHP/main.php">Volver</a> <h2>Formulario de Registro</h2> 
+                <a id="volver" href="main.php">Volver</a>
 
                 <?php
                 $envio = isset($_GET["pagina"]) ? $_GET["pagina"] : "login";
@@ -36,12 +36,27 @@
                     <button type="submit" id="btnIniciarSesion">Iniciar Sesion</button>
                 </form>
 
-                <?php
-                }
-                ?>
-
+                        <div class="botones">
+                            <button type="submit" id="btnIniciarSesion">Iniciar Sesion</button>
+                            <a href="main.php" class="btnDato">Cancelar</a>
+                        </div>
+                        
+                    </form>
+          
                 <?php if ($envio == "register"){
 
+                    <title>Registro</title>
+                    <h2>Formulario de Registro</h2>
+
+                    <form id="contenedorRegister" action="" method="post">
+                        <label for="Nm">Nombre</label>
+                        <input type="text" id="Nm" name="Nombre" placeholder="Ej: Juan">
+
+                        <label for="Ap">Apellido</label>
+                        <input type="text" id="Ap" name="Apellido" placeholder="Ej: Zorrilla">
+
+                        <label for="Usuario">Nombre de Usuario</label>
+                        <input type="text" id="Usuario" name="Usuario" placeholder="Ingrese su usuario" required>
                 ?>    
                 <form id="contenedorRegister" action="../PHP/consreg.php" method="post">
                     
@@ -59,7 +74,7 @@
                     
                     <label for="Correo">Correo electrónico</label>
                     <input type="email" id="Correo" name="Correo" placeholder="ejemplo@correo.com" required>
-
+                  
                     <label for="Contrasena">Contraseña</label>
                     <input type="password" id="Contrasena" name="Contrasena" placeholder="Ingrese su contraseña" required>
 
@@ -72,7 +87,14 @@
                         <option value="opcion3"> Estudiante</option>
                     </select>
 
-                    <label for="Gen">Genero</label>
+                        <label for="Ocupacion">Ocupación</label>
+                        <select id="Ocupacion" name="Ocupacion">
+                            <option value="docente">Docente</option>
+                            <option value="estudiante">Estudiante</option>
+                        </select>
+
+                        <label for="Gen">Género</label>
+
                         <select id="Gen" name="Genero">
                         <option value="opcion2"> Masculino </option>
                         <option value="opcion3"> Femenino</option>

@@ -1,7 +1,7 @@
 <?php
 $host = 'localhost';
-$usuario = 'Aprendomo';
-$contraseña = 'PalaCaballoDiamante';
+$usuario = 'root';
+$contraseña = '';
 $baseDatos = 'softwaredesarrollo';
 
 $dsn = 'mysql:host=' . $host . ';dbname=' . $baseDatos;
