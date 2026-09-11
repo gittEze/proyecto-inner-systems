@@ -1,18 +1,13 @@
 <?php
 $server = "localhost";
-$user = "root";
-$password = "";
+$usuario = "root";
+$contraseña = "";
 $database = "softwaredesarrollo";
 
 
-$conexion = new mysqli($server, $user, $password, $database);
-
-
-if ($conexion->connect_errno) {
-    die("Conexión fallida: " . $conexion->connect_error);
-}
-
-
+$dsn = 'mysql:host=' . $server . ';dbname=' . $database;
+$pdo = new PDO($dsn, $usuario, $contraseña);
+$pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
 
 
 ?>
