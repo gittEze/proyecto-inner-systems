@@ -13,81 +13,131 @@
         <main>
             <section class="contenedorLogin">
 
-                <div class="logo" id="logoLogin"><img src="../IMG/LogoBlanco.png"></div>
+                <div class="logo" id="logoLogin">
+                    <img src="../IMG/LogoBlanco.png" alt="Logo de Aprendomo">
+                </div>
 
-                <a  id="volver" href="../PHP/main.php">Volver</a> <h2>Formulario de Registro</h2> 
+                <a id="volver" href="main.php">Volver</a>
+<<<<<<< Updated upstream
 
-                <?php
-                $envio = isset($_GET["pagina"]) ? $_GET["pagina"] : "login";
-                ?>
+                <?php $envio = $_POST["btnRegister"] ?? $_POST["btnLogin"]; ?> 
+                 
 
+                <?php if ($envio == "login") { ?>
 
-                <?php if ($envio == "login"){
+                    <title>Iniciar sesión</title>
+                    <h2>Iniciar Sesión</h2>
 
-                ?>    
-                <form id="login" action="../PHP/consreg.php" method="post">
-                    <label for="Cr">Correo:</label>
-                    <input type="email" id="Cr" name="Correo" placeholder="Ingrese su Correo" required>
+                    <form id="login" action="" method="post">
+                        <label for="username">Nombre de usuario:</label>
+                        <input type="text" id="username" name="username" placeholder="Ingrese su usuario" required>
 
-                    <label for="password">Contraseña:</label>
-                    <input type="password" id="password" name="Contrasena" placeholder="Ingrese su contraseña" required>
-                    <a id="recuperarContrasenia" href="">Recuperar contraseña</a>
+                        <label for="password">Contraseña:</label>
+                        <input type="password" id="password" name="password" placeholder="Ingrese su contraseña" required>
 
-                    <button type="submit" id="btnIniciarSesion">Iniciar Sesion</button>
-                </form>
+                        <a id="recuperarContrasenia" href="">Recuperar contraseña</a>
 
-                <?php
-                }
-                ?>
+                        <div class="botones">
+                            <button type="submit" id="btnIniciarSesion">Iniciar Sesion</button>
+                            <a href="main.php" class="btnDato">Cancelar</a>
+=======
+                
+                <?php $envio = $_POST['btnRegister'] ?? $_POST['btnLogin'] ?? $_GET['pagina'] ?? 'login'; ?>
 
-                <?php if ($envio == "register"){
+                <?php if ($envio == "login") { ?>
 
-                ?>    
-                <form id="contenedorRegister" action="../PHP/consreg.php" method="post">
-                    
-                    <label for="Nm">Nombre</label>
-                    <input type="text" id="Nm" name="Nombre" placeholder="Ej: Juan">
+                    <title>Iniciar sesión - Aprendomo</title>
+                    <h2>Iniciar Sesión</h2>
 
-                    <label for="Ap">Apellido</label>
-                    <input type="text" id="Ap" name="Apellido" placeholder="Ej: Zorrila">
+                    <form id="login" action="../PHP conexiones/conlogin.php" method="post">
 
-                    <label for="Cedula">Cédula</label>
-                    <input type="number" id="Cedula" name="Cedula" placeholder="Ej: 123456789">
+                        <label for="Correo">Correo electrónico:</label>
+                        <input type="email" id="Correo" name="Correo" placeholder="Ingrese su correo">
 
-                    <label for="Fecha">Fecha de Nacimiento</label>
-                    <input type="date" id="Fecha" name="Fecha_de_Nacimiento">
-                    
-                    <label for="Correo">Correo electrónico</label>
-                    <input type="email" id="Correo" name="Correo" placeholder="ejemplo@correo.com" required>
+                        <label for="Contrasena">Contraseña:</label>
+                        <input type="password" id="Contrasena" name="Contrasena" placeholder="Ingrese su contraseña">
 
-                    <label for="Contrasena">Contraseña</label>
-                    <input type="password" id="Contrasena" name="Contrasena" placeholder="Ingrese su contraseña" required>
+                        <a id="recuperarContrasenia" href="">Recuperar contraseña.</a>
 
-                    <label for="Telefono">Teléfono</label>
-                    <input type="tel" id="Telefono" name="Telefono" placeholder="099123456">
+                        <p class="regisAqui">¿No tienes cuenta aún?
+                            <a href="login.php?pagina=register" class="linkRegistro">
+                                Regístrate aquí.
+                            </a>
+                        </p>                    
+                        
+                        <div class="botones">
+                            <button type="submit" id="btnIniciarSesion">Iniciar Sesion</button>
+>>>>>>> Stashed changes
+                        </div>
+                        
+                    </form>
 
-                    <label for="Ocupacion">Ocupación</label>
-                    <select id="Ocupacion" name="Ocupacion">
-                        <option value="opcion2"> Docente </option>
-                        <option value="opcion3"> Estudiante</option>
-                    </select>
+                <?php } elseif ($envio == "register") { ?>
 
-                    <label for="Gen">Genero</label>
+<<<<<<< Updated upstream
+                    <title>Registro</title>
+                    <h2>Formulario de Registro</h2>
+
+                    <form id="contenedorRegister" action="" method="post">
+=======
+                    <title>Registro - Aprendomo</title>
+                    <h2>Formulario de Registro</h2>
+
+                    <form id="contenedorRegister" action="../PHP conexiones/consreg.php" method="post">
+>>>>>>> Stashed changes
+                        <label for="Nm">Nombre</label>
+                        <input type="text" id="Nm" name="Nombre" placeholder="Ej: Juan">
+
+                        <label for="Ap">Apellido</label>
+                        <input type="text" id="Ap" name="Apellido" placeholder="Ej: Zorrilla">
+<<<<<<< Updated upstream
+
+                        <label for="Usuario">Nombre de Usuario</label>
+                        <input type="text" id="Usuario" name="Usuario" placeholder="Ingrese su usuario" required>
+=======
+                        
+                        <label for="Cedula">Cédula</label>
+                        <input type="text" id="Cedula" name="Cedula" placeholder="Ej: 1234567890">
+
+                        <label for="Fecha">Fecha de nacimiento</label>
+                        <input type="date" id="Fecha" name="Fecha_de_Nacimiento" placeholder="Ej: 01/01/2000">
+>>>>>>> Stashed changes
+
+                        <label for="Correo">Correo electrónico</label>
+                        <input type="email" id="Correo" name="Correo" placeholder="ejemplo@correo.com" required>
+
+                        <label for="Contrasena">Contraseña</label>
+                        <input type="password" id="Contrasena" name="Contrasena" placeholder="Ingrese su contraseña" required>
+
+                        <label for="Telefono">Teléfono</label>
+                        <input type="tel" id="Telefono" name="Telefono" placeholder="099123456">
+
+<<<<<<< Updated upstream
+                        <label for="Ocupacion">Ocupación</label>
+                        <select id="Ocupacion" name="Ocupacion">
+=======
+                        <label for="rol">Ocupación</label>
+                        <select id="rol" name="Rol">
+>>>>>>> Stashed changes
+                            <option value="docente">Docente</option>
+                            <option value="estudiante">Estudiante</option>
+                        </select>
+
+                        <label for="Gen">Género</label>
                         <select id="Gen" name="Genero">
-                        <option value="opcion2"> Masculino </option>
-                        <option value="opcion3"> Femenino</option>
-                    </select>
+                            <option value="masculino">Masculino</option>
+                            <option value="femenino">Femenino</option>
+                        </select>
 
-                    <button type="submit" class="btndato">Registrarse</button>
+                        <div class="botones">
+                            <button type="submit" class="btnDato">Registrarse</button>
+                            <button type="reset" class="btnDato">Limpiar formulario</button>
+                        </div>
+                    </form>
 
-                </form> 
-
-                <?php
-                }
-                ?>
+                <?php } ?>
 
             </section>
         </main>
     </body>
 </html>
-

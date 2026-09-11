@@ -393,7 +393,7 @@ select{
     margin-bottom: 15px;
 }
 
-#recuperarContrasenia:hover {
+#recuperarContrasenia:hover, .linkRegistro:hover {
     color: #54adfa;
 }
 
@@ -458,6 +458,20 @@ select{
     color: #1e88e5;
 }
 
+.linkRegistro {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    color: white;
+    text-decoration: underline;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.regisAqui {
+    margin-bottom: 10px;
+}
 
 /* -------------------- */
 

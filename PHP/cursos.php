@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Aprendomo - Cursos</title>
+        <title>Aprendomo</title>
         
         <link rel="stylesheet" href="../CSS/animaciones.css">
         <link rel="stylesheet" href="../CSS/estilo.css">

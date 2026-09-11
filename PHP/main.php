@@ -1,6 +1,3 @@
-<?php
-session_start();
-?>
 <!DOCTYPE html>
 <html lang="es">
     <head>
@@ -8,23 +5,20 @@ session_start();
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Aprendomo</title>
 
-        <link rel="stylesheet" href="CSS/animaciones.css">
-        <link rel="stylesheet" href="CSS/estilo.css">
-        <link rel="icon" href="IMG/Icono.ico">
+        <link rel="stylesheet" href="../CSS/animaciones.css">
+        <link rel="stylesheet" href="../CSS/estilo.css">
+        <link rel="icon" href="../IMG/Icono.ico">
     </head>
 
     <body class="bodyMain">
 
+<<<<<<< Updated upstream
+        <?php include 'menu.php'; ?>
+=======
         <?php include 'menu.php'; ?>  
       
-
-        <?php if (isset($_SESSION['Sesion'])) { ?>
-            <a class="LoginbBtn" href="../PHP conexiones/logout.php">Cerrar sesion</a>
-        <?php } else { ?>    
-            <a class="loginBtn" href="PHP/login.php?pagina=login">Iniciar sesion</a>
-            <a class="loginBtn" href="PHP/login.php?pagina=register">Registrarse</a>
-        <?php } ?>
         </div>
+>>>>>>> Stashed changes
 
         <main>
             <div class="contenedorInicio">
