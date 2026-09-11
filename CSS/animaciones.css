@@ -1,13 +1,30 @@
-@keyframes levitar {
+/*Anmiación que simula la acción de flotar o levitar*/
+@keyframes levitate {
     0% {
         transform: translateY(0);
-    }    50% {
+    }
+    50% {
         transform: translateY(-10px);
-    }   100% {
-        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(0px);
     }
 }
 
+/*Variante de levitate que va nunca queda estatica en el medio.*/
+@keyframes levitateUpAndDown {
+    0% {
+        transform: translateY(3px) scale(1.2);
+    }
+    50% {
+        transform: translateY(-3px) scale(1.2);
+    }
+    100% {
+        transform: translateY(3px) scale(1.2);
+    }
+}
+
+/*Animación... de un pulso xd*/
 @keyframes pulse {
     0% {
         transform: scale(1);
@@ -17,5 +34,37 @@
     }
     100% {
         transform: scale(1);
+    }
+}
+
+/*Animación que aplica un pequeño crecimiento y 2 giros de 360 grados */
+@keyframes spinGrow {
+    0% {
+        transform: rotate(0deg) scale(1);
+    }
+    50% {
+        transform: rotate(360deg) scale(1.2);
+    }
+    100% {
+        transform: rotate(720deg) scale(1.3);
+    }
+}
+
+/*Animación que cambia los colores de un fondo por ligeras variantes del color blanco*/
+@keyframes ultraLightShimmer {
+    0% {
+        background-color: #ffffff;
+    }
+    25% {
+        background-color: #f9fbff;
+    }
+    50% {
+        background-color: #eaebed;
+    }
+    75% {
+        background-color: #f6fff6;
+    }
+    100% {
+        background-color: #ffffff;
     }
 }

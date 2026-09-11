@@ -37,7 +37,6 @@ main {
     width: fit-content;
     box-sizing: border-box;
     margin-right: 10px;
-
 }
 
 .botones {
@@ -67,16 +66,17 @@ main {
 
 .loginBtn:hover{
     transform: scale(1.1); 
-
     background-color: #1e88e5;
     color:white
 }
 
 .Serv{
     display: inline-block;
-    padding: 10px 20px;
+    padding: 25px 15px;
     color: black;
     text-decoration: none;
+    border-radius: 50%/25%;
+    corner-shape: bevel;
 
     transition: all 250ms ease;
 }
@@ -102,6 +102,145 @@ main {
     width: 100%;
     height: auto;
 }
+
+/*----- MENU DE USUARIO -----*/
+
+.usuario {
+    position: relative;
+}
+
+.userIcon {
+    width: 55px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.userInfo .userIcon {
+    cursor: default;
+}
+
+.userMenu {
+    color: black;
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    width: 350px;
+    max-width: 90vw;
+    z-index: 1000;
+    max-height: 0;
+    overflow: hidden;
+
+    transition: max-height 0.5s ease-in-out;
+    animation: ultraLightShimmer 5s ease-in-out infinite;
+}
+
+.userMenu img{
+    width: 65px;
+    border-radius: 50%;
+}
+
+.userMenu h2 {
+    font-size: 1.2em;
+}
+
+.userMenu hr {
+    margin: 15px 0;
+    border: 0;
+    height: 1px;
+    background-color: #090030;
+}
+
+.userMenuBox{
+    padding: 20px;
+}
+
+.userInfo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.userMenuOptions{
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+}
+
+.userMenuOptions div{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 40px;
+
+    transition: all 0.4s ease-in-out;
+}
+
+.userMenuOptions p{
+    flex: 1;
+    margin-left: 15px;
+}
+
+.userSpanContenedor {
+    transition: transform 1s ease;
+}
+
+.userMenuOptions span{
+    background-color: #090030;
+    padding: 10px;
+    margin-bottom: 0px;
+    border-radius: 50%;
+    corner-shape: bevel bevel bevel bevel;
+
+    transform: translateX(0);
+}
+
+.userMenuOptions img{
+    width: 40px;
+    border-radius: 50%;
+}
+
+.userMenuOptions div img {
+    transition: transform 0.5s ease, filter 0.5s ease;
+}
+
+.userMenuOptions div:hover {
+    background-color: #090030;
+    color: white;
+    font-weight: bold;
+    border-radius: 30px;
+    corner-shape: round bevel bevel round;
+    cursor:pointer;
+}
+
+.userMenuOptions a{
+    text-decoration: none;
+    color:#090030;
+}
+
+.userMenuOptions div:hover img {
+    border: 1px solid #090030;
+    border-radius: 50%;
+
+    transform: scale(1.4);
+    filter: drop-shadow(0 0 4px #120063);
+}
+
+.userMenuOptions div:hover .userSpanContenedor {
+    transform: translateX(-25px) scale(1.2);
+}
+
+.userMenuOptions div:hover span {
+    background-color: #1e88e5;
+    padding: 10px;
+    border-radius: 50%/28%;
+    corner-shape: bevel bevel bevel bevel;
+    
+    animation: levitateUpAndDown 2.5s ease-in-out infinite;
+}
+
+.open-menu {
+    max-height: 400px;
+}
+/*---*/
 
 .footerMain {
     color: white;
@@ -139,7 +278,8 @@ main {
     justify-content: center;
     align-items: center;
     background-color: rgba(255, 255, 255, 0.15);
-    border-radius: 50%;
+    border-radius: 50%/23%;
+    corner-shape: bevel;
     font-size: 25px;
 }
 
