@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="es">
     <head>
@@ -5,20 +8,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Aprendomo</title>
 
-        <link rel="stylesheet" href="../CSS/animaciones.css">
-        <link rel="stylesheet" href="../CSS/estilo.css">
-        <link rel="icon" href="../IMG/Icono.ico">
+        <link rel="stylesheet" href="CSS/animaciones.css">
+        <link rel="stylesheet" href="CSS/estilo.css">
+        <link rel="icon" href="IMG/Icono.ico">
     </head>
 
     <body class="bodyMain">
 
-<<<<<<< Updated upstream
         <?php include 'menu.php'; ?>
-=======
-        <?php include 'menu.php'; ?>  
-      
-        </div>
->>>>>>> Stashed changes
 
         <main>
             <div class="contenedorInicio">
