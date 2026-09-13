@@ -24,6 +24,13 @@
                 <?php if ($envio == "login") { ?>
 
                     <title>Iniciar sesión - Aprendomo</title>
+
+                <?php  if (isset($_GET['exito']) && $_GET['exito'] == 1) { ?>
+                    <div class="logrado">
+                        Registro exitoso. Por favor, inicie sesión.
+                    </div>
+                <?php } ?>
+
                     <h2>Iniciar Sesión</h2>
 
                     <form id="login" action="../PHP conexiones/conlogin.php" method="post">
@@ -88,8 +95,11 @@
                         </select>
 
                         <div class="botones">
-                            <button type="submit" class="btnDato">Registrarse</button>
+                            <a href="login.php" class="claseo"> 
+                            <button type="submit" class="btnDato" >Registrarse</button>
+                            <a>
                             <button type="reset" class="btnDato">Limpiar formulario</button>
+                            </a>
                         </div>
                     </form>
 

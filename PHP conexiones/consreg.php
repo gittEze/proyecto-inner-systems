@@ -30,7 +30,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $consulta->execute();
 }
 
-
+header("Location: ../PHP/login.php?exito=1&Correo=".$_POST['Correo']);
 
 
 
