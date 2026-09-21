@@ -22,19 +22,33 @@
         
     
             <div id="Crearcurso">
-                <form action=""></form>
+                <form action="../PHP conexiones/crecur.php" method="post" enctype="multipart/form-data">
                 <h2 class="Curscre">Título del curso</h2>
                 <input type="text" id= "nombrecur" name="Titulo_curso" maxlength="50" placeholder="ej: Desarrollo de paginas webs">
 
                 <h2>Descripción del curso:</h2>
                 <textarea id="Desc" name="Descripcion_curso"  rows="8" cols="50"></textarea>
 
-                <h2 id="NivCurso">Nivel del curso:</h2>
-                <div id="botones" name="Nivel_Curso">
-                    <button id="botoncur1">Bajo</button>
-                    <button id="botoncur2">Medio</button>
-                    <button id="botoncur3">Alto</button>
-                </div>
+                <label class="Detalle" for="Cursotip">Tipo de curso:</label>
+                    <select id="Cursotip" name="Tipo_curso">
+                        <option value="Informática">Informática</option>
+                        <option value="Programacion">Programación</option>
+                        <option value="Arte">Arte</option>
+                        <option value="Cocina">Cocina</option>
+                        <option value="Psicologia">Psicologia</option>
+                        <option value="Marketing">Marketing</option>
+                        <option value="Escritura">Escritura</option>
+                        <option value="Animaciones">Animaciones</option>
+                        <option value="Economia">Economía</option>
+                        <option value="Hardware">Hardware</option>
+                    </select>
+        
+                <h2 id="NivCurso">Nivel del Curso:</h2>
+                <select id="Cursotip" name="Nivel_Curso">
+                    <option value="Bajo">Bajo</option>
+                    <option value="Medio">Medio</option>
+                    <option value="Alto">Alto</option>
+                </select>
                     
                 <h2>Duración estimada:</h2> 
                 <div id="horarios">  
@@ -48,9 +62,16 @@
                     <h2 id="pesos">Pesos</h2>
                 </div> 
                 <h2 class="Curscre">Adjunta la imagen de tu curso</h2>
-                <input type="file" id="Dataso" name="namefile" accept="image/*" />
+                <input type="file" id="Dataso" name="Dataso" accept="image/*" required />
 
+         
+                <div class="btncurso">
                 <button type="button" id="Visbut"> Vista previa </button>
+  
+                <button type="Submit" id="Env"> Publicar Curso </button>
+                </div>
+
+                </form>
             </div> 
 
 
