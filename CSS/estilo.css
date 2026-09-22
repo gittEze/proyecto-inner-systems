@@ -627,52 +627,15 @@ select{
 
 /* ----- CURSOS ----- */
 
-.h1cur{
+
+.h1cur {
     font-size: 30px;
-
-}
-    
-.contenedorCursos {
-    display: grid;
-    gap: 15px;
-    height: auto;
-    width: auto;
-    align-content: space-evenly;
-    justify-content: center;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
-    padding-top: 20px;
-    padding-right: 20px;
-    padding-bottom: 20px;
-    padding-left: 20px;
-    align-content: center;
-
-}
-
-.contenedorCursos div{
-    background-color: #1e88e5;
-    border-radius: 20px;
-    border: solid 4px #0d47a1;
-    text-align: center;
-    padding-bottom: 100px;
-    width: auto;
-    height: auto;
-    min-height: 300px;
-    min-width: 250px;
-    align-items: center;
-    margin-left: 20px; ;
-    margin-right: 20px;
- 
-}
-
-h1{
     text-align: center;
     padding: 40px 25px 25px 25px;
-    
 }
 
-.buscadoreishon{
-    align-items: center;
+
+.buscadoreishon {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -680,29 +643,130 @@ h1{
     margin: auto;
 }
 
-.buscador2{
-    display: flex;
-    align-items:center;
-    background:#f7f2eb;
+.buscador2 {
+    background: #f7f2eb;
     border: 2px solid #0d47a1;
-    border-radius:20px;
+    border-radius: 20px;
     padding: 13px;
-    width: 1000px;
+    width: 100%;
+    max-width: 1000px;
     box-sizing: border-box;
-    margin-right: 10px;
-    align-items: center;
 }
 
 
-#Crearbot{
-    display: block;
-    border-radius: 10px;
-    padding: 15px 40px;
-    color: white;
-    font-weight: bold;
-    margin-bottom:  20px;
+#Crearbot {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
 
+.contenedorCursos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 25px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+
+.tarjeta-curso {
+    background-color: #1e88e5;
+    border-radius: 20px;
+    border: 4px solid #0d47a1;
+    padding: 15px;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-sizing: border-box;
+    min-height: 420px;
     
+
+    box-shadow: 0 8px 20px rgba(13, 71, 161, 0.25);
+    
+
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    cursor: pointer;
+}
+
+
+.tarjeta-curso:hover {
+
+    transform: translateY(-8px);
+    
+
+    box-shadow: 0 16px 30px rgba(0, 0, 0, 0.35);
+    
+
+    border-color: #1565c0;
+}
+
+
+.tarjeta-curso {
+    background-color: #1e88e5;
+    border-radius: 20px;
+    border: 4px solid #0d47a1;
+    padding: 15px;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-sizing: border-box;
+    min-height: 420px;
+    box-shadow: 0 8px 20px rgba(13, 71, 161, 0.25);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+
+.titulo-curso {
+    margin: 0 0 10px 0;
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+
+.box-imagen {
+    position: relative; 
+    width: 100%;
+    height: 150px;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #0d47a1;
+    margin-bottom: 10px;
+}
+
+.box-imagen img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+
+.badge-tipo {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    background-color: rgba(13, 71, 161, 0.9); /* Azul oscuro semitransparente */
+    color: #ffffff;
+    font-size: 0.75rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    z-index: 2;
+}
+
+
+.desc-curso {
+    font-size: 0.85rem;
+    margin-bottom: 12px;
+    text-align: center;
+    opacity: 0.9;
 }
 /* -------------------- */
 
@@ -743,6 +807,8 @@ h1{
     min-height: 800px;
     margin-left: 50px;
     flex-wrap: wrap;
+    margin-bottom:10px;
+    margin-top: 10px;
     
     
 
@@ -798,7 +864,16 @@ h1{
     border-color: blue;
 }
 
-
+#Cursotip{
+    width: 315px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    margin-left: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 5px;
+    border-color: blue;
+}
     
 #NivCurso{
     margin-bottom: 10px;

@@ -1,3 +1,14 @@
+<?php 
+
+require '../PHP conexiones/conexion.php';
+
+
+$sql = "SELECT * FROM cursos ORDER BY idCurso DESC";
+$stmt = $pdo->prepare($sql);
+$stmt->execute();
+$cursos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+?>
 <!DOCTYPE html>
 <html lang="es">
     <head>
@@ -11,16 +22,18 @@
     </head>
     
     <body>
+        
 
-        <?php include 'menu.php'; ?>
+    <?php include 'menu.php'; ?>
 
-        <main>
-            <h1 class="h1cur"> Cursos </h1>
+    
+    <main>
+        <h1 class="h1cur"> Cursos </h1>
 
         <div id="Crearbot">
-            <a href="crear.php">
-                <button id="envcur" type="button"> Crear Curso</button>
-            </a>
+        <a href="crear.php">
+            <button id="envcur" type="button"> Crear Curso</button>
+        </a>
         </div>
 
             <div class="buscadoreishon">
@@ -28,48 +41,58 @@
             </div>
 
             <div class="contenedorCursos">
-                <div class="Cur1">
-                    <h3>Matemátatica Discreta</h3>
-                </div>
-
-                <div class="Cur2">
-                    <h3>Lógica</h3>
-                </div>
-        
-                <div class="Cur3">
-                    <h3>Ingles Magistral</h3>
-                </div>
-
-                <div class="Cur4">
-                    <h3>Visual</h3>
-                </div>
-
-                <div class="Cur5">
-                    <h3>Estudiantes a trabajar</h3>
-                </div>
-            
-                <div class="Cur6">
-                    <h3>Cosas del curso</h3>
-                </div>
+                <?php if (!empty($cursos)): ?>
+                                <?php foreach ($cursos as $curso): ?>
+                    <div class="tarjeta-curso">
+                        
                     
-                <div class="Cur7">
-                    <h3>Cosas del curso</h3>
-                </div>
+                    <h3 class="titulo-curso"><?php echo htmlspecialchars($curso['Titulo_curso']); ?></h3>
 
-                <div class="Cur8">
-                    <h3>Robótica</h3>
-                </div>
+                    
+                    <div class="box-imagen">
+                        <?php if (!empty($curso['Dataso'])): ?>
+                            <img src="../PHP conexiones/Imagenes/<?php echo htmlspecialchars($curso['Dataso']); ?>" alt="Curso">
+                        <?php else: ?>
+                            <img src="../IMG/Curso1.png" alt="Curso">
+                        <?php endif; ?>
 
-                <div class="Cur8">
-                    <h3>Robótica</h3>
-                </div>
+                        <?php if (!empty($curso['Tipo_curso'])): ?>
+                            <span class="badge-tipo"><?php echo htmlspecialchars($curso['Tipo_curso']); ?></span>
+                        <?php endif; ?>
+                    </div>
 
-            </div>
-        </main>
+                        <p class="desc-curso"><?php echo htmlspecialchars($curso['Descripcion_curso']); ?></p>
 
-        <?php include 'footer.php'; ?>
+                    <div class="info-curso">
+                        <div class="dato-item">
+                            <span class="label">Nivel</span>
+                            <span class="valor"><?php echo htmlspecialchars($curso['Nivel_Curso']); ?></span>
+                        </div>
+
+                        <div class="dato-item">
+                            <span class="label">Horas</span>
+                            <span class="valor"><?php echo htmlspecialchars($curso['Duracion_estimada']); ?>h</span>
+                        </div>
+                            
+                        <div class="dato-item precio-box">
+                            <span class="label">Precio</span>
+                            <span class="valor-precio">$<?php echo htmlspecialchars($curso['Precio']); ?></span>
+                        </div>
+                    </div>
+
+                    </div>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <p class="no-cursos">No hay cursos registrados todavía.</p>
+        <?php endif; ?>
+
+        </div>
+    </main>
+
+    <?php include 'footer.php'; ?>
         
-    </body>
+</body>
 
-    <link rel="stylesheet" href="../JS/Botones.js">
+<script src="../JS/Botones.js"></script>
+
 </html>
