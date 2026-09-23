@@ -1,6 +1,8 @@
 <?php 
 require_once '../PHP conexiones/conexion.php';
 
+// Esta consulta que permite obtener los cursos de la base de ddatos ordenados por su id y de forma descendente. 
+
 $sql = "SELECT * FROM cursos ORDER BY idCurso DESC";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
@@ -33,7 +35,9 @@ $cursos = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <div class="buscadoreishon">
             <input class="buscador2" type="search" placeholder="Buscar">
         </div>
-
+    <!-- Contenedor que posee un condicional que en caso de que los datos traidos no esten vacios,
+        toma la variable $cursos y guarda en cada recorrido los datos en #curso.
+       -->
         <div class="contenedorCursos">
             <?php if (!empty($cursos)): ?>
                 <?php foreach ($cursos as $curso): ?>
