@@ -947,3 +947,338 @@ background-color: #fff;
     
 }
 /* ACA TERMINA LO DE CREAR CURSOS */
+
+/* Reset Básico */
+
+
+/* Header */
+.top-nav {
+    background-color: #1e293b;
+    color: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.brand {
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+}
+
+.user-menu {
+    font-size: 0.95rem;
+}
+
+/* Contenedor Principal (Layout de 3 columnas) */
+.lms-container {
+    display: grid;
+    grid-template-columns: 240px 1fr 280px;
+    gap: 20px;
+    max-width: 1400px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+/* Columna Izquierda: Menú Lateral */
+.sidebar-left {
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+
+.curso-portada img {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-bottom: 15px;
+}
+
+.course-nav ul {
+    list-style: none;
+}
+
+.course-nav li {
+    margin-bottom: 8px;
+}
+
+.course-nav a {
+    display: block;
+    padding: 10px 12px;
+    color: #475569;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: background 0.2s;
+}
+
+.course-nav a:hover,
+.course-nav a.active {
+    background-color: #e2e8f0;
+    color: #0f172a;
+}
+
+.info-curso {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #e2e8f0;
+    color: #64748b;
+    font-size: 0.85rem;
+}
+
+/* Columna Central: Contenido */
+.content-center {
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 25px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+
+.curso-header h2 {
+    font-size: 1.8rem;
+    color: #1e293b;
+    margin-bottom: 8px;
+}
+
+.curso-header .descripcion {
+    color: #64748b;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+hr {
+    border: 0;
+    border-top: 1px solid #e2e8f0;
+    margin: 20px 0;
+}
+
+/* Items de Recursos y Carpetas */
+.lista-recursos {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.item-recurso {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.item-recurso .icon {
+    font-size: 1.3rem;
+}
+
+.item-recurso a {
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.item-recurso a:hover {
+    text-decoration: underline;
+}
+
+/* Carpetas (<details>) */
+details.carpeta {
+    display: block;
+    padding: 0;
+}
+
+details.carpeta summary {
+    padding: 12px 16px;
+    cursor: pointer;
+    font-weight: 600;
+    user-select: none;
+    list-style: none;
+}
+
+details.carpeta summary::-webkit-details-marker {
+    display: none;
+}
+
+.contenido-carpeta {
+    padding: 10px 16px 15px 40px;
+    background: #ffffff;
+    border-top: 1px solid #e2e8f0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.sub-item {
+    background: #f1f5f9;
+    padding: 8px 12px;
+    font-size: 0.9rem;
+}
+
+/* Contenedores Multimedia */
+.media-container {
+    width: 100%;
+}
+
+.media-container video, 
+.media-container audio {
+    margin-top: 8px;
+    border-radius: 6px;
+}
+
+/* Columna Derecha: Widget Actividades */
+.sidebar-right {
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    height: fit-content;
+}
+
+.card-widget h3 {
+    font-size: 1.1rem;
+    color: #1e293b;
+    margin-bottom: 12px;
+}
+
+.text-muted {
+    color: #94a3b8;
+    font-size: 0.88rem;
+}
+
+/* Adaptación para pantallas pequeñas */
+@media (max-width: 900px) {
+    .lms-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* Info para el recuadro de la inscripción */
+
+/* Superposición oscura de fondo (oculta por defecto) */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.65);
+    display: none; /* Oculta la ventana */
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+/* Muestra el modal SOLO cuando se toca la tarjeta del curso */
+.modal-overlay:target {
+    display: flex;
+}
+
+/* Caja del recuadro emergente */
+.modal-box {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    max-width: 450px;
+    width: 90%;
+    color: #333333;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    text-align: left;
+}
+
+.modal-detalles h3 {
+    margin-top: 0;
+    color: #1d4ed8;
+    font-size: 1.4rem;
+}
+
+.modal-detalles p {
+    margin: 8px 0;
+    font-size: 0.95rem;
+}
+
+.modal-desc {
+    color: #555555;
+    font-style: italic;
+    margin-top: 10px;
+}
+
+/* Botones de acción */
+.modal-acciones {
+    margin-top: 20px;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.btn-confirmar {
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn-confirmar:hover {
+    background-color: #1d4ed8;
+}
+
+.btn-cancelar {
+    color: #dc2626;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 10px 15px;
+}
+
+.btn-cancelar:hover {
+    text-decoration: underline;
+}
+
+/* Enlace invisible alrededor de la tarjeta para permitir click */
+.tarjeta-curso-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+/* Dentro de los cursos */
+
+.grid-cursos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+.card-curso {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.card-curso:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+.card-curso img {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+}
+.card-curso-body {
+    padding: 15px;
+}
+.card-curso-body h3 {
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+    color: #1e1e3b;
+}
