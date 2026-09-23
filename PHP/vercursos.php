@@ -2,7 +2,7 @@
 session_start();
 require_once '../PHP conexiones/conexion.php';
 
-
+// Condicional con isset que evalua existe el idCurso o si esta vacio,en caso de ello, el usuario ira a mis_cursos.php 
 if (!isset($_GET['idCurso']) || empty($_GET['idCurso'])) {
     header("Location: mis_cursos.php");
     exit();

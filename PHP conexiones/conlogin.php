@@ -25,8 +25,9 @@ require 'conexion.php';
             } else {
                 echo "<script>
                 alert('Correo o contraseña incorrectos..');
-                window.location.href='../PHP/login.php?pagina=login';
+                window.location.href='../PHP/login.php?pagina=login';  
                 </script>";
+                //Una vez le das al boton de aceptar del alert, el usuario se ira al login nuevamente.
                 exit();
             }
 

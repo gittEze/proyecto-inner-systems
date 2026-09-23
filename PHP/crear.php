@@ -20,6 +20,7 @@
 
         <div id="contotal">
         
+            <!-- Formulario para la creación de los cursos -->
     
             <div id="Crearcurso">
                 <form action="../PHP conexiones/crecur.php" method="post" enctype="multipart/form-data">
