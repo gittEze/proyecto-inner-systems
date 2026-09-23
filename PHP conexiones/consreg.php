@@ -3,7 +3,7 @@
 require 'conexion.php';
 
 
-//Insertar filas para el registro.
+//Conuslta que por medio de PDO y el metodo post inserta los usuarios del registro en la BD.
 
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $sql = 'INSERT INTO usuario (Nombre, Apellido, Cedula, Fecha_de_Nacimiento, Correo, Contraseña, Telefono, Genero, Rol) VALUES (:nombre, :apellido, :cedula, :fecha_nacimiento, :correo, :contrasena, :telefono, :genero, :rol)';
@@ -29,6 +29,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
     $consulta->execute();
 }
+
+// Una vez se da el registro fue envia en el header del login en el parametro exito un dato.
 
 header("Location: ../PHP/login.php?exito=1&Correo=".$_POST['Correo']);
 
