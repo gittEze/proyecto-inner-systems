@@ -10,7 +10,7 @@ if (session_status() === PHP_SESSION_NONE) {
     </a>
 
 
-    // condicional que evalua si el usuario se logeo, en caso de que si, aplica el if y muestra todos los enlaces, en caso contrario muestra todos menos mis cursos.
+    <!-- Condicional que evalua si el usuario se logeo, en caso de que si, aplica el if y muestra todos los enlaces, en caso contrario muestra todos menos mis cursos. -->
 
     <?php if (isset($_SESSION['Sesion'])) { ?>
     <a class="Serv" href="main.php">Inicio</a>
@@ -53,7 +53,7 @@ if (session_status() === PHP_SESSION_NONE) {
                             </div>
                          </a>
                         <!-- Mis Cursos -->
-                         <a href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR4nPptYxnzR73BjRoIAmoBtwhPU54WkqYy0MNJVhiy28nxvEN10iX-FnAF&s=10" target="_blank">
+                         <a href="mis_cursos.php">
                             <div>
                                 <img src="../IMG/MisCursosIcon.jpg" alt="Mis Cursos Icon">
                                 <p>Mis cursos</p>

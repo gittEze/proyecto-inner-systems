@@ -110,7 +110,7 @@ $miembros = $stmtMiembros->fetchAll(PDO::FETCH_ASSOC);
 
     <div class="lms-container">
 
-        Columna izquerda que muestra datos como los miembros inscriptos,calificaciones y materiales del curso.
+        <!-- Columna izquerda que muestra datos como los miembros inscriptos,calificaciones y materiales del curso. -->
         <aside class="sidebar-left">
             <div class="curso-portada">
                 <img src="../PHP conexiones/Imagenes/<?= !empty($curso['Dataso']) ? htmlspecialchars($curso['Dataso']) : 'default.png' ?>" alt="Portada Curso">
