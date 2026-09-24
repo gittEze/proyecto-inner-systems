@@ -1,4 +1,5 @@
 <?php 
+session_start();
 require_once '../PHP conexiones/conexion.php';
 
 // Esta consulta que permite obtener los cursos de la base de ddatos ordenados por su id y de forma descendente. 
@@ -99,6 +100,14 @@ $cursos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                     <input type="hidden" name="idCurso" value="<?= $curso['idCurso'] ?>">
                                     <button type="submit" class="btn-confirmar">Inscribirme</button>
                                 </form>
+
+                                <?php if (isset($_SESSION['Rol']) && $_SESSION['Rol'] === 'administrador'): ?>
+                                    <form action="../PHP conexiones/eliminarcurso.php" method="POST" onsubmit="return confirm('¿Está seguro de eliminar este curso?');">
+                                        <input type="hidden" name="idCurso" value="<?= $curso['idCurso'] ?>">
+                                        <button type="submit" class="btn-elim">Eliminar Curso</button>
+                                    </form>
+                                <?php endif; ?>
+
                                 <a href="#" class="btn-cancelar">Cancelar</a>
                             </div>
                         </div>
@@ -111,7 +120,6 @@ $cursos = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </main>
 
     <?php include 'footer.php'; ?>
-<?php include 'footer.php'; ?>
 
 </body>
 <script src="../JS/Botones.js"></script>
