@@ -3,7 +3,28 @@
 require 'conexion.php';
 
 
-//Conuslta que por medio de PDO y el metodo post inserta los usuarios del registro en la BD.
+// Validación para espacios de los datos insertados por medio de trim.
+
+$nombre = trim($_POST['Nombre'] ?? '');
+
+$apellido = trim($_POST['Apellido'] ?? '');
+
+$cedula = trim($_POST['Cedula'] ?? '');
+
+$fecha_de_nacimiento = trim($_POST['Fecha_de_Nacimiento'] ?? '');
+
+$correo = trim($_POST['Correo'] ?? '');
+
+$contrasena = trim($_POST['Contrasena'] ?? '');
+
+$telefono = trim($_POST['Telefono'] ?? '');
+
+$genero = trim($_POST['Genero'] ?? '');
+
+$rol = trim($_POST['Rol'] ?? '');
+
+
+//Consulta que por medio de PDO y el metodo post inserta los usuarios del registro en la BD.
 
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $sql = 'INSERT INTO usuario (Nombre, Apellido, Cedula, Fecha_de_Nacimiento, Correo, Contraseña, Telefono, Genero, Rol) VALUES (:nombre, :apellido, :cedula, :fecha_nacimiento, :correo, :contrasena, :telefono, :genero, :rol)';

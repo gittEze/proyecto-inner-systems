@@ -1,20 +1,26 @@
 <?php
-
+session_start();
 require 'conexion.php';
 
+if (!isset($_SESSION['idUsu']) || empty($_SESSION['idUsu'])) {
+    die("Error: Tu sesión ha expirado o no estás autenticado. Vuelve a iniciar sesión.");
+}
 
-// Consulta que permite insertar datos del formulario de "crecur2 en la base de datos.
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
-    $sql = 'INSERT INTO cursos (Titulo_curso,Descripcion_curso,Tipo_curso, Nivel_Curso, Duracion_estimada, Precio, Dataso) VALUES (:Titulo_curso, :Descripcion_curso, :Tipo_curso, :Nivel_Curso, :Duracion_estimada, :Precio, :Dataso)';
+    // $idDocente obtiene el id del usuario que está creando el curso desde la sesión.
+    $idDocente = $_SESSION['idUsu'] ?? null;
+
+// Consulta para insertar/crear cursos
+    $sql = 'INSERT INTO cursos (Titulo_curso,Descripcion_curso,Tipo_curso, Nivel_Curso, Duracion_estimada, Precio, Dataso, idDocente) VALUES (:Titulo_curso, :Descripcion_curso, :Tipo_curso, :Nivel_Curso, :Duracion_estimada, :Precio, :Dataso, :idDocente)';
 
     if(isset($_FILES['Dataso']) && $_FILES['Dataso']['error'] === 0){
 
         // Estructura que permite guardar los archivos de tipo imagen de manera temporal.
         $nombre_imagen= time(). "-" . $_FILES['Dataso']["name"];
         $tmp = $_FILES['Dataso']['tmp_name'];  
+
         // Compara la ubiación actual por medio del DIR y le adjunto la ruta de la Carpeta que guarda las imágenes traidas de $nombre_imagen.
         $ruta_destino= __DIR__ . "/Imagenes/" . $nombre_imagen;
-
         move_uploaded_file($tmp, $ruta_destino);
     }    
     // Envia los datos a la base de datos.
@@ -33,6 +39,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $consulta->bindParam(':Precio', $_POST['Precio'], PDO::PARAM_INT);
 
     $consulta->bindParam(':Dataso', $nombre_imagen, PDO::PARAM_STR);
+
+    $consulta->bindParam(':idDocente', $idDocente, PDO::PARAM_INT);
 
 
     $consulta->execute();
