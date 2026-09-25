@@ -10,22 +10,33 @@ if (!isset($_SESSION['Sesion'])) {
 }
 
 $correo = $_SESSION['Sesion'];
+$idUsu = $_SESSION['idUsu'] ?? 0;
 
-// Consulta SQL con JOIN para obtener solo los cursos en los que está inscripto el usuario actual.
+// Consulta con UNION: Junta los cursos inscriptos + los cursos creados por el docente
 $sql = "SELECT c.* 
         FROM cursos c
         INNER JOIN inscripcion i ON c.idCurso = i.idCurso
         INNER JOIN usuario u ON i.idUsu = u.idUsu
         WHERE u.Correo = :correo
-        ORDER BY c.idCurso DESC";
 
-        
-// Se prepara la conuslta a traves del statment
+        UNION
+
+        SELECT c.* 
+        FROM cursos c
+        WHERE c.idDocente = :idUsu
+
+        ORDER BY idCurso DESC";
+    
 $stmt = $pdo->prepare($sql);
-$stmt->execute([':correo' => $correo]);
+
+$stmt->execute([
+    ':correo' => $correo,
+    ':idUsu'  => $idUsu
+]);
+
 $cursos = $stmt->fetchAll(PDO::FETCH_ASSOC);
-// Guarda los datos de la consulta en $cursos.
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>

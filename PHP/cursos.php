@@ -8,7 +8,12 @@ $sql = "SELECT * FROM cursos ORDER BY idCurso DESC";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
 $cursos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Evaluamos el rol del usuario mediante una sessión.
+$rolper = strtolower(trim($_SESSION['Rol'] ?? ''));
+$acesso = !empty($rolper) && $rolper !== 'estudiante' && ($rolper === 'docente') || $rolper === 'administrador';
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -26,13 +31,15 @@ $cursos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     <main>
         <h1 class="h1cur"> Cursos </h1>
-
+         
+        <!-- Solo se mostrar el boton en caso que lo que esta en acceso se cumpla -->
+        <?php if ($acesso): ?>
         <div id="Crearbot">
             <a href="crear.php">
                 <button id="envcur" type="button"> Crear Curso</button>
             </a>
         </div>
-
+        <?php endif; ?>
         <div class="buscadoreishon">
             <input class="buscador2" type="search" placeholder="Buscar">
         </div>

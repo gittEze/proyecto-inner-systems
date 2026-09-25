@@ -11,17 +11,19 @@ if (!isset($_SESSION['Rol']) || $_SESSION['Rol'] !== 'administrador') {
     exit();
 }
 
-
+// Se evalua si los datos son recibidos por el metodo POST y verifican qu este idCurso
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idCurso'])) {
     $idCurso = intval($_POST['idCurso']);
 
 
     // try que intenta eliminar un cursos de la base de datos por su id.
     try {
+        // Consulta para eliminar el curso en base al id.
         $sql = "DELETE FROM cursos WHERE idCurso = :idCurso";
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam(':idCurso', $idCurso, PDO::PARAM_INT);
 
+        // Condicional encargado de verificar si la consulte se ejecuta,en caso de que si, muestra el alert confirmadno el exito.
         if ($stmt->execute()) {
             echo "<script>
                 alert('Curso eliminado exitosamente.');
@@ -29,6 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idCurso'])) {
             </script>";
             exit();
         }
+        // Captura la excepcion y se muestra un script con otro alert indicando que ocurrio un error, en tal caso vuelve a cargar la misma pestaña.
     } catch (PDOException $e) {
         echo "<script>
             alert('Error al eliminar el curso.');
@@ -36,6 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idCurso'])) {
         </script>";
         exit();
     }
+    // En este else se reitera el volver a cursos.php independientemente del condicional anterior.
 } else {
     header("Location: ../PHP/cursos.php");
     exit();

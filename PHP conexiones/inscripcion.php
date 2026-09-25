@@ -1,8 +1,12 @@
 <?php
+
+// Se habre una sessión.
 session_start();
+
+// Se inclue la conexión a la Base de datos para la funcionalidad del archivo.
 require_once 'conexion.php';
 
-
+// Condicional isset que evalua si la sesion se inicio.
 if (!isset($_SESSION['Sesion'])) {
     header("Location: ../PHP/login.php");
     exit();
@@ -28,10 +32,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['idCurso'])) {
             ':idCurso' => $idCurso
         ]);
     }
-
-
     header("Location: ../PHP/mis_cursos.php");
     exit();
+
 } else {
     header("Location: ../PHP/cursos.php");
     exit();
