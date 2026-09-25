@@ -12,15 +12,15 @@ if (!isset($_SESSION['Rol']) || $_SESSION['Rol'] !== 'administrador') {
 }
 
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idCurso'])) {
-    $idCurso = intval($_POST['idCurso']);
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ID_Curso'])) {
+    $ID_Curso = intval($_POST['ID_Curso']);
 
 
     // try que intenta eliminar un cursos de la base de datos por su id.
     try {
-        $sql = "DELETE FROM cursos WHERE idCurso = :idCurso";
+        $sql = "DELETE FROM cursos WHERE ID_Curso = :ID_Curso";
         $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(':idCurso', $idCurso, PDO::PARAM_INT);
+        $stmt->bindParam(':ID_Curso', $ID_Curso, PDO::PARAM_INT);
 
         if ($stmt->execute()) {
             echo "<script>

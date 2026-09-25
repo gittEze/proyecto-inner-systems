@@ -78,7 +78,7 @@
                         <input type="text" id="Cedula" name="Cedula" placeholder="Ej: 1234567890">
 
                         <label for="Fecha">Fecha de nacimiento</label>
-                        <input type="date" id="Fecha" name="Fecha_de_Nacimiento" placeholder="Ej: 01/01/2000">
+                        <input type="date" id="Fecha" name="Fecha_De_Nacimiento" placeholder="Ej: 01/01/2000" required>
 
                         <label for="Correo">Correo electrónico</label>
                         <input type="email" id="Correo" name="Correo" placeholder="ejemplo@correo.com" required>

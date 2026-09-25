@@ -2,20 +2,20 @@
 session_start();
 require_once '../PHP conexiones/conexion.php';
 
-// Condicional con isset que evalua existe el idCurso o si esta vacio,en caso de ello, el usuario ira a mis_cursos.php 
-if (!isset($_GET['idCurso']) || empty($_GET['idCurso'])) {
+// Condicional con isset que evalua existe el ID_Curso o si esta vacio,en caso de ello, el usuario ira a mis_cursos.php 
+if (!isset($_GET['ID_Curso']) || empty($_GET['ID_Curso'])) {
     header("Location: mis_cursos.php");
     exit();
 }
 
-$idCurso = intval($_GET['idCurso']);
+$ID_Curso = intval($_GET['ID_Curso']);
 
 // Pestaña activa enviada por la URL (por defecto muestra 'materiales' si no encuentra un valor en 'tab')
 $tabActiva = $_GET['tab'] ?? 'materiales';
 
 // Consulta que permite traer información del curso por medio de su id.
-$stmtCurso = $pdo->prepare("SELECT * FROM cursos WHERE idCurso = :idCurso");
-$stmtCurso->bindParam(':idCurso', $idCurso, PDO::PARAM_INT);
+$stmtCurso = $pdo->prepare("SELECT * FROM cursos WHERE ID_Curso = :ID_Curso");
+$stmtCurso->bindParam(':ID_Curso', $ID_Curso, PDO::PARAM_INT);
 $stmtCurso->execute();
 $curso = $stmtCurso->fetch(PDO::FETCH_ASSOC);
 
@@ -27,23 +27,23 @@ if (!$curso) {
 }
 
 // En esa consulta se obtienen las carpetas que hay en el curso.
-$stmtCarpetas = $pdo->prepare("SELECT * FROM carpeta WHERE idCurso = :idCurso ORDER BY Orden ASC");
-$stmtCarpetas->bindParam(':idCurso', $idCurso, PDO::PARAM_INT);
+$stmtCarpetas = $pdo->prepare("SELECT * FROM carpetas WHERE ID_Curso = :ID_Curso ORDER BY Orden ASC");
+$stmtCarpetas->bindParam(':ID_Curso', $ID_Curso, PDO::PARAM_INT);
 $stmtCarpetas->execute();
 $carpetas = $stmtCarpetas->fetchAll(PDO::FETCH_ASSOC);
 
 // Esta consulta se encarga de obtener los materiales que no esten dentro de ninguna carpeta.
-$stmtMatSueltos = $pdo->prepare("SELECT * FROM material WHERE idCurso = :idCurso AND idCarpeta IS NULL");
-$stmtMatSueltos->bindParam(':idCurso', $idCurso, PDO::PARAM_INT);
+$stmtMatSueltos = $pdo->prepare("SELECT * FROM materiales WHERE ID_Curso = :ID_Curso AND ID_Carpeta IS NULL");
+$stmtMatSueltos->bindParam(':ID_Curso', $ID_Curso, PDO::PARAM_INT);
 $stmtMatSueltos->execute();
 $materialesSueltos = $stmtMatSueltos->fetchAll(PDO::FETCH_ASSOC);
 
 // Esta consulta se encarga de obtener los miembros que esten inscriptos en los cursos.
 $stmtMiembros = $pdo->prepare("SELECT u.Nombre, u.Apellido, u.Correo 
-                               FROM usuario u 
-                               INNER JOIN inscripcion i ON u.idUsu = i.idUsu 
-                               WHERE i.idCurso = :idCurso");
-$stmtMiembros->bindParam(':idCurso', $idCurso, PDO::PARAM_INT);
+                               FROM usuarios u 
+                               INNER JOIN inscripciones i ON u.ID_Usuario = i.ID_Usuario 
+                               WHERE i.ID_Curso = :ID_Curso");
+$stmtMiembros->bindParam(':ID_Curso', $ID_Curso, PDO::PARAM_INT);
 $stmtMiembros->execute();
 $miembros = $stmtMiembros->fetchAll(PDO::FETCH_ASSOC);
 ?>
@@ -52,7 +52,7 @@ $miembros = $stmtMiembros->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= htmlspecialchars($curso['Titulo_curso']) ?> | LMS</title>
+    <title><?= htmlspecialchars($curso['Titulo_Curso']) ?> | LMS</title>
     <link rel="stylesheet" href="../CSS/estilo.css">
     <style>
         /* Estilos para el menú de navegación */
@@ -118,33 +118,33 @@ $miembros = $stmtMiembros->fetchAll(PDO::FETCH_ASSOC);
             <nav class="course-nav">
                 <ul>
                     <li>
-                        <a href="vercursos.php?idCurso=<?= $idCurso ?>&tab=materiales" class="<?= $tabActiva === 'materiales' ? 'active' : '' ?>">
+                        <a href="vercursos.php?ID_Curso=<?= $ID_Curso ?>&tab=materiales" class="<?= $tabActiva === 'materiales' ? 'active' : '' ?>">
                             📦 Materiales
                         </a>
                     </li>
                     <li>
-                        <a href="vercursos.php?idCurso=<?= $idCurso ?>&tab=calificaciones" class="<?= $tabActiva === 'calificaciones' ? 'active' : '' ?>">
+                        <a href="vercursos.php?ID_Curso=<?= $ID_Curso ?>&tab=calificaciones" class="<?= $tabActiva === 'calificaciones' ? 'active' : '' ?>">
                             📊 Calificaciones
                         </a>
                     </li>
                     <li>
-                        <a href="vercursos.php?idCurso=<?= $idCurso ?>&tab=miembros" class="<?= $tabActiva === 'miembros' ? 'active' : '' ?>">
+                        <a href="vercursos.php?ID_Curso=<?= $ID_Curso ?>&tab=miembros" class="<?= $tabActiva === 'miembros' ? 'active' : '' ?>">
                             👥 Miembros (<?= count($miembros) ?>)
                         </a>
                     </li>
                 </ul>
             </nav>
             <div class="info-curso">
-                <small><strong>Nivel:</strong> <?= htmlspecialchars($curso['Nivel_Curso'] ?? $curso['Nivel_curso'] ?? '') ?></small><br>
-                <small><strong>Tipo:</strong> <?= htmlspecialchars($curso['Tipo_curso'] ?? '') ?></small>
+                <small><strong>Nivel:</strong> <?= htmlspecialchars($curso['Nivel_Curso'] ??'') ?></small><br>
+                <small><strong>Tipo:</strong> <?= htmlspecialchars($curso['Tipo_Curso'] ?? '') ?></small>
             </div>
         </aside>
 
         <!-- Columna 2: Lienzo Central -->
         <main class="content-center">
             <div class="curso-header">
-                <h2><?= htmlspecialchars($curso['Titulo_curso']) ?></h2>
-                <p class="descripcion"><?= htmlspecialchars($curso['Descripcion_curso']) ?></p>
+                <h2><?= htmlspecialchars($curso['Titulo_Curso']) ?></h2>
+                <p class="descripcion"><?= htmlspecialchars($curso['Descripcion_Curso']) ?></p>
             </div>
 
             <hr>
@@ -162,45 +162,45 @@ $miembros = $stmtMiembros->fetchAll(PDO::FETCH_ASSOC);
 
                         <?php foreach ($materialesSueltos as $mat): ?>
                             <div class="item-recurso material">
-                                <?php if ($mat['Tipo_material'] == 'enlace'): ?>
+                                <?php if ($mat['Tipo_Material'] == 'enlace'): ?>
                                     <span class="icon">🔗</span>
-                                    <a href="<?= htmlspecialchars($mat['Contenido_url']) ?>" target="_blank">
-                                        <?= htmlspecialchars($mat['Titulo_material']) ?> (abrir en otra pestaña)
+                                    <a href="<?= htmlspecialchars($mat['Contenido_URL']) ?>" target="_blank">
+                                        <?= htmlspecialchars($mat['Titulo_Material']) ?> (abrir en otra pestaña)
                                     </a>
 
                                 <!-- En cada else if asigna que el tipo de material sea correspondiente a un tipo expecifico -->
 
-                                <?php elseif ($mat['Tipo_material'] == 'tarea'): ?>
+                                <?php elseif ($mat['Tipo_Material'] == 'tarea'): ?>
                                     <span class="icon">📝</span>
                                     <div class="info-tarea">
-                                        <strong><?= htmlspecialchars($mat['Titulo_material']) ?></strong>
-                                        <?php if (!empty($mat['Fecha_vencimiento'])): ?>
-                                            <small class="vencimiento">Vence: <?= date('d/m/Y H:i', strtotime($mat['Fecha_vencimiento'])) ?></small>
+                                        <strong><?= htmlspecialchars($mat['Titulo_Material']) ?></strong>
+                                        <?php if (!empty($mat['Fecha_De_Vencimiento'])): ?>
+                                            <small class="vencimiento">Vence: <?= date('d/m/Y H:i', strtotime($mat['Fecha_De_Vencimiento'])) ?></small>
                                         <?php endif; ?>
                                     </div>
 
-                                <?php elseif ($mat['Tipo_material'] == 'video'): ?>
+                                <?php elseif ($mat['Tipo_Material'] == 'video'): ?>
                                     <span class="icon">🎬</span>
                                     <div class="media-container">
-                                        <strong><?= htmlspecialchars($mat['Titulo_material']) ?></strong><br>
+                                        <strong><?= htmlspecialchars($mat['Titulo_Material']) ?></strong><br>
                                         <video controls width="100%">
-                                            <source src="uploads/videos/<?= htmlspecialchars($mat['Contenido_url']) ?>" type="video/mp4">
+                                            <source src="uploads/videos/<?= htmlspecialchars($mat['Contenido_URL']) ?>" type="video/mp4">
                                         </video>
                                     </div>
 
-                                <?php elseif ($mat['Tipo_material'] == 'audio'): ?>
+                                <?php elseif ($mat['Tipo_Material'] == 'audio'): ?>
                                     <span class="icon">🎧</span>
                                     <div class="media-container">
-                                        <strong><?= htmlspecialchars($mat['Titulo_material']) ?></strong><br>
+                                        <strong><?= htmlspecialchars($mat['Titulo_Material']) ?></strong><br>
                                         <audio controls style="width: 100%;">
-                                            <source src="uploads/audios/<?= htmlspecialchars($mat['Contenido_url']) ?>" type="audio/mpeg">
+                                            <source src="uploads/audios/<?= htmlspecialchars($mat['Contenido_URL']) ?>" type="audio/mpeg">
                                         </audio>
                                     </div>
 
                                 <?php else: ?>
                                     <span class="icon">📄</span>
-                                    <a href="uploads/archivos/<?= htmlspecialchars($mat['Contenido_url']) ?>" download>
-                                        <?= htmlspecialchars($mat['Titulo_material']) ?>
+                                    <a href="uploads/archivos/<?= htmlspecialchars($mat['Contenido_URL']) ?>" download>
+                                        <?= htmlspecialchars($mat['Titulo_Material']) ?>
                                     </a>
                                 <?php endif; ?>
                             </div>
@@ -212,15 +212,15 @@ $miembros = $stmtMiembros->fetchAll(PDO::FETCH_ASSOC);
                             <details class="item-recurso carpeta">
                                 <summary>
                                     <span class="icon">📁</span>
-                                    <strong><?= htmlspecialchars($carpeta['Nombre_carpeta']) ?></strong>
+                                    <strong><?= htmlspecialchars($carpeta['Nombre_Carpeta']) ?></strong>
                                 </summary>
                                 
                                 
                                 <div class="contenido-carpeta">
                                     <!-- Consulta para obtener los materiales de las carpetas -->
                                     <?php
-                                    $stmtMatFolder = $pdo->prepare("SELECT * FROM material WHERE idCarpeta = :idCarpeta");
-                                    $stmtMatFolder->bindParam(':idCarpeta', $carpeta['idCarpeta'], PDO::PARAM_INT);
+                                    $stmtMatFolder = $pdo->prepare("SELECT * FROM materiales WHERE ID_Carpeta = :ID_Carpeta");
+                                    $stmtMatFolder->bindParam(':ID_Carpeta', $carpeta['ID_Carpeta'], PDO::PARAM_INT);
                                     $stmtMatFolder->execute();
                                     $materialesCarpeta = $stmtMatFolder->fetchAll(PDO::FETCH_ASSOC);
 
@@ -229,7 +229,7 @@ $miembros = $stmtMiembros->fetchAll(PDO::FETCH_ASSOC);
                                     ?>
                                         <div class="item-recurso sub-item">
                                             <span class="icon">📄</span>
-                                            <span><?= htmlspecialchars($matFolder['Titulo_material']) ?></span>
+                                            <span><?= htmlspecialchars($matFolder['Titulo_Material']) ?></span>
                                         </div>
                                     <?php 
                                         endforeach;

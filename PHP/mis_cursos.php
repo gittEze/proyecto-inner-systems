@@ -14,10 +14,10 @@ $correo = $_SESSION['Sesion'];
 // Consulta SQL con JOIN para obtener solo los cursos en los que está inscripto el usuario actual.
 $sql = "SELECT c.* 
         FROM cursos c
-        INNER JOIN inscripcion i ON c.idCurso = i.idCurso
-        INNER JOIN usuario u ON i.idUsu = u.idUsu
+        INNER JOIN inscripciones i ON c.ID_Curso = i.ID_Curso
+        INNER JOIN usuarios u ON i.ID_Usuario = u.ID_Usuario
         WHERE u.Correo = :correo
-        ORDER BY c.idCurso DESC";
+        ORDER BY c.ID_Curso DESC";
 
         
 // Se prepara la conuslta a traves del statment
@@ -46,12 +46,12 @@ $cursos = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <div class="grid-cursos">
             <?php if (count($cursos) > 0): ?>
                 <?php foreach ($cursos as $c): ?>
-                    <!-- Enlace conectado directamente a vercursos.php pasándole el idCurso -->
-                    <a href="vercursos.php?idCurso=<?= $c['idCurso'] ?>" class="card-curso">
+                    <!-- Enlace conectado directamente a vercursos.php pasándole el ID_Curso -->
+                    <a href="vercursos.php?ID_Curso=<?= $c['ID_Curso'] ?>" class="card-curso">
                         <img src="../PHP conexiones/Imagenes/<?= !empty($c['Dataso']) ? htmlspecialchars($c['Dataso']) : 'default.png' ?>" alt="Portada">
                         <div class="card-curso-body">
-                            <h3><?= htmlspecialchars($c['Titulo_curso']) ?></h3>
-                            <small class="text-muted"><?= htmlspecialchars($c['Nivel_Curso'] ?? $c['Nivel_curso'] ?? '') ?></small>
+                            <h3><?= htmlspecialchars($c['Titulo_Curso']) ?></h3>
+                            <small class="text-muted"><?= htmlspecialchars($c['Nivel_Curso'] ??'') ?></small>
                         </div>
                     </a>
                 <?php endforeach; ?>

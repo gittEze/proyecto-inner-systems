@@ -3,7 +3,7 @@
 $server = "localhost";
 $usuario = "root";
 $contraseña = "";
-$database = "softwaredesarrollo";
+$database = "aprendomo";
 
 // La variable $dsn toma los datos de la estructura anterior y los guarda.
 $dsn = 'mysql:host=' . $server . ';dbname=' . $database;

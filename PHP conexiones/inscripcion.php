@@ -8,24 +8,24 @@ if (!isset($_SESSION['Sesion'])) {
     exit();
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['idCurso'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['ID_Curso'])) {
     $correo = $_SESSION['Sesion'];
-    $idCurso = intval($_POST['idCurso']);
+    $ID_Curso = intval($_POST['ID_Curso']);
 
     // Esta consulta se encarga de obtener el id del usuario que se logueo en la plataforma
-    $stmtUser = $pdo->prepare("SELECT idUsu FROM usuario WHERE Correo = :correo");
+    $stmtUser = $pdo->prepare("SELECT ID_Usuario FROM usuarios WHERE Correo = :correo");
     $stmtUser->execute([':correo' => $correo]);
     $usuario = $stmtUser->fetch(PDO::FETCH_ASSOC);
 
     if ($usuario) {
-        $idUsu = $usuario['idUsu'];
+        $ID_Usuario = $usuario['ID_Usuario'];;
 
     // Esta consulta inserta los id de Usuario y Curso en la tabla inscipcion, sirviendo como punto de contacto para saber si el alumno se inscribio.  
-        $sql = "INSERT IGNORE INTO inscripcion (idUsu, idCurso) VALUES (:idUsu, :idCurso)";
+        $sql = "INSERT IGNORE INTO inscripciones (ID_Usuario, ID_Curso, Fecha_Inscripcion) VALUES (:ID_Usuario, :ID_Curso, NOW())";
         $stmtIns = $pdo->prepare($sql);
         $stmtIns->execute([
-            ':idUsu' => $idUsu,
-            ':idCurso' => $idCurso
+            ':ID_Usuario' => $ID_Usuario,
+            ':ID_Curso' => $ID_Curso
         ]);
     }
 
