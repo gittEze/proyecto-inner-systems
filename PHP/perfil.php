@@ -1,21 +1,23 @@
 <?php
-
 session_start();
-require '../PHP conexiones/conexion.php';
+require_once '../PHP conexiones/conexion.php';
 
+// Verifica que exista una sesión iniciada
 if (!isset($_SESSION['Sesion'])) {
-    header('Location: login.php');
+    header("Location: login.php");
     exit();
 }
 
-$sql = "SELECT Nombre, Apellido, Rol FROM usuario WHERE Correo = :Correo";
 
-$consulta = $pdo->prepare($sql);
-$consulta->bindParam(':Correo', $_SESSION['Sesion'], PDO::PARAM_STR);
-$consulta->execute();
+$correo = $_SESSION['Sesion'];// Correo del usuario actual
+$sql = "SELECT Nombre, Apellido, Rol, Foto_Perfil 
+        FROM usuario 
+        WHERE Correo = :correo";
 
-$usuario = $consulta->fetch();
-
+$stmt = $pdo->prepare($sql);
+// Se ejecuta la consulta pasando el correo del usuario
+$stmt->execute([':correo' => $correo]);
+$usuario = $stmt->fetch(PDO::FETCH_ASSOC);// Variable con los datos del usuario
 ?>
 
 <!DOCTYPE html>
@@ -23,7 +25,7 @@ $usuario = $consulta->fetch();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi perfil</title>
+    <title>Mi perfil | Aprendomo</title>
     <link rel="stylesheet" href="../CSS/animaciones.css">
     <link rel="stylesheet" href="../CSS/estilo.css">
     <link rel="icon" href="../IMG/Icono.ico">
@@ -47,15 +49,22 @@ $usuario = $consulta->fetch();
     <!-- Información principal y tareas pendientes -->
     <section class="perfilUsuario">
         <div class="fotoPerfil">
-            <img src="../IMG/aprendomoUser.jpg" alt="Foto de perfil">
+            <?php if (!empty($usuario['Foto_Perfil'])): ?>
+                <img src="../IMG/perfiles/<?php echo htmlspecialchars($usuario['Foto_Perfil']); ?>" alt="Foto de perfil">
+            <?php else: ?>
+                <img src="../IMG/aprendomoUser.jpg" alt="Foto de perfil">
+            <?php endif; ?>
         </div>
         <div class="nombreYApaellidoUsuario">
-            <h1><?php echo $usuario->Nombre . " " . $usuario->Apellido; ?></h1>
-            <p class="rolUsuario"><?php echo $usuario->Rol; ?></p>
+            <h1><?php echo $usuario['Nombre'] . " " . $usuario['Apellido']; ?></h1>
+            <p class="rolUsuario"><?php echo $usuario['Rol']; ?></p>
 
-    <a href="editarPerfil.php" class="editarPerfil">
-        Cambiar foto de perfil
-    </a>
+    <form action="../PHP conexiones/guardarFoto.php" method="POST" enctype="multipart/form-data">
+        <label for="fotoPerfil" class="editarPerfil">
+            Cambiar foto de perfil
+        </label>
+        <input type="file" id="fotoPerfil" name="fotoPerfil" accept="image/*" hidden onchange="this.form.submit()">
+    </form>
 
 </div>
 
@@ -133,7 +142,7 @@ $usuario = $consulta->fetch();
 
     <!-- Ir a mis cursos -->
     <section class="botonMisCursos">
-        <a href="#">Ver mis cursos</a>
+        <a href="mis_cursos.php">Ver mis cursos</a>
     </section>
 </main>
 </body>

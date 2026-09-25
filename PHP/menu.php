@@ -1,6 +1,16 @@
 <?php
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
+    require_once '../PHP conexiones/conexion.php';  
+}
+
+if (isset($_SESSION['Sesion'])) {
+    $correo = $_SESSION['Sesion']; // Correo del usuario actual
+    $sql = "SELECT Nombre, Apellido, Rol, Foto_Perfil FROM usuario WHERE Correo = :correo";
+    $stmt = $pdo->prepare($sql);
+    // Se ejecuta la consulta pasando el correo del usuario
+    $stmt->execute([':correo' => $correo]);
+    $usuario = $stmt->fetch(PDO::FETCH_ASSOC); // Variable con los datos del usuario
 }
 ?>
 
@@ -15,7 +25,6 @@ if (session_status() === PHP_SESSION_NONE) {
     <?php if (isset($_SESSION['Sesion'])) { ?>
     <a class="Serv" href="main.php">Inicio</a>
     <a class="Serv" href="cursos.php">Cursos</a>
-    <a class="Serv" href="mis_cursos.php">Mis cursos</a>
     <a class="Serv" href="proyectos.php">Proyectos educativos</a>
     <a class="Serv" href="mentorías.php">Mentorías</a>
     <?php } else { ?>
@@ -33,12 +42,20 @@ if (session_status() === PHP_SESSION_NONE) {
     <?php if (isset($_SESSION['Sesion'])) { ?>
         <!-- Icono del usuario con menú desplegable. -->
         <div class="usuario">
-            <img src="../IMG/aprendomoUser.jpg" alt="userIcon" class="userIcon">
+            <?php if (!empty($usuario['Foto_Perfil'])): ?>
+                <img src="../IMG/perfiles/<?php echo htmlspecialchars($usuario['Foto_Perfil']); ?>" alt="Foto de perfil" class="userIcon">
+            <?php else: ?>
+                <img src="../IMG/aprendomoUser.jpg" alt="Foto de perfil" class="userIcon">
+            <?php endif; ?>
             <div class="userMenu">
                 <div class="userMenuBox">
                     <div class="userInfo">
-                        <img src="../IMG/aprendomoUser.jpg" alt="Foto del usuario" class="userIcon">
-                        <h2>Aprendomo User</h2>
+                        <?php if (!empty($usuario['Foto_Perfil'])): ?>
+                            <img src="../IMG/perfiles/<?php echo htmlspecialchars($usuario['Foto_Perfil']); ?>" alt="Foto de perfil">
+                        <?php else: ?>
+                            <img src="../IMG/aprendomoUser.jpg" alt="Foto de perfil">
+                        <?php endif; ?>
+                        <h2><?php echo $usuario['Nombre'] . " " . $usuario['Apellido']; ?></h2>
                     </div>
                     <hr>
                     <div class="userMenuOptions">

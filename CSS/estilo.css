@@ -111,6 +111,8 @@ main {
 
 .userIcon {
     width: 55px;
+    height: 55px;
+    object-fit: cover;
     border-radius: 50%;
     cursor: pointer;
 }
@@ -135,7 +137,9 @@ main {
 
 .userMenu img{
     width: 65px;
+    height: 65px;
     border-radius: 50%;
+    object-fit: cover;
 }
 
 .userMenu h2 {
@@ -195,6 +199,7 @@ main {
 
 .userMenuOptions img{
     width: 40px;
+    height: 40px;
     border-radius: 50%;
 }
 
@@ -270,7 +275,9 @@ margin: 40px auto;
 }
 
 .profileBtn {
-    width: 60px;
+    width: 45px;
+    height: 45px;
+    padding: 13px;
     display: flex;
     justify-content: center;
     align-items: center;
