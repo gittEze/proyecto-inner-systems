@@ -29,7 +29,7 @@ if (session_status() === PHP_SESSION_NONE) {
                     <hr>
                     <div class="userMenuOptions">
                         <!-- Mi Perfil -->
-                         <a href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR4nPptYxnzR73BjRoIAmoBtwhPU54WkqYy0MNJVhiy28nxvEN10iX-FnAF&s=10" target="_blank">
+                         <a href="perfil.php">
                             <div>
                                 <img src="../IMG/MyProfileIcon.png" alt="Mi Perfil Icon">
                                 <p>Mi perfil</p>

@@ -60,7 +60,7 @@ main {
     justify-content: space-around;
     margin-right: 10px;
     text-decoration: none;
-
+    cursor: pointer;
     transition: all 500ms ease;
 }
 
@@ -188,7 +188,7 @@ main {
     padding: 10px;
     margin-bottom: 0px;
     border-radius: 50%;
-    corner-shape: bevel bevel bevel bevel;
+    corner-shape: bevel;
 
     transform: translateX(0);
 }
@@ -232,7 +232,7 @@ main {
     background-color: #1e88e5;
     padding: 10px;
     border-radius: 50%/28%;
-    corner-shape: bevel bevel bevel bevel;
+    corner-shape:  bevel;
     
     animation: levitateUpAndDown 2.5s ease-in-out infinite;
 }
@@ -240,7 +240,338 @@ main {
 .open-menu {
     max-height: 400px;
 }
-/*---*/
+/*-----*/
+
+/*----- PERFIL USUARIO -----*/
+
+.perfilMain {
+width: 100%;
+max-width: 1200px;
+margin: 40px auto;
+}
+
+/* ----- ENCABEZADO / DIV ----- */
+.contenedorPerfil {
+    background: white;
+    color: #0d47a1;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #dceaf5;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.profileBtns {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.profileBtn {
+    width: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #9bfaff;
+    border-radius: 50%;
+    transition: all 250ms ease;
+}
+
+.profileIcon {
+    width: 45px;
+    object-fit: contain;
+    transition: all 250ms ease;
+}
+
+.profileBtn:hover {
+    background-color: #00f2ff;
+    border-radius: 50%/25%;
+    corner-shape: bevel;
+    transform: scale(1.2);
+} 
+
+
+#logoPerfilImg {
+    width: 100px;
+    height: auto;
+}
+
+.botones {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.textoBoton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.loginBtn {
+    color: #1e88e5;
+    border: 2px solid #1e88e5;
+    border-radius: 50px;
+    background-color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 300ms ease;
+}
+
+.loginBtn:hover {
+    transform: scale(1.05);
+    background-color: #1e88e5;
+    color: white;
+}
+
+/* ----- INFORMACIÓN PRINCIPAL ----- */
+
+.perfilUsuario {
+display: flex;
+align-items: top;
+
+
+background-color: white;
+border: 2px solid #dceaf5;
+border-radius: 20px;
+padding: 30px;
+gap: 25px;
+transition: all 300ms ease;
+}
+
+.perfilUsuario:hover {
+box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* ----- FOTO DE PERFIL ----- */
+
+.fotoPerfil img {
+width: 140px;
+height: 140px;
+object-fit: cover;
+border-radius: 50%;
+border: 4px solid #1e88e5;
+transition: all 300ms ease;
+
+}
+
+.fotoPerfil img:hover {
+transform: scale(1.05);
+}
+
+/* ----- DATOS DEL USUARIO ----- */
+
+.nombreYApaellidoUsuario {
+flex: 1;
+}
+
+.nombreYApaellidoUsuario h1 {
+text-align: left;
+padding: 0;
+margin: 0 0 10px 0;
+font-size: 32px;
+color: #0d47a1;
+}
+
+.rolUsuario {
+color: #555;
+font-size: 16px;
+margin-bottom: 20px;
+}
+
+/* ----- BOTÓN EDITAR PERFIL ----- */
+
+.editarPerfil {
+display: inline-block;
+color: #1e88e5;
+
+border: 2px solid #1e88e5;
+border-radius: 50px;
+
+background-color: white;
+
+padding: 10px 18px;
+
+text-decoration: none;
+
+transition: all 300ms ease;
+}
+
+.editarPerfil:hover {
+transform: scale(1.08);
+background-color: #1e88e5;
+color: white;
+}
+
+/* ----- TAREAS ----- */
+
+.tareasPendientes {
+flex: 1.5;
+background-color: #5bb8ff;
+border-radius: 50%/15%;
+corner-shape: bevel;
+padding: 80px 20px 80px 20px;
+}
+
+.tareasPendientes h2 {
+color: white;
+font-size: 25px;
+margin-bottom: 10px;
+text-align: center;
+font-weight: bold;
+}
+
+.listaTareas {
+display: flex;
+flex-direction: column;
+gap: 12px;
+}
+
+.tareaPendiente {
+display: flex;
+align-items: center;
+gap: 12px;
+padding: 9px;
+margin-bottom: 10px;
+background-color: white;
+border: 1px solid #dceaf5;
+border-radius: 12px;
+transition: all 300ms ease;
+}
+
+.tareaPendiente:hover {
+transform: translateY(-3px);
+border-color: #1e88e5;
+box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.tareaPendiente span {
+display: flex;
+justify-content: center;
+align-items: center;
+min-width: 35px;
+height: 35px;
+background-color: #1e88e5;
+color: white;
+border-radius: 50%;
+font-size: 18px;
+}
+
+.tareaPendiente h3 {
+color: #0d47a1;
+font-size: 15px;
+margin-bottom: 4px;
+}
+
+.tareaPendiente p {
+margin-bottom: 4px;
+}
+
+
+/* ----- SECCIONES DE CURSOS ----- */
+
+.cursosPerfil {
+background-color: white;
+border: 2px solid #dceaf5;
+border-radius: 20px;
+padding: 30px;
+margin-top: 25px;
+transition: all 300ms ease;
+}
+
+.cursosPerfil:hover {
+box-shadow: 0 8px 20px rgba(0, 0, 0, 0.10);
+}
+
+.cursosPerfil h2 {
+color: #0d47a1;
+font-size: 25px;
+text-align: left;
+padding: 0;
+margin: 0 0 20px 0;
+}
+
+/* ----- LISTA DE CURSOS ----- */
+
+.listaCursosPerfil {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 20px;
+}
+
+.cursoPerfil {
+background-color: #f5f9fc;
+border: 1px solid #dceaf5;
+border-radius: 15px;
+padding: 20px;
+transition: all 300ms ease;
+}
+
+.cursoPerfil:hover {
+transform: translateY(-5px);
+background-color: white;
+border-color: #1e88e5;
+box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
+}
+
+.cursoPerfil h3 {
+color: #0d47a1;
+font-size: 18px;
+margin-bottom: 10px;
+}
+
+.cursoPerfil p {
+color: #555;
+margin-bottom: 12px;
+}
+
+/* ----- ESTADO DEL CURSO ----- */
+
+.nivelCurso {
+display: inline-block;
+color: white;
+background-color: #1e88e5;
+padding: 4px 12px;
+border-radius: 20px;
+font-size: 12px;
+font-weight: bold;
+}
+
+/* ----- BOTÓN MIS CURSOS ----- */
+
+.botonMisCursos {
+display: flex;
+justify-content: center;
+margin: 35px 0;
+}
+
+.botonMisCursos a {
+display: inline-block;
+color: white;
+background: linear-gradient(to right,#1e88e5,#0d47a1);
+padding: 14px 35px;
+border-radius: 50px;
+text-decoration: none;
+font-weight: bold;
+border: 2px solid white;
+box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+transition: all 300ms ease;
+}
+
+.botonMisCursos a:hover {
+transform: translateY(-5px) scale(1.03);
+background: white;
+color: #1e88e5;
+border-color: #1e88e5;
+box-shadow: 0 8px 20px rgba(0, 0, 0, 0.20);
+}
+
+/*-----*/
 
 .footerMain {
     color: white;
@@ -546,6 +877,7 @@ select{
     background-color: #1e88e5;
     padding: 10px 15px;
     text-decoration: none;
+    cursor: pointer;
     transition: all 500ms ease;
 }
 #btnIniciarSesion:hover {
@@ -579,6 +911,7 @@ select{
 
 #btnIniciarSesion {
     display: block;
+    cursor: pointer;
 }
 
 .btnDato {
@@ -810,6 +1143,7 @@ h1{
     align-items: center;
     display: flex;
     justify-content: center;
+    cursor: pointer;
 }
  
 
