@@ -1380,6 +1380,20 @@ details.carpeta summary::-webkit-details-marker {
 .btn-cancelar:hover {
     text-decoration: underline;
 }
+.btn-elim{
+    background-color: #eb2525;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn-elim:hover{
+    background-color: red;
+}
+
 
 /* Enlace invisible alrededor de la tarjeta para permitir click */
 .tarjeta-curso-link {

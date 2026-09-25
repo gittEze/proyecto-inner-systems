@@ -1,4 +1,6 @@
 
+// Visualización dinámica de a traves el boton previsualizar del apartado para crear los cursos.
+
 document.getElementById("Visbut").onclick = function() {
 
     document.getElementById("titlecur").value = document.getElementById("nombrecur").value;

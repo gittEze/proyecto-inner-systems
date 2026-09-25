@@ -1,8 +1,9 @@
 <?php
+// Inicia la sesión 
 session_start();
 require_once '../PHP conexiones/conexion.php';
 
-// Validar que exista la sesión del usuario
+// Validar que exista la sesión del usuario, en cada de que exista la sesión, el usuario es enviado a login si la sesion existe. 
 if (!isset($_SESSION['Sesion'])) {
     header("Location: login.php");
     exit();
@@ -10,7 +11,7 @@ if (!isset($_SESSION['Sesion'])) {
 
 $correo = $_SESSION['Sesion'];
 
-// Consulta SQL con JOIN para obtener solo los cursos en los que está inscripto el usuario actual
+// Consulta SQL con JOIN para obtener solo los cursos en los que está inscripto el usuario actual.
 $sql = "SELECT c.* 
         FROM cursos c
         INNER JOIN inscripcion i ON c.idCurso = i.idCurso
@@ -19,10 +20,11 @@ $sql = "SELECT c.*
         ORDER BY c.idCurso DESC";
 
         
-
+// Se prepara la conuslta a traves del statment
 $stmt = $pdo->prepare($sql);
 $stmt->execute([':correo' => $correo]);
 $cursos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+// Guarda los datos de la consulta en $cursos.
 ?>
 <!DOCTYPE html>
 <html lang="es">

@@ -2,7 +2,7 @@
 session_start();
 require_once '../PHP conexiones/conexion.php';
 
-
+// Condicional con isset que evalua existe el idCurso o si esta vacio,en caso de ello, el usuario ira a mis_cursos.php 
 if (!isset($_GET['idCurso']) || empty($_GET['idCurso'])) {
     header("Location: mis_cursos.php");
     exit();
@@ -110,7 +110,7 @@ $miembros = $stmtMiembros->fetchAll(PDO::FETCH_ASSOC);
 
     <div class="lms-container">
 
-        Columna izquerda que muestra datos como los miembros inscriptos,calificaciones y materiales del curso.
+        <!-- Columna izquerda que muestra datos como los miembros inscriptos,calificaciones y materiales del curso. -->
         <aside class="sidebar-left">
             <div class="curso-portada">
                 <img src="../PHP conexiones/Imagenes/<?= !empty($curso['Dataso']) ? htmlspecialchars($curso['Dataso']) : 'default.png' ?>" alt="Portada Curso">

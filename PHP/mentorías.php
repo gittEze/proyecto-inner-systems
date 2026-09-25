@@ -12,12 +12,13 @@
     
     <body>
 
+        <!-- Por medio del include se trae la estructura del menu superior de la página -->
         <?php include 'menu.php'; ?>
 
         <main>
 
         </main>
-
+        <!-- Por medio del include se trae la estructura del menu inferior de la página -->
         <?php include 'footer.php'; ?>
         
     </body>
