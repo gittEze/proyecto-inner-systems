@@ -18,15 +18,18 @@
                 </div>
 
                 <a id="volver" href="main.php">Volver</a>
-                
+
+
+                <!-- Comprobante de envio de los datos por los meotods post y get -->
                 <?php $envio = $_POST['btnRegister'] ?? $_POST['btnLogin'] ?? $_GET['pagina'] ?? 'login'; ?>
 
                 <?php if ($envio == "login") { ?>
 
                     <title>Iniciar sesión - Aprendomo</title>
-
+                <!-- Condicional que evalua si existe el parámetro exito en el método GET y si concuerda con lo dado en "conslogin" -->
                 <?php  if (isset($_GET['exito']) && $_GET['exito'] == 1) { ?>
-                    <div class="logrado">
+                <!-- Si se logra el coommprbante mmuestra un mensaje de que se logro el registro -->
+                    <div class="logrado">  
                         Registro exitoso. Por favor, inicie sesión.
                     </div>
                 <?php } ?>
@@ -43,6 +46,7 @@
 
                         <a id="recuperarContrasenia" href="">Recuperar contraseña.</a>
 
+                        <!-- Link que aparece en el apartado del formulario de login que envia al usuario a registrase si aun no lo ha hecho. -->
                         <p class="regisAqui">¿No tienes cuenta aún?
                             <a href="login.php?pagina=register" class="linkRegistro">
                                 Regístrate aquí.
@@ -54,6 +58,9 @@
                         </div>
                         
                     </form>
+
+
+                <!-- En caso de que el parametro recibido sea 'register', se mostrara el formulario -->
 
                 <?php } elseif ($envio == "register") { ?>
 
