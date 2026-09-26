@@ -6,7 +6,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
 if (isset($_SESSION['Sesion'])) {
     $correo = $_SESSION['Sesion']; // Correo del usuario actual
-    $sql = "SELECT Nombre, Apellido, Rol, Foto_Perfil FROM usuario WHERE Correo = :correo";
+    $sql = "SELECT Nombre, Apellido, Rol, Foto_Perfil FROM usuarios WHERE Correo = :correo";
     $stmt = $pdo->prepare($sql);
     // Se ejecuta la consulta pasando el correo del usuario
     $stmt->execute([':correo' => $correo]);
