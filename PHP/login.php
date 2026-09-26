@@ -91,14 +91,14 @@
 
                         <label for="rol">Ocupación</label>
                         <select id="rol" name="Rol">
-                            <option value="docente">Docente</option>
-                            <option value="estudiante">Estudiante</option>
+                            <option value="Docente">Docente</option>
+                            <option value="Estudiante">Estudiante</option>
                         </select>
 
                         <label for="Gen">Género</label>
                         <select id="Gen" name="Genero">
-                            <option value="masculino">Masculino</option>
-                            <option value="femenino">Femenino</option>
+                            <option value="Masculino">Masculino</option>
+                            <option value="Femenino">Femenino</option>
                         </select>
 
                         <div class="botones">
