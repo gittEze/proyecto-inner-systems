@@ -12,7 +12,13 @@ if (session_status() === PHP_SESSION_NONE) {
     <a class="Serv" href="main.php">Inicio</a>
     <a class="Serv" href="cursos.php">Cursos</a>
     <a class="Serv" href="proyectos.php">Proyectos educativos</a>
-    <a class="Serv" href="mentorías.php">Mentorías</a>
+    <?php
+    if (isset($_SESSION['Sesion'])) {
+    ?>
+        <a class="Serv" href="mentorías.php">Mentorías</a>
+    <?php
+    }
+    ?>
 
     <input id="buscador" type="search" placeholder="Buscar cursos, servicios...">
 
