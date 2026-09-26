@@ -595,8 +595,11 @@ box-shadow: 0 8px 20px rgba(0, 0, 0, 0.20);
     color: #FFFFFF;
 }
 .footerNombre h2{
-    font-size: 25px;
+    font-size: 15px;
     margin-bottom: 10px;
+}
+.footerNombre p{
+    font-size: 12px;
 }
 .footer-col p{
     color: #CCCCCC;
@@ -607,6 +610,7 @@ box-shadow: 0 8px 20px rgba(0, 0, 0, 0.20);
     display: flex;
     align-items: center;
     gap: 15px;
+    padding: 10px;
 }
 
 .footerIcono {
@@ -623,19 +627,24 @@ box-shadow: 0 8px 20px rgba(0, 0, 0, 0.20);
 
 .footerItem h3 {
     margin: 0 0 8px 0;
-    font-size: 18px;
+    font-size: 15px;
 }
 .footerItem p {
     margin: 0;
-    font-size: 14px;
+    font-size: 12px;
 }
 
-.footerItem:hover, .footerNombre:hover {
+#manualUsuario:hover {
     .footerItem p, .footerItem h3 {
         text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
     }
-    transform: scale(1.1);
+    transform: scale(1.05);
     transition: all 500ms ease;
+}
+
+#manualUsuario {
+    color: white;
+    text-decoration: none;
 }
 
 .copyright {
@@ -1429,6 +1438,65 @@ background-color: #fff;
 }
 /* ACA TERMINA LO DE CREAR CURSOS */
 
+/* MANUAL DE USUARIO */
+.manualUsuario {
+    background-image: url("../IMG/background2.png");
+    margin: 0;
+    padding: 40px 0;
+}
+
+.manualUsuario p {
+    margin-top: 10px;
+}
+
+.manualUsuario section {
+    width: 80%;
+    max-width: 95%;
+    background: white;
+    margin: 0 auto 24px;
+    padding: 28px;
+    border-radius: 12px;
+    box-shadow: 0 3px 14px rgba(0, 0, 0, 0.07);
+    box-sizing: border-box;
+}
+
+.manualUsuario h2 {
+    margin-top: 10px;
+    color: #1e88e5;
+    border-bottom: 2px solid #e8eef5;
+    padding-bottom: 10px;
+}
+
+.manualUsuario h3 {
+    margin-top: 25px;
+}
+
+.manualUsuario ul,
+.manualUsuario ol {
+    padding-left: 24px;
+}
+
+.manualUsuario li {
+    margin-top: 10px;
+    margin-bottom: 8px;
+}
+
+.nota {
+    background: #eaf4ff;
+    border-left: 4px solid #1e88e5;
+    padding: 14px 16px;
+    margin: 18px 0;
+    border-radius: 5px;
+}
+
+.paso {
+    margin: 10px 0;
+    padding: 12px 15px;
+    background: #f8fafc;
+    border-radius: 7px;
+}
+
+/* ------------------------------- */
 /* Reset Básico */
 
 
