@@ -4,13 +4,13 @@ require_once 'conexion.php';
 
 // Estrucutra encargada de validar que la petición venga de un docente o administrador
 $rol = strtolower(trim($_SESSION['Rol'] ?? ''));
-if ($_SERVER['REQUEST_METHOD'] !== 'POST' || ($rol !== 'docente' && $rol !== 'administrador')) {
-    header("Location: ../PHP/mis_cursos.php");
+if ($_SERVER['REQUEST_METHOD'] !== 'POST' || ($rol !== 'Docente' && $rol !== 'Administrador')) {
+    header("Location: ../PHP/miscursos.php");
     exit();
 }
 
 $idCurso = intval($_POST['idCurso'] ?? 0);
-$tituloMaterial = trim($_POST['Titulo_material'] ?? '');
+$tituloMaterial = trim($_POST['Titulo_Material'] ?? '');
 
 
 if ($idCurso <= 0 || empty($tituloMaterial)) {
@@ -34,16 +34,16 @@ if (isset($_FILES['archivo_adjunto']) && $_FILES['archivo_adjunto']['error'] ===
 
     if (move_uploaded_file($tmpName, $rutaCompleta)) {
         // Insertar registro en la base de datos
-        $sql = "INSERT INTO material (idCurso, Titulo_material, Tipo_material, Contenido_url) 
-                VALUES (:idCurso, :Titulo_material, 'archivo', :Contenido_url)";
+        $sql = "INSERT INTO materiales (ID_Curso, Titulo_Material, Tipo_Material, Contenido_URL) 
+                VALUES (:ID_Curso, :Titulo_Material, 'archivo', :Contenido_URL)";
 
         $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(':idCurso', $idCurso, PDO::PARAM_INT);
-        $stmt->bindParam(':Titulo_material', $tituloMaterial, PDO::PARAM_STR);
-        $stmt->bindParam(':Contenido_url', $nombreArchivo, PDO::PARAM_STR);
+        $stmt->bindParam(':ID_Curso', $idCurso, PDO::PARAM_INT);
+        $stmt->bindParam(':Titulo_Material', $tituloMaterial, PDO::PARAM_STR);
+        $stmt->bindParam(':Contenido_URL', $nombreArchivo, PDO::PARAM_STR);
 
         if ($stmt->execute()) {
-            header("Location: ../PHP/vercursos.php?idCurso=" . $idCurso . "&tab=materiales");
+            header("Location: ../PHP/vercursos.php?ID_Curso=" . $idCurso . "&tab=materiales");
             exit();
         } else {
             echo "Error al guardar los datos en la base de datos.";

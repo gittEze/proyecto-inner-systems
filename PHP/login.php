@@ -42,7 +42,7 @@
                         <input type="email" id="Correo" name="Correo" placeholder="Ingrese su correo">
 
                         <label for="Contrasena">Contraseña:</label>
-                        <input type="password" id="Contrasena" name="Contrasena" placeholder="Ingrese su contraseña">
+                        <input type="password" id="Contrasena" name="Contrasenia" placeholder="Ingrese su contraseña">
 
                         <a id="recuperarContrasenia" href="">Recuperar contraseña.</a>
 
@@ -78,13 +78,13 @@
                         <input type="text" id="Cedula" name="Cedula" placeholder="Ej: 1234567890">
 
                         <label for="Fecha">Fecha de nacimiento</label>
-                        <input type="date" id="Fecha" name="Fecha_de_Nacimiento" placeholder="Ej: 01/01/2000">
+                        <input type="date" id="Fecha" name="Fecha_De_Nacimiento" placeholder="Ej: 01/01/2000">
 
                         <label for="Correo">Correo electrónico</label>
                         <input type="email" id="Correo" name="Correo" placeholder="ejemplo@correo.com" required>
 
                         <label for="Contrasena">Contraseña</label>
-                        <input type="password" id="Contrasena" name="Contrasena" placeholder="Ingrese su contraseña" required>
+                        <input type="password" id="Contrasena" name="Contrasenia" placeholder="Ingrese su contraseña" required>
 
                         <label for="Telefono">Teléfono</label>
                         <input type="tel" id="Telefono" name="Telefono" placeholder="099123456">

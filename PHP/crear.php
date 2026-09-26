@@ -25,13 +25,13 @@
             <div id="Crearcurso">
                 <form action="../PHP conexiones/crecur.php" method="post" enctype="multipart/form-data">
                 <h2 class="Curscre">Título del curso</h2>
-                <input type="text" id= "nombrecur" name="Titulo_curso" maxlength="50" placeholder="ej: Desarrollo de paginas webs">
+                <input type="text" id= "nombrecur" name="Titulo_Curso" maxlength="50" placeholder="ej: Desarrollo de paginas webs">
 
                 <h2>Descripción del curso:</h2>
-                <textarea id="Desc" name="Descripcion_curso"  rows="8" cols="50"></textarea>
+                <textarea id="Desc" name="Descripcion_Curso"  rows="8" cols="50"></textarea>
 
                 <label class="Detalle" for="Cursotip">Tipo de curso:</label>
-                    <select id="Cursotip" name="Tipo_curso">
+                    <select id="Cursotip" name="Tipo_Curso">
                         <option value="Informática">Informática</option>
                         <option value="Programacion">Programación</option>
                         <option value="Arte">Arte</option>
@@ -53,7 +53,7 @@
                     
                 <h2>Duración estimada:</h2> 
                 <div id="horarios">  
-                    <input type="number" id="curnum" name="Duracion_estimada" min="10" max="100" placeholder="Ej: 12"> 
+                    <input type="number" id="curnum" name="Duracion_Estimada" min="10" max="100" placeholder="Ej: 12"> 
                     <h2 id="horas">Horas</h2>
                 </div> 
 
