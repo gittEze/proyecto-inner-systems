@@ -1,7 +1,7 @@
 CREATE TABLE usuarios (
     ID_Usuario INT AUTO_INCREMENT PRIMARY KEY,
     Rol VARCHAR(30) NOT NULL,
-    Contrasena VARCHAR(255) NOT NULL,
+    Contrasenia VARCHAR(255) NOT NULL,
     Nombre VARCHAR(100) NOT NULL,
     Apellido VARCHAR(100) NOT NULL,
     Correo VARCHAR(150) NOT NULL UNIQUE,
@@ -22,9 +22,9 @@ CREATE TABLE cursos (
     Tipo_Curso VARCHAR(50),
     Nivel_Curso VARCHAR(50),
 
-    CONSTRAINT fk_Curso_Usuario
+    CONSTRAINT fk_curso_usuario
         FOREIGN KEY (ID_Docente)
-        REFERENCES Usuario(ID_Usuario)
+        REFERENCES usuarios(ID_Usuario)
         ON DELETE CASCADE
         ON UPDATE CASCADE
 );
@@ -35,19 +35,19 @@ CREATE TABLE inscripciones (
     ID_Usuario INT NOT NULL,
     Fecha_Inscripcion DATETIME DEFAULT CURRENT_TIMESTAMP,
 
-    CONSTRAINT fk_Inscribe_Curso
+    CONSTRAINT fk_inscripcion_curso
         FOREIGN KEY (ID_Curso)
-        REFERENCES Curso(ID_Curso)
+        REFERENCES cursos(ID_Curso)
         ON DELETE CASCADE
         ON UPDATE CASCADE,
 
-    CONSTRAINT fk_Inscribe_Usuario
+    CONSTRAINT fk_inscripcion_usuario
         FOREIGN KEY (ID_Usuario)
-        REFERENCES Usuario(ID_Usuario)
+        REFERENCES usuarios(ID_Usuario)
         ON DELETE CASCADE
         ON UPDATE CASCADE,
 
-    CONSTRAINT uq_Inscribe_Usuario_Curso
+    CONSTRAINT uq_inscripcion_usuario_cursos
         UNIQUE (ID_Curso, ID_Usuario)
 );
 
@@ -56,9 +56,9 @@ CREATE TABLE carpetas (
     ID_Curso INT NOT NULL,
     Nombre_Carpeta VARCHAR(150) NOT NULL,
 
-    CONSTRAINT fk_Carpeta_Curso
+    CONSTRAINT fk_carpeta_curso
         FOREIGN KEY (ID_Curso)
-        REFERENCES Curso(ID_Curso)
+        REFERENCES cursos(ID_Curso)
         ON DELETE CASCADE
         ON UPDATE CASCADE
 );
@@ -71,26 +71,26 @@ CREATE TABLE materiales (
     Tipo_Material VARCHAR(50),
     Archivo VARCHAR(255),
 
-    CONSTRAINT fk_Material_Carpeta
+    CONSTRAINT fk_material_carpeta
         FOREIGN KEY (ID_Carpeta)
-        REFERENCES Carpeta(ID_Carpeta)
+        REFERENCES carpetas(ID_Carpeta)
         ON DELETE CASCADE
         ON UPDATE CASCADE
 );
 
 INSERT INTO usuarios
-(ID_Usuario, Rol, Contrasena, Nombre, Apellido, Correo, Fecha_De_Nacimiento, Telefono, Cedula, Genero)
+(ID_Usuario, Rol, Contrasenia, Nombre, Apellido, Correo, Fecha_De_Nacimiento, Telefono, Cedula, Genero)
 VALUES
-(1, 'Docente', 'Clave123', 'Carlos', 'Rodriguez', 'carlos.rodriguez@email.com', '1985-03-15', '099111111', '12345678', 'Masculino'),
-(2, 'Docente', 'Clave456', 'Laura', 'Martinez', 'laura.martinez@email.com', '1988-07-22', '099222222', '23456789', 'Femenino'),
-(3, 'Docente', 'Clave789', 'Andres', 'Gomez', 'andres.gomez@email.com', '1982-11-10', '099333333', '34567890', 'Masculino'),
-(4, 'Estudiante', 'Clave111', 'Sofia', 'Fernandez', 'sofia.fernandez@email.com', '2003-01-25', '099444444', '45678901', 'Femenino'),
-(5, 'Estudiante', 'Clave222', 'Mateo', 'Silva', 'mateo.silva@email.com', '2002-05-18', '099555555', '56789012', 'Masculino'),
-(6, 'Estudiante', 'Clave333', 'Valentina', 'Lopez', 'valentina.lopez@email.com', '2004-09-12', '099666666', '67890123', 'Femenino'),
-(7, 'Estudiante', 'Clave444', 'Martin', 'Perez', 'martin.perez@email.com', '2001-12-03', '099777777', '78901234', 'Masculino'),
-(8, 'Estudiante', 'Clave555', 'Camila', 'Gonzalez', 'camila.gonzalez@email.com', '2003-06-30', '099888888', '89012345', 'Femenino'),
-(9, 'Estudiante', 'Clave666', 'Nicolas', 'Torres', 'nicolas.torres@email.com', '2002-08-14', '099999999', '90123456', 'Masculino'),
-(10, 'Estudiante', 'Clave777', 'Lucia', 'Ramirez', 'lucia.ramirez@email.com', '2004-02-20', '098101010', '01234567', 'Femenino');
+(1, 'Docente', 'Carlos2026', 'Carlos', 'Rodriguez', 'carlos.rodriguez@email.com', '1985-03-15', '099111111', '12345678', 'Masculino'),
+(2, 'Docente', 'Laura2026', 'Laura', 'Martinez', 'laura.martinez@email.com', '1988-07-22', '099222222', '23456789', 'Femenino'),
+(3, 'Docente', 'Andres2026', 'Andres', 'Gomez', 'andres.gomez@email.com', '1982-11-10', '099333333', '34567890', 'Masculino'),
+(4, 'Estudiante', 'Sofia2026', 'Sofia', 'Fernandez', 'sofia.fernandez@email.com', '2003-01-25', '099444444', '45678901', 'Femenino'),
+(5, 'Estudiante', 'Mateo2026', 'Mateo', 'Silva', 'mateo.silva@email.com', '2002-05-18', '099555555', '56789012', 'Masculino'),
+(6, 'Estudiante', 'Valentina2026', 'Valentina', 'Lopez', 'valentina.lopez@email.com', '2004-09-12', '099666666', '67890123', 'Femenino'),
+(7, 'Estudiante', 'Martin2026', 'Martin', 'Perez', 'martin.perez@email.com', '2001-12-03', '099777777', '78901234', 'Masculino'),
+(8, 'Estudiante', 'Camila2026', 'Camila', 'Gonzalez', 'camila.gonzalez@email.com', '2003-06-30', '099888888', '89012345', 'Femenino'),
+(9, 'Estudiante', 'Nicolas2026', 'Nicolas', 'Torres', 'nicolas.torres@email.com', '2002-08-14', '099999999', '90123456', 'Masculino'),
+(10, 'Estudiante', 'Lucia2026', 'Lucia', 'Ramirez', 'lucia.ramirez@email.com', '2004-02-20', '098101010', '01234567', 'Femenino');
 
 INSERT INTO cursos
 (ID_Curso, ID_Docente, Dataso, Duracion_Estimada, Precio, Titulo_Curso, Descripcion_Curso, Tipo_Curso, Nivel_Curso)
