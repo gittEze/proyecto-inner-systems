@@ -2,23 +2,24 @@
 session_start();
 require 'conexion.php';
 
-// Aqui el condicional evalua si existelos parametros enviados por post y get de 'Corre' y 'Contrasena'
- if(isset($_POST['Correo']) && isset($_POST['Contrasena'])){
+// Aqui el condicional evalua si existelos parametros enviados por post y get de 'Corre' y 'Contrasenia'
+ if(isset($_POST['Correo']) && isset($_POST['Contrasenia'])){
     // La consulta trae el correo y contraseña de la base de datos.
-                $sql = "SELECT Correo, Rol FROM usuario WHERE Correo = :Correo AND Contraseña = :Contrasena";
+                $sql = "SELECT ID_Usuario, Correo, Rol FROM usuarios WHERE Correo = :Correo AND Contrasenia = :Contrasenia";
                 // Se prepara la consulta para mayor seguridad.
                 $consulta = $pdo->prepare($sql);
 
                 $consulta->bindParam(':Correo', $_POST['Correo'], PDO::PARAM_STR);
-                $consulta->bindParam(':Contrasena', $_POST['Contrasena'], PDO::PARAM_STR);
+                $consulta->bindParam(':Contrasenia', $_POST['Contrasenia'], PDO::PARAM_STR);
 
                 $consulta->execute();
 
                 $usuario = $consulta->fetch(PDO::FETCH_ASSOC);
-            }
+            
             // Condicional que verifica si la sesión de correo contiene el parametro de 'Correo'.
             if($usuario){
                 $_SESSION['Sesion'] = $usuario['Correo'];
+                $_SESSION['ID_Usuario'] = $usuario['ID_Usuario'];
                 $_SESSION['Rol'] = strtolower($usuario['Rol']);
 
                 header("Location: ../PHP/main.php");
@@ -33,5 +34,5 @@ require 'conexion.php';
                 exit();
             }
 
-
+ }
 ?>

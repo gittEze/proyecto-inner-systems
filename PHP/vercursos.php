@@ -2,20 +2,20 @@
 session_start();
 require_once '../PHP conexiones/conexion.php';
 
-// Condicional con isset que evalua existe el idCurso o si esta vacio,en caso de ello, el usuario ira a mis_cursos.php 
-if (!isset($_GET['idCurso']) || empty($_GET['idCurso'])) {
-    header("Location: mis_cursos.php");
+// Condicional con isset que evalua existe el idCurso o si esta vacio,en caso de ello, el usuario ira a miscursos.php 
+if (!isset($_GET['ID_Curso']) || empty($_GET['ID_Curso'])) {
+    header("Location: miscursos.php");
     exit();
 }
 
-$idCurso = intval($_GET['idCurso']);
+$idCurso = intval($_GET['ID_Curso']);
 
 // Pestaña activa enviada por la URL (por defecto muestra 'materiales' si no encuentra un valor en 'tab')
 $tabActiva = $_GET['tab'] ?? 'materiales';
 
 // Consulta que permite traer información del curso por medio de su id.
-$stmtCurso = $pdo->prepare("SELECT * FROM cursos WHERE idCurso = :idCurso");
-$stmtCurso->bindParam(':idCurso', $idCurso, PDO::PARAM_INT);
+$stmtCurso = $pdo->prepare("SELECT * FROM cursos WHERE ID_Curso = :ID_Curso");
+$stmtCurso->bindParam(':ID_Curso', $idCurso, PDO::PARAM_INT);
 $stmtCurso->execute();
 $curso = $stmtCurso->fetch(PDO::FETCH_ASSOC);
 
@@ -26,24 +26,30 @@ if (!$curso) {
     exit();
 }
 
+// Estructura para verificar el rol del usuario.
+
+$rolSesion = strtolower(trim($_SESSION['Rol'] ?? ''));
+$esDocente = ($rolSesion === 'Docente' || $rolSesion === 'Administrador');
+
+
 // En esa consulta se obtienen las carpetas que hay en el curso.
-$stmtCarpetas = $pdo->prepare("SELECT * FROM carpeta WHERE idCurso = :idCurso ORDER BY Orden ASC");
-$stmtCarpetas->bindParam(':idCurso', $idCurso, PDO::PARAM_INT);
+$stmtCarpetas = $pdo->prepare("SELECT * FROM carpetas WHERE ID_Curso = :ID_Curso ORDER BY Orden ASC");
+$stmtCarpetas->bindParam(':ID_Curso', $idCurso, PDO::PARAM_INT);
 $stmtCarpetas->execute();
 $carpetas = $stmtCarpetas->fetchAll(PDO::FETCH_ASSOC);
 
 // Esta consulta se encarga de obtener los materiales que no esten dentro de ninguna carpeta.
-$stmtMatSueltos = $pdo->prepare("SELECT * FROM material WHERE idCurso = :idCurso AND idCarpeta IS NULL");
-$stmtMatSueltos->bindParam(':idCurso', $idCurso, PDO::PARAM_INT);
+$stmtMatSueltos = $pdo->prepare("SELECT * FROM materiales WHERE ID_Curso = :ID_Curso AND ID_Carpeta IS NULL");
+$stmtMatSueltos->bindParam(':ID_Curso', $idCurso, PDO::PARAM_INT);
 $stmtMatSueltos->execute();
 $materialesSueltos = $stmtMatSueltos->fetchAll(PDO::FETCH_ASSOC);
 
 // Esta consulta se encarga de obtener los miembros que esten inscriptos en los cursos.
 $stmtMiembros = $pdo->prepare("SELECT u.Nombre, u.Apellido, u.Correo 
-                               FROM usuario u 
-                               INNER JOIN inscripcion i ON u.idUsu = i.idUsu 
-                               WHERE i.idCurso = :idCurso");
-$stmtMiembros->bindParam(':idCurso', $idCurso, PDO::PARAM_INT);
+                               FROM usuarios u 
+                               INNER JOIN inscripciones i ON u.ID_Usuario = i.ID_Usuario 
+                               WHERE i.ID_Curso = :ID_Curso");
+$stmtMiembros->bindParam(':ID_Curso', $idCurso, PDO::PARAM_INT);
 $stmtMiembros->execute();
 $miembros = $stmtMiembros->fetchAll(PDO::FETCH_ASSOC);
 ?>
@@ -52,57 +58,8 @@ $miembros = $stmtMiembros->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= htmlspecialchars($curso['Titulo_curso']) ?> | LMS</title>
+    <title><?= htmlspecialchars($curso['Titulo_Curso']) ?> | LMS</title>
     <link rel="stylesheet" href="../CSS/estilo.css">
-    <style>
-        /* Estilos para el menú de navegación */
-        .course-nav a {
-            display: block;
-            padding: 10px 15px;
-            text-decoration: none;
-            color: #333;
-            border-radius: 6px;
-            margin-bottom: 5px;
-        }
-        .course-nav a.active {
-            background-color: #2563eb;
-            color: #ffffff;
-            font-weight: bold;
-        }
-
-        /* Estilos para el desplegable de Miembros */
-        details.desplegable-miembros {
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            padding: 12px;
-            margin-top: 15px;
-        }
-        details.desplegable-miembros summary {
-            font-weight: bold;
-            font-size: 1.1rem;
-            cursor: pointer;
-            user-select: none;
-            color: #0d47a1;
-        }
-        .lista-miembros {
-            list-style: none;
-            padding: 10px 0 0 0;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-        .item-miembro {
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            padding: 10px 14px;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-    </style>
 </head>
 <body>
 
@@ -110,7 +67,7 @@ $miembros = $stmtMiembros->fetchAll(PDO::FETCH_ASSOC);
 
     <div class="lms-container">
 
-        <!-- Columna izquerda que muestra datos como los miembros inscriptos,calificaciones y materiales del curso. -->
+        <!-- Columna izquierda: Navegación -->
         <aside class="sidebar-left">
             <div class="curso-portada">
                 <img src="../PHP conexiones/Imagenes/<?= !empty($curso['Dataso']) ? htmlspecialchars($curso['Dataso']) : 'default.png' ?>" alt="Portada Curso">
@@ -118,33 +75,33 @@ $miembros = $stmtMiembros->fetchAll(PDO::FETCH_ASSOC);
             <nav class="course-nav">
                 <ul>
                     <li>
-                        <a href="vercursos.php?idCurso=<?= $idCurso ?>&tab=materiales" class="<?= $tabActiva === 'materiales' ? 'active' : '' ?>">
+                        <a href="vercursos.php?ID_Curso=<?= $idCurso ?>&tab=materiales" class="<?= $tabActiva === 'materiales' ? 'active' : '' ?>">
                             📦 Materiales
                         </a>
                     </li>
                     <li>
-                        <a href="vercursos.php?idCurso=<?= $idCurso ?>&tab=calificaciones" class="<?= $tabActiva === 'calificaciones' ? 'active' : '' ?>">
+                        <a href="vercursos.php?ID_Curso=<?= $idCurso ?>&tab=calificaciones" class="<?= $tabActiva === 'calificaciones' ? 'active' : '' ?>">
                             📊 Calificaciones
                         </a>
                     </li>
                     <li>
-                        <a href="vercursos.php?idCurso=<?= $idCurso ?>&tab=miembros" class="<?= $tabActiva === 'miembros' ? 'active' : '' ?>">
+                        <a href="vercursos.php?ID_Curso=<?= $idCurso ?>&tab=miembros" class="<?= $tabActiva === 'miembros' ? 'active' : '' ?>">
                             👥 Miembros (<?= count($miembros) ?>)
                         </a>
                     </li>
                 </ul>
             </nav>
             <div class="info-curso">
-                <small><strong>Nivel:</strong> <?= htmlspecialchars($curso['Nivel_Curso'] ?? $curso['Nivel_curso'] ?? '') ?></small><br>
-                <small><strong>Tipo:</strong> <?= htmlspecialchars($curso['Tipo_curso'] ?? '') ?></small>
+                <small><strong>Nivel:</strong> <?= htmlspecialchars($curso['Nivel_Curso'] ?? $curso['Nivel_Curso'] ?? '') ?></small><br>
+                <small><strong>Tipo:</strong> <?= htmlspecialchars($curso['Tipo_Curso'] ?? '') ?></small>
             </div>
         </aside>
 
-        <!-- Columna 2: Lienzo Central -->
+        <!-- Columna central -->
         <main class="content-center">
             <div class="curso-header">
-                <h2><?= htmlspecialchars($curso['Titulo_curso']) ?></h2>
-                <p class="descripcion"><?= htmlspecialchars($curso['Descripcion_curso']) ?></p>
+                <h2><?= htmlspecialchars($curso['Titulo_Curso']) ?></h2>
+                <p class="descripcion"><?= htmlspecialchars($curso['Descripcion_Curso']) ?></p>
             </div>
 
             <hr>
@@ -154,73 +111,64 @@ $miembros = $stmtMiembros->fetchAll(PDO::FETCH_ASSOC);
                 <section class="seccion-tab">
                     <h3>Recursos del Curso</h3>
                     <br>
+
+                    <!-- Acciones exclusivas para docentes/admins -->
+                    <?php if ($esDocente): ?>
+                        <div class="acciones-profesor">
+                            <a href="#modal-archivo" class="btn-confirmar">📁 Subir Archivo</a>
+                        </div>
+                    <?php endif; ?>
+
                     <div class="lista-recursos">
                         
-                        <!-- MATERIALES SUELTOS -->
-
-                         <!--El foreach primero recorre los materiales sueltos a traves de $materialesSueltos y los guarda en $mat  -->
-
+                        <!-- Lista de archivos sueltos -->
                         <?php foreach ($materialesSueltos as $mat): ?>
                             <div class="item-recurso material">
-                                <?php if ($mat['Tipo_material'] == 'enlace'): ?>
+                                <?php if ($mat['Tipo_Material'] == 'enlace'): ?>
                                     <span class="icon">🔗</span>
-                                    <a href="<?= htmlspecialchars($mat['Contenido_url']) ?>" target="_blank">
-                                        <?= htmlspecialchars($mat['Titulo_material']) ?> (abrir en otra pestaña)
+                                    <a href="<?= htmlspecialchars($mat['Contenido_URL']) ?>" target="_blank">
+                                        <?= htmlspecialchars($mat['Titulo_Material']) ?> (abrir en otra pestaña)
                                     </a>
 
-                                <!-- En cada else if asigna que el tipo de material sea correspondiente a un tipo expecifico -->
-
-                                <?php elseif ($mat['Tipo_material'] == 'tarea'): ?>
-                                    <span class="icon">📝</span>
-                                    <div class="info-tarea">
-                                        <strong><?= htmlspecialchars($mat['Titulo_material']) ?></strong>
-                                        <?php if (!empty($mat['Fecha_vencimiento'])): ?>
-                                            <small class="vencimiento">Vence: <?= date('d/m/Y H:i', strtotime($mat['Fecha_vencimiento'])) ?></small>
-                                        <?php endif; ?>
-                                    </div>
-
-                                <?php elseif ($mat['Tipo_material'] == 'video'): ?>
+                                <?php elseif ($mat['Tipo_Material'] == 'video'): ?>
                                     <span class="icon">🎬</span>
                                     <div class="media-container">
-                                        <strong><?= htmlspecialchars($mat['Titulo_material']) ?></strong><br>
+                                        <strong><?= htmlspecialchars($mat['Titulo_Material']) ?></strong><br>
                                         <video controls width="100%">
-                                            <source src="uploads/videos/<?= htmlspecialchars($mat['Contenido_url']) ?>" type="video/mp4">
+                                            <source src="Subidas/videos/<?= htmlspecialchars($mat['Contenido_URL']) ?>" type="video/mp4">
                                         </video>
                                     </div>
 
-                                <?php elseif ($mat['Tipo_material'] == 'audio'): ?>
+                                <?php elseif ($mat['Tipo_Material'] == 'audio'): ?>
                                     <span class="icon">🎧</span>
                                     <div class="media-container">
-                                        <strong><?= htmlspecialchars($mat['Titulo_material']) ?></strong><br>
+                                        <strong><?= htmlspecialchars($mat['Titulo_Material']) ?></strong><br>
                                         <audio controls style="width: 100%;">
-                                            <source src="uploads/audios/<?= htmlspecialchars($mat['Contenido_url']) ?>" type="audio/mpeg">
+                                            <source src="Subidas/audios/<?= htmlspecialchars($mat['Contenido_URL']) ?>" type="audio/mpeg">
                                         </audio>
                                     </div>
 
                                 <?php else: ?>
                                     <span class="icon">📄</span>
-                                    <a href="uploads/archivos/<?= htmlspecialchars($mat['Contenido_url']) ?>" download>
-                                        <?= htmlspecialchars($mat['Titulo_material']) ?>
+                                    <a href="Subidas/archivos/<?= htmlspecialchars($mat['Contenido_URL']) ?>" download>
+                                        <?= htmlspecialchars($mat['Titulo_Material']) ?>
                                     </a>
                                 <?php endif; ?>
                             </div>
                         <?php endforeach; ?>
 
-                        <!-- CARPETAS -->
-                         <!-- Foreach que recorre las carpetas y las guarda en la variable $carpeta -->
+                        <!-- Carpetas -->
                         <?php foreach ($carpetas as $carpeta): ?>
                             <details class="item-recurso carpeta">
                                 <summary>
                                     <span class="icon">📁</span>
-                                    <strong><?= htmlspecialchars($carpeta['Nombre_carpeta']) ?></strong>
+                                    <strong><?= htmlspecialchars($carpeta['Nombre_Carpeta']) ?></strong>
                                 </summary>
                                 
-                                
                                 <div class="contenido-carpeta">
-                                    <!-- Consulta para obtener los materiales de las carpetas -->
                                     <?php
-                                    $stmtMatFolder = $pdo->prepare("SELECT * FROM material WHERE idCarpeta = :idCarpeta");
-                                    $stmtMatFolder->bindParam(':idCarpeta', $carpeta['idCarpeta'], PDO::PARAM_INT);
+                                    $stmtMatFolder = $pdo->prepare("SELECT * FROM materiales WHERE ID_Carpeta = :ID_Carpeta");
+                                    $stmtMatFolder->bindParam(':ID_Carpeta', $carpeta['ID_Carpeta'], PDO::PARAM_INT);
                                     $stmtMatFolder->execute();
                                     $materialesCarpeta = $stmtMatFolder->fetchAll(PDO::FETCH_ASSOC);
 
@@ -229,7 +177,7 @@ $miembros = $stmtMiembros->fetchAll(PDO::FETCH_ASSOC);
                                     ?>
                                         <div class="item-recurso sub-item">
                                             <span class="icon">📄</span>
-                                            <span><?= htmlspecialchars($matFolder['Titulo_material']) ?></span>
+                                            <span><?= htmlspecialchars($matFolder['Titulo_Material']) ?></span>
                                         </div>
                                     <?php 
                                         endforeach;
@@ -245,7 +193,7 @@ $miembros = $stmtMiembros->fetchAll(PDO::FETCH_ASSOC);
                 </section>
             <?php endif; ?>
 
-            <!-- Apartado de las calificaciones -->
+            <!-- PESTAÑA 2: CALIFICACIONES -->
             <?php if ($tabActiva === 'calificaciones'): ?>
                 <section class="seccion-tab">
                     <h3>Calificaciones</h3>
@@ -257,12 +205,11 @@ $miembros = $stmtMiembros->fetchAll(PDO::FETCH_ASSOC);
                 </section>
             <?php endif; ?>
 
-            <!-- Apartado de selección de los miembros-->
+            <!-- PESTAÑA 3: MIEMBROS -->
             <?php if ($tabActiva === 'miembros'): ?>
                 <section class="seccion-tab">
                     <h3>Integrantes del Curso</h3>
 
-                    <!-- Lista con los nombre de los usuarios inscriptos -->
                     <details class="desplegable-miembros" open>
                         <summary>👥 Alumnos inscriptos (<?= count($miembros) ?>)</summary>
                         
@@ -270,7 +217,6 @@ $miembros = $stmtMiembros->fetchAll(PDO::FETCH_ASSOC);
                             <ul class="lista-miembros">
                                 <?php foreach ($miembros as $m): ?>
                                     <?php 
-                                        // Nombre completo registrado o fallback al correo
                                         $nombreCompleto = trim(($m['Nombre'] ?? '') . ' ' . ($m['Apellido'] ?? ''));
                                         if (empty($nombreCompleto)) {
                                             $nombreCompleto = explode('@', $m['Correo'])[0];
@@ -293,15 +239,38 @@ $miembros = $stmtMiembros->fetchAll(PDO::FETCH_ASSOC);
 
         </main>
 
-        <!-- Columna 3: Panel de Actividades Próximas -->
+        <!-- Columna derecha -->
         <aside class="sidebar-right">
             <div class="card-widget">
-                <h3>Actividades a realizar 📅</h3>
-                <p class="text-muted">No hay tareas o eventos agendados para esta semana.</p>
+                <h3>Información 📅</h3>
+                <p class="text-muted">No hay eventos agendados para esta semana.</p>
             </div>
         </aside>
 
     </div>
+
+    <!-- Modal de subida de archivos -->
+    <?php if ($esDocente): ?>
+        <div id="modal-archivo" class="modal-overlay">
+            <div class="modal-box">
+                <h2>Subir Archivo</h2>
+                <form action="../PHP conexiones/subirmaterial.php" method="POST" enctype="multipart/form-data">
+                    <input type="hidden" name="ID_Curso" value="<?= $idCurso ?>">
+
+                    <label>Título del archivo:</label>
+                    <input type="text" name="Titulo_Material" required placeholder="Ej: Unidad 1 - Presentación.pdf">
+
+                    <label>Seleccionar Archivo:</label>
+                    <input type="file" name="archivo_adjunto" required>
+
+                    <div class="modal-acciones">
+                        <button type="submit" class="btn-confirmar">Subir</button>
+                        <a href="#" class="btn-cancelar">Cancelar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    <?php endif; ?>
 
     <?php include 'footer.php'; ?>
 

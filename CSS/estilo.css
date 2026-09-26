@@ -1777,3 +1777,57 @@ details.carpeta summary::-webkit-details-marker {
     margin-bottom: 8px;
     color: #1e1e3b;
 }
+
+
+/* DISEÑO DENTRO DE LOS CURSOS*/
+
+/* Estilos para el menú de navegación */
+.course-nav a {
+    display: block;
+    padding: 10px 15px;
+    text-decoration: none;
+    color: #333;
+    border-radius: 6px;
+    margin-bottom: 5px;
+}
+.course-nav a.active {
+        background-color: #2563eb;
+        color: #ffffff;
+        font-weight: bold;
+}
+
+/* Estilos para el desplegable de Miembros */
+details.desplegable-miembros {
+background: #ffffff;
+border: 1px solid #e2e8f0;
+border-radius: 8px;
+padding: 12px;
+margin-top: 15px;
+}
+
+details.desplegable-miembros summary {
+font-weight: bold;
+font-size: 1.1rem;
+cursor: pointer;
+user-select: none;
+color: #0d47a1;
+}
+
+.lista-miembros {
+    list-style: none;
+    padding: 10px 0 0 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.item-miembro {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    padding: 10px 14px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
