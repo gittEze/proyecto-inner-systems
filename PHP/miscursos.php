@@ -10,28 +10,28 @@ if (!isset($_SESSION['Sesion'])) {
 }
 
 $correo = $_SESSION['Sesion'];
-$idUsu = $_SESSION['idUsu'] ?? 0;
+$ID_Usuario = $_SESSION['ID_Usuario'] ?? 0;
 
 // Consulta con UNION: Junta los cursos inscriptos + los cursos creados por el docente
 $sql = "SELECT c.* 
         FROM cursos c
-        INNER JOIN inscripcion i ON c.idCurso = i.idCurso
-        INNER JOIN usuario u ON i.idUsu = u.idUsu
-        WHERE u.Correo = :correo
+        INNER JOIN inscripciones i ON c.ID_Curso = i.ID_Curso
+        INNER JOIN usuarios u ON i.ID_Usuario = u.ID_Usuario
+        WHERE u.Correo = :Correo
 
         UNION
 
         SELECT c.* 
         FROM cursos c
-        WHERE c.idDocente = :idUsu
+        WHERE c.ID_Docente = :ID_Usuario
 
-        ORDER BY idCurso DESC";
+        ORDER BY ID_Curso DESC";
     
 $stmt = $pdo->prepare($sql);
 
 $stmt->execute([
-    ':correo' => $correo,
-    ':idUsu'  => $idUsu
+    ':Correo' => $correo,
+    ':ID_Usuario'  => $ID_Usuario
 ]);
 
 $cursos = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -58,10 +58,10 @@ $cursos = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <?php if (count($cursos) > 0): ?>
                 <?php foreach ($cursos as $c): ?>
                     <!-- Enlace conectado directamente a vercursos.php pasándole el idCurso -->
-                    <a href="vercursos.php?idCurso=<?= $c['idCurso'] ?>" class="card-curso">
+                    <a href="vercursos.php?idCurso=<?= $c['ID_Curso'] ?>" class="card-curso">
                         <img src="../PHP conexiones/Imagenes/<?= !empty($c['Dataso']) ? htmlspecialchars($c['Dataso']) : 'default.png' ?>" alt="Portada">
                         <div class="card-curso-body">
-                            <h3><?= htmlspecialchars($c['Titulo_curso']) ?></h3>
+                            <h3><?= htmlspecialchars($c['Titulo_Curso']) ?></h3>
                             <small class="text-muted"><?= htmlspecialchars($c['Nivel_Curso'] ?? $c['Nivel_curso'] ?? '') ?></small>
                         </div>
                     </a>
