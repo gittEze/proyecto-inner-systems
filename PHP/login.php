@@ -18,15 +18,18 @@
                 </div>
 
                 <a id="volver" href="main.php">Volver</a>
-                
+
+
+                <!-- Comprobante de envio de los datos por los meotods post y get -->
                 <?php $envio = $_POST['btnRegister'] ?? $_POST['btnLogin'] ?? $_GET['pagina'] ?? 'login'; ?>
 
                 <?php if ($envio == "login") { ?>
 
                     <title>Iniciar sesión - Aprendomo</title>
-
+                <!-- Condicional que evalua si existe el parámetro exito en el método GET y si concuerda con lo dado en "conslogin" -->
                 <?php  if (isset($_GET['exito']) && $_GET['exito'] == 1) { ?>
-                    <div class="logrado">
+                <!-- Si se logra el coommprbante mmuestra un mensaje de que se logro el registro -->
+                    <div class="logrado">  
                         Registro exitoso. Por favor, inicie sesión.
                     </div>
                 <?php } ?>
@@ -39,10 +42,11 @@
                         <input type="email" id="Correo" name="Correo" placeholder="Ingrese su correo">
 
                         <label for="Contrasena">Contraseña:</label>
-                        <input type="password" id="Contrasena" name="Contrasena" placeholder="Ingrese su contraseña">
+                        <input type="password" id="Contrasena" name="Contrasenia" placeholder="Ingrese su contraseña">
 
                         <a id="recuperarContrasenia" href="">Recuperar contraseña.</a>
 
+                        <!-- Link que aparece en el apartado del formulario de login que envia al usuario a registrase si aun no lo ha hecho. -->
                         <p class="regisAqui">¿No tienes cuenta aún?
                             <a href="login.php?pagina=register" class="linkRegistro">
                                 Regístrate aquí.
@@ -54,6 +58,9 @@
                         </div>
                         
                     </form>
+
+
+                <!-- En caso de que el parametro recibido sea 'register', se mostrara el formulario -->
 
                 <?php } elseif ($envio == "register") { ?>
 
@@ -71,27 +78,27 @@
                         <input type="text" id="Cedula" name="Cedula" placeholder="Ej: 1234567890">
 
                         <label for="Fecha">Fecha de nacimiento</label>
-                        <input type="date" id="Fecha" name="Fecha_de_Nacimiento" placeholder="Ej: 01/01/2000">
+                        <input type="date" id="Fecha" name="Fecha_De_Nacimiento" placeholder="Ej: 01/01/2000">
 
                         <label for="Correo">Correo electrónico</label>
                         <input type="email" id="Correo" name="Correo" placeholder="ejemplo@correo.com" required>
 
                         <label for="Contrasena">Contraseña</label>
-                        <input type="password" id="Contrasena" name="Contrasena" placeholder="Ingrese su contraseña" required>
+                        <input type="password" id="Contrasena" name="Contrasenia" placeholder="Ingrese su contraseña" required>
 
                         <label for="Telefono">Teléfono</label>
                         <input type="tel" id="Telefono" name="Telefono" placeholder="099123456">
 
                         <label for="rol">Ocupación</label>
                         <select id="rol" name="Rol">
-                            <option value="docente">Docente</option>
-                            <option value="estudiante">Estudiante</option>
+                            <option value="Docente">Docente</option>
+                            <option value="Estudiante">Estudiante</option>
                         </select>
 
                         <label for="Gen">Género</label>
                         <select id="Gen" name="Genero">
-                            <option value="masculino">Masculino</option>
-                            <option value="femenino">Femenino</option>
+                            <option value="Masculino">Masculino</option>
+                            <option value="Femenino">Femenino</option>
                         </select>
 
                         <div class="botones">
