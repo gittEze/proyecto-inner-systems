@@ -9,10 +9,12 @@ if (!isset($_SESSION['Sesion'])) {
     exit();
 }
 
+//Variables que toman la sessión y el id del usaurio.
 $correo = $_SESSION['Sesion'];
 $ID_Usuario = $_SESSION['ID_Usuario'] ?? 0;
 
-// Consulta con UNION: Junta los cursos inscriptos + los cursos creados por el docente
+// Consulta con UNION que pemite juntar los cursos inscriptos mas los cursos creados por el docente,
+// De esta forma el usaurio puede ver lo que creo o esta inscripto sin importar el rol.
 $sql = "SELECT c.* 
         FROM cursos c
         INNER JOIN inscripciones i ON c.ID_Curso = i.ID_Curso

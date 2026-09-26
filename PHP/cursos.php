@@ -2,7 +2,7 @@
 session_start();
 require_once '../PHP conexiones/conexion.php';
 
-// Esta consulta que permite obtener los cursos de la base de ddatos ordenados por su id y de forma descendente. 
+// Esta consulta que permite obtener los cursos de la base de datos ordenados por su id y de forma descendente. 
 
 $sql = "SELECT * FROM cursos ORDER BY idCurso DESC";
 $stmt = $pdo->prepare($sql);
@@ -54,6 +54,7 @@ $acesso = !empty($rolper) && $rolper !== 'estudiante' && ($rolper === 'Docente')
                         <div class="tarjeta-curso">
                             <h3 class="titulo-curso"><?php echo htmlspecialchars($curso['Titulo_Curso']); ?></h3>
 
+                            <!-- Estrcutura para mostrar la imagen de los cursos traidos -->
                             <div class="box-imagen">
                                 <?php if (!empty($curso['Dataso'])): ?>
                                     <img src="../PHP conexiones/Imagenes/<?php echo htmlspecialchars($curso['Dataso']); ?>" alt="Curso">

@@ -1,7 +1,7 @@
 <?php
 session_start();
 require 'conexion.php';
-
+// Medida de seguridad para saber si la sesión del usaurio realmente se guarda en la base de datos,
 if (!isset($_SESSION['ID_Usuario']) || empty($_SESSION['ID_Usuario'])) {
     die("Error: Tu sesión ha expirado o no estás autenticado. Vuelve a iniciar sesión.");
 }
