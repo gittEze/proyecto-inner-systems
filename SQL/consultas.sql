@@ -1,4 +1,4 @@
-CREATE TABLE Usuario (
+CREATE TABLE usuarios (
     ID_Usuario INT AUTO_INCREMENT PRIMARY KEY,
     Rol VARCHAR(30) NOT NULL,
     Contrasena VARCHAR(255) NOT NULL,
@@ -11,7 +11,7 @@ CREATE TABLE Usuario (
     Genero VARCHAR(20)
 );
 
-CREATE TABLE Curso (
+CREATE TABLE cursos (
     ID_Curso INT AUTO_INCREMENT PRIMARY KEY,
     ID_Docente INT NOT NULL,
     Dataso VARCHAR(100),
@@ -29,7 +29,7 @@ CREATE TABLE Curso (
         ON UPDATE CASCADE
 );
 
-CREATE TABLE Inscribe (
+CREATE TABLE inscripciones (
     ID_Inscripcion INT AUTO_INCREMENT PRIMARY KEY,
     ID_Curso INT NOT NULL,
     ID_Usuario INT NOT NULL,
@@ -51,7 +51,7 @@ CREATE TABLE Inscribe (
         UNIQUE (ID_Curso, ID_Usuario)
 );
 
-CREATE TABLE Carpeta (
+CREATE TABLE carpetas (
     ID_Carpeta INT AUTO_INCREMENT PRIMARY KEY,
     ID_Curso INT NOT NULL,
     Nombre_Carpeta VARCHAR(150) NOT NULL,
@@ -63,7 +63,7 @@ CREATE TABLE Carpeta (
         ON UPDATE CASCADE
 );
 
-CREATE TABLE Material (
+CREATE TABLE materiales (
     ID_Material INT AUTO_INCREMENT PRIMARY KEY,
     ID_Carpeta INT NOT NULL,
     Nombre_Material VARCHAR(150) NOT NULL,
@@ -78,7 +78,7 @@ CREATE TABLE Material (
         ON UPDATE CASCADE
 );
 
-INSERT INTO Usuario
+INSERT INTO usuarios
 (ID_Usuario, Rol, Contrasena, Nombre, Apellido, Correo, Fecha_De_Nacimiento, Telefono, Cedula, Genero)
 VALUES
 (1, 'Docente', 'Clave123', 'Carlos', 'Rodriguez', 'carlos.rodriguez@email.com', '1985-03-15', '099111111', '12345678', 'Masculino'),
@@ -92,7 +92,7 @@ VALUES
 (9, 'Estudiante', 'Clave666', 'Nicolas', 'Torres', 'nicolas.torres@email.com', '2002-08-14', '099999999', '90123456', 'Masculino'),
 (10, 'Estudiante', 'Clave777', 'Lucia', 'Ramirez', 'lucia.ramirez@email.com', '2004-02-20', '098101010', '01234567', 'Femenino');
 
-INSERT INTO Curso
+INSERT INTO cursos
 (ID_Curso, ID_Docente, Dataso, Duracion_Estimada, Precio, Titulo_Curso, Descripcion_Curso, Tipo_Curso, Nivel_Curso)
 VALUES
 (1, 1, 'Datos generales', 40, 150.00, 'Programacion en Python', 'Introduccion a la programacion utilizando Python.', 'Programacion', 'Principiante'),
@@ -106,7 +106,7 @@ VALUES
 (9, 3, 'Datos generales', 35, 130.00, 'Python Avanzado', 'Programacion avanzada y manejo de datos con Python.', 'Programacion', 'Avanzado'),
 (10, 1, 'Datos generales', 30, 110.00, 'Introduccion a la Informatica', 'Conceptos basicos de informatica y tecnologia.', 'Informatica', 'Principiante');
 
-INSERT INTO Inscribe
+INSERT INTO inscripciones
 (ID_Inscripcion, ID_Curso, ID_Usuario, Fecha_Inscripcion)
 VALUES
 (1, 1, 4, '2026-01-10 10:30:00'),
@@ -120,7 +120,7 @@ VALUES
 (9, 8, 5, '2026-01-18 13:45:00'),
 (10, 9, 6, '2026-01-19 17:00:00');
 
-INSERT INTO Carpeta
+INSERT INTO carpetas
 (ID_Carpeta, ID_Curso, Nombre_Carpeta)
 VALUES
 (1, 1, 'Introduccion a Python'),
@@ -134,7 +134,7 @@ VALUES
 (9, 9, 'Python Avanzado'),
 (10, 10, 'Informatica Basica');
 
-INSERT INTO Material
+INSERT INTO materiales
 (ID_Material, ID_Carpeta, Nombre_Material, Descripcion_Material, Tipo_Material, Archivo)
 VALUES
 (1, 1, 'Introduccion a Python', 'Material introductorio sobre Python.', 'PDF', 'introduccion_python.pdf'),
