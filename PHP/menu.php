@@ -19,21 +19,19 @@ if (isset($_SESSION['Sesion'])) {
         <img id="logoMainImg" src="../IMG/Logo.png" alt="Logo de Aprendomo">
     </a>
 
-
-    <!-- Condicional que evalua si el usuario se logeo, en caso de que si, aplica el if y muestra todos los enlaces, en caso contrario muestra todos menos mis cursos. -->
+    <!-- Condicional que evalua si el usuario se logeo, en caso de que si, aplica el if y muestra todos los enlaces, en caso contrario muestra todos menos mis cursos y mentorías. -->
 
     <?php if (isset($_SESSION['Sesion'])) { ?>
     <a class="Serv" href="main.php">Inicio</a>
     <a class="Serv" href="cursos.php">Cursos</a>
     <a class="Serv" href="miscursos.php">Mis cursos</a>
     <a class="Serv" href="proyectos.php">Proyectos educativos</a>
-    <?php
-    if (isset($_SESSION['Sesion'])) {
-    ?>
-        <a class="Serv" href="mentorías.php">Mentorías</a>
-    <?php
-    }
-    ?>
+    <a class="Serv" href="mentorías.php">Mentorías</a>
+    <?php } else { ?>
+    <a class="Serv" href="main.php">Inicio</a>
+    <a class="Serv" href="cursos.php">Cursos</a>
+    <a class="Serv" href="proyectos.php">Proyectos educativos</a>
+    <?php } ?>
 
     <input id="buscador" type="search" placeholder="Buscar cursos, servicios...">
 
