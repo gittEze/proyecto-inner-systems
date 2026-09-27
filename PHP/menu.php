@@ -6,7 +6,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
 if (isset($_SESSION['Sesion'])) {
     $correo = $_SESSION['Sesion']; // Correo del usuario actual
-    $sql = "SELECT Nombre, Apellido, Rol, Foto_Perfil FROM usuario WHERE Correo = :correo";
+    $sql = "SELECT Nombre, Apellido, Rol, Foto_Perfil FROM usuarios WHERE Correo = :correo";
     $stmt = $pdo->prepare($sql);
     // Se ejecuta la consulta pasando el correo del usuario
     $stmt->execute([':correo' => $correo]);
@@ -19,8 +19,7 @@ if (isset($_SESSION['Sesion'])) {
         <img id="logoMainImg" src="../IMG/Logo.png" alt="Logo de Aprendomo">
     </a>
 
-
-    <!-- Condicional que evalua si el usuario se logeo, en caso de que si, aplica el if y muestra todos los enlaces, en caso contrario muestra todos menos mis cursos. -->
+    <!-- Condicional que evalua si el usuario se logeo, en caso de que si, aplica el if y muestra todos los enlaces, en caso contrario muestra todos menos mis cursos y mentorías. -->
 
     <?php if (isset($_SESSION['Sesion'])) { ?>
     <a class="Serv" href="main.php">Inicio</a>
@@ -32,9 +31,6 @@ if (isset($_SESSION['Sesion'])) {
     <a class="Serv" href="cursos.php">Cursos</a>
     <a class="Serv" href="proyectos.php">Proyectos educativos</a>
     <?php } ?>
- 
-
-
 
     <input id="buscador" type="search" placeholder="Buscar cursos, servicios...">
 
