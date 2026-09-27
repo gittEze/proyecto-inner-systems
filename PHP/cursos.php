@@ -4,7 +4,7 @@ require_once '../PHP conexiones/conexion.php';
 
 // Esta consulta que permite obtener los cursos de la base de datos ordenados por su id y de forma descendente. 
 
-$sql = "SELECT * FROM cursos ORDER BY idCurso DESC";
+$sql = "SELECT * FROM cursos ORDER BY ID_Curso DESC";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
 $cursos = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -69,7 +69,7 @@ $acesso = !empty($rolper) && $rolper !== 'estudiante' && ($rolper === 'Docente')
 
                             <p class="desc-curso"><?php echo htmlspecialchars($curso['Descripcion_Curso']); ?></p>
 
-                            <div class="info-curso"
+                            <div class="info-curso">
                                 <div class="dato-item">
                                     <span class="label">Nivel</span>
                                     <span class="valor"><?php echo htmlspecialchars($curso['Nivel_Curso'] ?? $curso['Nivel_Curso'] ?? ''); ?></span>
