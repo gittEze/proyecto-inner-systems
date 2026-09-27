@@ -1009,14 +1009,6 @@ select{
     margin-bottom: 20px;
 }
 
-.contenedorCursos {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 25px;
-    padding: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
-}
 
 
 .tarjeta-curso {
@@ -1040,7 +1032,7 @@ select{
 }
 
 
-.tarjeta-curso:hover {
+/* .tarjeta-curso:hover {
 
     transform: translateY(-8px);
     
@@ -1049,10 +1041,10 @@ select{
     
 
     border-color: #1565c0;
-}
+} */
 
 
-.tarjeta-curso {
+/* .tarjeta-curso {
     background-color: #1e88e5;
     border-radius: 20px;
     border: 4px solid #0d47a1;
@@ -1065,18 +1057,18 @@ select{
     min-height: 420px;
     box-shadow: 0 8px 20px rgba(13, 71, 161, 0.25);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
+} */
 
 
-.titulo-curso {
+/* .titulo-curso {
     margin: 0 0 10px 0;
     text-align: center;
     font-size: 1.2rem;
     font-weight: bold;
-}
+} */
 
 
-.box-imagen {
+/* .box-imagen {
     position: relative; 
     width: 100%;
     height: 150px;
@@ -1084,39 +1076,26 @@ select{
     overflow: hidden;
     background-color: #0d47a1;
     margin-bottom: 10px;
-}
+} */
 
-.box-imagen img {
+/* .box-imagen img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
-}
+} */
 
 
-.badge-tipo {
-    position: absolute;
-    bottom: 8px;
-    right: 8px;
-    background-color: rgba(13, 71, 161, 0.9); /* Azul oscuro semitransparente */
-    color: #ffffff;
-    font-size: 0.75rem;
-    font-weight: bold;
-    text-transform: uppercase;
-    padding: 4px 10px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    z-index: 2;
-}
 
 
-.desc-curso {
+/* .desc-curso {
     font-size: 0.85rem;
     margin-bottom: 12px;
     text-align: center;
     opacity: 0.9;
-}
+} */
+
+
 /* -------------------- */
 
 #Crearbot button{
@@ -1566,13 +1545,13 @@ background-color: #fff;
     color: #0f172a;
 }
 
-.info-curso {
+/* .info-curso {
     margin-top: 20px;
     padding-top: 15px;
     border-top: 1px solid #e2e8f0;
     color: #64748b;
     font-size: 0.85rem;
-}
+} */
 
 /* Columna Central: Contenido */
 .content-center {
@@ -1800,13 +1779,6 @@ details.carpeta summary::-webkit-details-marker {
 }
 
 
-/* Enlace invisible alrededor de la tarjeta para permitir click */
-.tarjeta-curso-link {
-    text-decoration: none;
-    color: inherit;
-    display: block;
-}
-
 /* Dentro de los cursos */
 
 .grid-cursos {
@@ -1894,4 +1866,141 @@ color: #0d47a1;
     display: flex;
     align-items: center;
     gap: 10px;
+}
+
+
+/* ==========================================
+   SECCIÓN: TARJETAS DE CURSOS cursos.php
+   ========================================== */
+
+/* Grilla principal de la sección de cursos */
+.contenedorCursos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 25px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Enlace contenedor de la tarjeta */
+.tarjeta-curso-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+/* Estructura base de la tarjeta */
+.tarjeta-curso {
+    background-color: #1e88e5;
+    border-radius: 20px;
+    border: 4px solid #0d47a1;
+    padding: 15px;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-sizing: border-box;
+    min-height: 420px;
+    box-shadow: 0 8px 20px rgba(13, 71, 161, 0.25);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    cursor: pointer;
+}
+
+.tarjeta-curso:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 16px 30px rgba(0, 0, 0, 0.35);
+    border-color: #1565c0;
+}
+
+/* Título principal del curso */
+.titulo-curso {
+    margin: 0 0 10px 0;
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+/* Contenedor de la imagen y etiqueta dentro de la tarjeta */
+.box-imagen {
+    position: relative; 
+    width: 100%;
+    height: 150px;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #0d47a1;
+    margin-bottom: 10px;
+}
+
+.box-imagen img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Badge del tipo de curso (Online/Presencial, etc.) */
+.badge-tipo {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    background-color: rgba(13, 71, 161, 0.9);
+    color: #ffffff;
+    font-size: 0.75rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    z-index: 2;
+}
+
+/* Texto descriptivo dentro de la tarjeta */
+.desc-curso {
+    font-size: 0.85rem;
+    margin-bottom: 12px;
+    text-align: center;
+    opacity: 0.9;
+    color: #ffffff;
+    line-height: 1.4;
+}
+
+/* Contenedor inferior de datos (Nivel, Horas, Precio) */
+.info-curso {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 8px;
+    margin-top: auto;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.dato-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Control estricto del tamaño de letra en las etiquetas internas */
+.dato-item .label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    opacity: 0.85;
+    color: #e0e0e0;
+    margin-bottom: 2px;
+}
+
+.dato-item .valor, 
+.dato-item .valor-precio {
+    font-size: 0.95rem;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.precio-box .valor-precio {
+    color: #ffd700; /* Destaque de color dorado para el precio */
+    font-size: 1.1rem;
 }
