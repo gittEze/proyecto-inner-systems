@@ -7,7 +7,7 @@ if (!isset($_GET['ID_Curso']) || empty($_GET['ID_Curso'])) {
     header("Location: miscursos.php");
     exit();
 }
-
+// Variable que guarda el valor de un curso 
 $idCurso = intval($_GET['ID_Curso']);
 
 // Pestaña activa enviada por la URL (por defecto muestra 'materiales' si no encuentra un valor en 'tab')
@@ -26,13 +26,13 @@ if (!$curso) {
     exit();
 }
 
-// Estructura para verificar el rol del usuario.
+//Estructura para verificar el rol del usuario.
 
 $rolSesion = strtolower(trim($_SESSION['Rol'] ?? ''));
 $esDocente = ($rolSesion === 'Docente' || $rolSesion === 'Administrador');
 
 
-// En esa consulta se obtienen las carpetas que hay en el curso.
+// En esta consulta se obtienen las carpetas que hay en el curso.
 $stmtCarpetas = $pdo->prepare("SELECT * FROM carpetas WHERE ID_Curso = :ID_Curso ORDER BY Orden ASC");
 $stmtCarpetas->bindParam(':ID_Curso', $idCurso, PDO::PARAM_INT);
 $stmtCarpetas->execute();
