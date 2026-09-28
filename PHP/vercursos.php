@@ -29,7 +29,7 @@ if (!$curso) {
 //Estructura para verificar el rol del usuario.
 
 $rolSesion = strtolower(trim($_SESSION['Rol'] ?? ''));
-$esDocente = ($rolSesion === 'Docente' || $rolSesion === 'Administrador');
+$esDocente = ($rolSesion === 'docente' || $rolSesion === 'administrador');
 
 
 // En esta consulta se obtienen las carpetas que hay en el curso.

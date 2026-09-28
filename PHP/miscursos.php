@@ -60,7 +60,7 @@ $cursos = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <?php if (count($cursos) > 0): ?>
                 <?php foreach ($cursos as $c): ?>
                     <!-- Enlace conectado directamente a vercursos.php pasándole el idCurso -->
-                    <a href="vercursos.php?idCurso=<?= $c['ID_Curso'] ?>" class="card-curso">
+                    <a href="vercursos.php?ID_Curso=<?= $c['ID_Curso'] ?>" class="card-curso">
                         <img src="../PHP conexiones/Imagenes/<?= !empty($c['Dataso']) ? htmlspecialchars($c['Dataso']) : 'default.png' ?>" alt="Portada">
                         <div class="card-curso-body">
                             <h3><?= htmlspecialchars($c['Titulo_Curso']) ?></h3>

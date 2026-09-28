@@ -40,7 +40,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
     $consulta->bindParam(':Dataso', $nombre_imagen, PDO::PARAM_STR);
 
-    $consulta->bindParam(':ID_Docente', $ID_Docente, PDO::PARAM_INT);
+    $consulta->bindParam(':ID_Docente', $idDocente, PDO::PARAM_INT);
 
 
     $consulta->execute();
