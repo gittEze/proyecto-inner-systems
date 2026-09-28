@@ -11,7 +11,7 @@ $cursos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Evaluamos el rol del usuario mediante una sessión.
 $rolper = strtolower(trim($_SESSION['Rol'] ?? ''));
-$acesso = !empty($rolper) && $rolper !== 'estudiante' && ($rolper === 'Docente') || $rolper === 'Administrador';
+$acesso = !empty($rolper) && $rolper !== 'estudiante' && ($rolper === 'docente' || $rolper === 'administrador');
 ?>
 
 <!DOCTYPE html>

@@ -9,7 +9,7 @@ require 'conexion.php';
     $contraseña_ingresada= trim($_POST['Contrasenia']);
 
     // La consulta trae el correo y contraseña de la base de datos.
-                $sql = "SELECT ID_Usuario, Correo, Contrasenia, Rol FROM usuarios WHERE Correo";
+                $sql = "SELECT ID_Usuario, Correo, Contrasenia, Rol FROM usuarios WHERE Correo = :Correo";
                 // Se prepara la consulta para mayor seguridad.
                 $consulta = $pdo->prepare($sql);
 
