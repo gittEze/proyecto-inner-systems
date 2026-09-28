@@ -143,7 +143,7 @@ $usuario = $stmt->fetch(PDO::FETCH_ASSOC);// Variable con los datos del usuario
 
     <!-- Ir a mis cursos -->
     <section class="botonMisCursos">
-        <a href="mis_cursos.php">Ver mis cursos</a>
+        <a href="miscursos.php">Ver mis cursos</a>
     </section>
 </main>
 </body>
