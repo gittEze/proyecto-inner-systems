@@ -1108,6 +1108,7 @@ select{
     font-weight: bold;
 
 }
+
 #envcur:hover{
     transform: translateY(-5px);
     background: linear-gradient(to right,white, white);
@@ -1202,12 +1203,21 @@ select{
     border-radius: 5px;
     border-color: blue;
 }
-    
+
+#Tcurso{
+    font-size: 20px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    text-align: left;
+    font-weight: bold;
+}
+
 #NivCurso{
     margin-bottom: 10px;
     margin-top: 10px;
-    text-align: center;
+    text-align: left;
 }
+
 
 #botones{
     align-items: center;
@@ -1244,7 +1254,83 @@ select{
     
 }
 
+/* Contenedor Flexbox alineado y centrado */
+.btncurso {
+    display: flex;
+    justify-content: flex-start; /* o 'center' si los quieres centrados */
+    align-items: center;
+    gap: 15px; /* Espacio uniforme entre botones */
+    margin-top: 25px;
+    margin-left: 10px;
+}
 
+/* Estilos base compartidos para los botones */
+#Visbut, .Public {
+    padding: 10px 22px;
+    height: auto;
+    border-radius: 15px; /* Mantiene los bordes redondeados */
+    font-weight: bold;
+    font-size: 15px;
+    cursor: pointer;
+    margin: 0; /* Sin márgenes manuales innecesarios */
+    transition: all 0.3s ease;
+}
+
+/* Botón Vista Previa */
+#Visbut {
+    background-color: white;
+    color: crimson;
+    border: 2px solid crimson;
+}
+
+#Visbut:hover {
+    background-color: crimson;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(220, 20, 60, 0.3);
+}
+
+/* Botón Publicar Curso */
+.Public {
+    background-color: #1e88e5;
+    color: white;
+    border: 2px solid #1e88e5;
+}
+
+.Public:hover {
+    background-color: #0d47a1;
+    border-color: #0d47a1;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(13, 71, 161, 0.3);
+}
+
+/* Input del archivo */
+#Dataso {
+    margin-left: 10px;
+    margin-top: 8px;
+    margin-bottom: 15px;
+    font-size: 14px;
+    color: #555;
+}
+
+/* Botón interno "Seleccionar archivo" */
+#Dataso::file-selector-button {
+    background-color: #1e88e5;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-right: 12px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#Dataso::file-selector-button:hover {
+    background-color: #0d47a1;
+    transform: translateY(-1px);
+}
 
 #Crearcurso h2{
     margin-left: 10px;
@@ -1331,25 +1417,18 @@ background-color: #fff;
 
 }
 
-#Visbut{
-    background-color: white;
-    color:crimson;
-    width: 130px;
-    height: 40px;
-    border: solid black;
-    border-radius: 15px;
-    font-weight: bold;
-    margin-top: 30px;
-    margin-left: 300px;
+#Visbut {
+    background-color: #ff9800;
+    color: white;
+    border: 2px solid #ff9800;
 }
 
-
-#Visbut:hover{
-    transform: translateY(-5px);
-    background: linear-gradient(to right,white, white);
-    color: blue;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-    cursor:pointer;
+#Visbut:hover {
+    background-color: #e68a00;
+    border-color: #e68a00;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 152, 0, 0.35);
 }
 
 
