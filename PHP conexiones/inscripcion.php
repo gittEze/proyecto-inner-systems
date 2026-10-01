@@ -7,8 +7,10 @@ session_start();
 require_once 'conexion.php';
 
 // Condicional isset que evalua si la sesion se inicio.
+
+// Es necesario inscribirse para entrar a un curso.
 if (!isset($_SESSION['Sesion'])) {
-    header("Location: ../PHP/login.php");
+    header("Location: ../PHP/login.php");  
     exit();
 }
 

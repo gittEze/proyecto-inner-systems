@@ -26,9 +26,11 @@
                 <?php if ($envio == "login") { ?>
 
                     <title>Iniciar sesión - Aprendomo</title>
+
                 <!-- Condicional que evalua si existe el parámetro exito en el método GET y si concuerda con lo dado en "conslogin" -->
                 <?php  if (isset($_GET['exito']) && $_GET['exito'] == 1) { ?>
-                <!-- Si se logra el coommprbante mmuestra un mensaje de que se logro el registro -->
+
+                <!-- Si se logra el coommprobante mmuestra un mensaje de que se logro el registro -->
                     <div class="logrado">  
                         Registro exitoso. Por favor, inicie sesión.
                     </div>
