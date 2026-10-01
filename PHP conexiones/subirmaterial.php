@@ -9,10 +9,12 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST' || ($rol !== 'docente' && $rol !== 'ad
     exit();
 }
 
+// Estructura que toma el id del curso 
 $idCurso = intval($_POST['ID_Curso'] ?? 0);
+// Variable que  guarda el titulo
 $tituloMaterial = trim($_POST['Titulo_Material'] ?? '');
 
-
+// Concidicional que evalua si se puso un titulo al archivo adjunto 
 if ($idCurso <= 0 || empty($tituloMaterial)) {
     die("Error: Faltan datos obligatorios.");
 }
@@ -22,10 +24,14 @@ if (isset($_FILES['archivo_adjunto']) && $_FILES['archivo_adjunto']['error'] ===
     $nombreOriginal = $_FILES['archivo_adjunto']['name'];
     $tmpName = $_FILES['archivo_adjunto']['tmp_name'];
     $extension= strtolower(pathinfo($nombreOriginal, PATHINFO_EXTENSION));
-
+    // pathinfo me permite obtener info sobre la ruta del archivo.
+    // PATHINFO_EXTENSIÓN obtiene expecificamente la extensión del archivo
+    
     // Determinar el tipo de material y la subcarpeta adecuada según la extensión
     $tipoMaterial = 'archivo';
     $subCarpeta = 'archivos/';
+
+    // Array dedicado para las extensiones de cada tipo, tanto para videos como para audios.
 
     if (in_array($extension, ['mp4', 'webm', 'ogg', 'avi', 'mkv'])) {
         $tipoMaterial = 'video';
@@ -39,6 +45,7 @@ if (isset($_FILES['archivo_adjunto']) && $_FILES['archivo_adjunto']['error'] ===
     // Ruta de la carpeta donde se almacenarán los archivos
     $dirDestino = __DIR__ . '/../PHP/Subidas/' . $subCarpeta;
 
+    // Condicional para crear la carpeta en caso de que no exista la ubicación(carpeta necesaria) 
     if (!is_dir($dirDestino)) {
         mkdir($dirDestino, 0777, true);
     }
@@ -48,7 +55,7 @@ if (isset($_FILES['archivo_adjunto']) && $_FILES['archivo_adjunto']['error'] ===
     $rutaCompleta = $dirDestino . $nombreArchivo;
 
     if (move_uploaded_file($tmpName, $rutaCompleta)) {
-        // Insertar registro en la base de datos
+        // Inserción de los materiales en la  base de datos.
         $sql = "INSERT INTO materiales (ID_Curso, Titulo_Material, Tipo_Material, Contenido_URL) 
                 VALUES (:ID_Curso, :Titulo_Material, :Tipo_Material, :Contenido_URL)";
 
@@ -58,6 +65,7 @@ if (isset($_FILES['archivo_adjunto']) && $_FILES['archivo_adjunto']['error'] ===
         $stmt->bindParam(':Tipo_Material', $tipoMaterial, PDO::PARAM_STR);
         $stmt->bindParam(':Contenido_URL', $nombreArchivo, PDO::PARAM_STR);
 
+        // Condicional para redirigir al curso
         if ($stmt->execute()) {
             header("Location: ../PHP/vercursos.php?ID_Curso=" . $idCurso . "&tab=materiales");
             exit();

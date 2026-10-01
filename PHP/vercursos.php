@@ -71,6 +71,7 @@ $miembros = $stmtMiembros->fetchAll(PDO::FETCH_ASSOC);
             <div class="curso-portada">
                 <img src="../PHP conexiones/Imagenes/<?= !empty($curso['Dataso']) ? htmlspecialchars($curso['Dataso']) : 'default.png' ?>" alt="Portada Curso">
             </div>
+            <!-- Nav con los elementos -->
             <nav class="course-nav">
                 <ul>
                     <li>
