@@ -8,22 +8,23 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST' || ($rol !== 'docente' && $rol !== 'ad
     header("Location: ../PHP/miscursos.php");
     exit();
 }
-
+// Variables encargadas de guardar
 $idCurso = intval($_POST['ID_Curso'] ?? 0);
 $nombreCarpeta = trim($_POST['Nombre_Carpeta'] ?? '');
 
+// Estructura condicional encargada de verficar que la carpeta poseea un nombre paara crearse.
 if ($idCurso <= 0 || empty($nombreCarpeta)) {
     die("Error: Faltan datos obligatorios.");
 }
 
-// Obtener el último número de orden para ubicar la nueva carpeta al final
+// Obtener el último número de orden para ubicar la nueva carpeta al final.
 $stmtOrden = $pdo->prepare("SELECT MAX(Orden) AS MaxOrden FROM carpetas WHERE ID_Curso = :ID_Curso");
 $stmtOrden->bindParam(':ID_Curso', $idCurso, PDO::PARAM_INT);
 $stmtOrden->execute();
 $resOrden = $stmtOrden->fetch(PDO::FETCH_ASSOC);
 $nuevoOrden = ($resOrden['MaxOrden'] ?? 0) + 1;
 
-// Insertar la carpeta en la base de datos
+// Consulta encargada de insertar la carpeta en la base de datos.
 $sql = "INSERT INTO carpetas (ID_Curso, Nombre_Carpeta, Orden) VALUES (:ID_Curso, :Nombre_Carpeta, :Orden)";
 $stmt = $pdo->prepare($sql);
 $stmt->bindParam(':ID_Curso', $idCurso, PDO::PARAM_INT);

@@ -3,9 +3,10 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
     require_once '../PHP conexiones/conexion.php';  
 }
-
+// Condicional para evluar el inicio de la sesion
 if (isset($_SESSION['Sesion'])) {
-    $correo = $_SESSION['Sesion']; // Correo del usuario actual
+    $correo = $_SESSION['Sesion']; 
+    // Correo del usuario actual
     $sql = "SELECT Nombre, Apellido, Rol, Foto_Perfil FROM usuarios WHERE Correo = :correo";
     $stmt = $pdo->prepare($sql);
     // Se ejecuta la consulta pasando el correo del usuario
