@@ -1152,14 +1152,16 @@ select{
     font-size: 30px;
     text-align: left;
     margin-left: 0;
-    margin-right: 0;
+    margin-right: 10px;
     
 }
 
 .pcur{
+    font-size: 20px;
+    font-weight: bold;
     margin-bottom: 12px;
     margin-top: 12px;
-    margin-left: 25px;
+    margin-left: 15px;
 }
     
 
@@ -2082,4 +2084,43 @@ color: #0d47a1;
 .precio-box .valor-precio {
     color: #ffd700; /* Destaque de color dorado para el precio */
     font-size: 1.1rem;
+}
+
+/* SUBIDA DE ARCHIVOS */
+
+/* Espaciado y alineación del contenedor de botones */
+.acciones-profesor {
+    display: flex;
+    gap: 12px;                  /* Espacio horizontal entre los botones */
+    margin-bottom: 25px;        /* Separa los botones de los elementos de abajo */
+    align-items: center;
+}
+
+/* Estilo para dar apariencia de botón despejado y limpio */
+.acciones-profesor .btn-confirmar {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 18px;
+    background-color: #2563eb;  /* Azul consistente */
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+}
+
+.acciones-profesor .btn-confirmar:hover {
+    background-color: #1d4ed8;
+    transform: translateY(-1px);
+}
+
+/* Margen superior para el contenedor principal de los archivos */
+.lista-recursos {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;                 /* Espacio uniforme entre cada archivo y carpeta */
+    margin-top: 10px;
 }

@@ -56,11 +56,13 @@ $cursos = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <div style="max-width: 1200px; margin: 30px auto; padding: 0 20px;">
         <h2>Mis Cursos</h2>
         
+        <!-- Estructura para mostrar los cursos -->
         <div class="grid-cursos">
             <?php if (count($cursos) > 0): ?>
                 <?php foreach ($cursos as $c): ?>
                     <!-- Enlace conectado directamente a vercursos.php pasándole el idCurso -->
                     <a href="vercursos.php?ID_Curso=<?= $c['ID_Curso'] ?>" class="card-curso">
+                        <!-- En caso de no contar con una imágen asignda en la carpeta de imágenes para el curso se pone un default.png. -->
                         <img src="../PHP conexiones/Imagenes/<?= !empty($c['Dataso']) ? htmlspecialchars($c['Dataso']) : 'default.png' ?>" alt="Portada">
                         <div class="card-curso-body">
                             <h3><?= htmlspecialchars($c['Titulo_Curso']) ?></h3>

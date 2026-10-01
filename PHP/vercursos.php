@@ -20,7 +20,6 @@ $stmtCurso->execute();
 $curso = $stmtCurso->fetch(PDO::FETCH_ASSOC);
 
 //Condicional que evalua si existe el curso.
-
 if (!$curso) {
     echo "El curso no existe.";
     exit();
@@ -115,7 +114,8 @@ $miembros = $stmtMiembros->fetchAll(PDO::FETCH_ASSOC);
                     <!-- Acciones exclusivas para docentes/admins -->
                     <?php if ($esDocente): ?>
                         <div class="acciones-profesor">
-                            <a href="#modal-archivo" class="btn-confirmar">📁 Subir Archivo</a>
+                            <a href="#modal-archivo" class="btn-confirmar"> 📄 Subir Archivo</a>
+                             <a href="#modal-carpeta" class="btn-confirmar">📁 Crear Carpeta</a>
                         </div>
                     <?php endif; ?>
 
@@ -164,7 +164,8 @@ $miembros = $stmtMiembros->fetchAll(PDO::FETCH_ASSOC);
                                     <span class="icon">📁</span>
                                     <strong><?= htmlspecialchars($carpeta['Nombre_Carpeta']) ?></strong>
                                 </summary>
-                                
+       
+                                <!-- Estructura con una consulta que permite traer el id carpeta de los materials -->
                                 <div class="contenido-carpeta">
                                     <?php
                                     $stmtMatFolder = $pdo->prepare("SELECT * FROM materiales WHERE ID_Carpeta = :ID_Carpeta");
@@ -213,6 +214,7 @@ $miembros = $stmtMiembros->fetchAll(PDO::FETCH_ASSOC);
                     <details class="desplegable-miembros" open>
                         <summary>👥 Alumnos inscriptos (<?= count($miembros) ?>)</summary>
                         
+                        <!-- Estructura para contar los miembros y traerlos -->
                         <?php if (count($miembros) > 0): ?>
                             <ul class="lista-miembros">
                                 <?php foreach ($miembros as $m): ?>
@@ -248,6 +250,26 @@ $miembros = $stmtMiembros->fetchAll(PDO::FETCH_ASSOC);
         </aside>
 
     </div>
+    <!-- Estructura de codigo especeilizada en la creación de carpetas para los cursos -->
+    <?php if ($esDocente): ?>
+        <div id="modal-carpeta" class="modal-overlay">
+            <div class="modal-box">
+                <h2>Nueva Carpeta</h2>
+                <form action="../PHP conexiones/crearcarpeta.php" method="POST">
+                    <input type="hidden" name="ID_Curso" value="<?= $idCurso ?>">
+
+                    <label>Nombre de la carpeta:</label>
+                    <input type="text" name="Nombre_Carpeta" required placeholder="Ej: Unidad 1 - Introducción">
+
+                    <div class="modal-acciones">
+                        <button type="submit" class="btn-confirmar">Crear</button>
+                        <a href="#" class="btn-cancelar">Cancelar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    <?php endif; ?>
+
 
     <!-- Modal de subida de archivos -->
     <?php if ($esDocente): ?>
@@ -259,6 +281,15 @@ $miembros = $stmtMiembros->fetchAll(PDO::FETCH_ASSOC);
 
                     <label>Título del archivo:</label>
                     <input type="text" name="Titulo_Material" required placeholder="Ej: Unidad 1 - Presentación.pdf">
+
+                    <!-- Estructura para asignar un archivo dentro  de una carpeta.  -->
+                    <label>Asignar a carpeta (opcional):</label>
+                        <select name="ID_Carpeta">
+                            <option value="">-- Sin carpeta (Archivo suelto) --</option>
+                            <?php foreach ($carpetas as $c): ?>
+                                <option value="<?= $c['ID_Carpeta'] ?>"><?= htmlspecialchars($c ['Nombre_Carpeta']) ?></option>
+                            <?php endforeach; ?>
+                        </select>
 
                     <label>Seleccionar Archivo:</label>
                     <input type="file" name="archivo_adjunto" required>

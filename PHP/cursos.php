@@ -93,6 +93,7 @@ $acesso = !empty($rolper) && $rolper !== 'estudiante' && ($rolper === 'docente' 
                         <div class="modal-box">
                             <h2>Confirmar Inscripción</h2>
                             
+                            <!-- Modal dedicado a mostrar la información de la tarjeta del curso -->
                             <div class="modal-detalles">
                                 <h3><?php echo htmlspecialchars($curso['Titulo_Curso']); ?></h3>
                                 <p><strong>Categoría:</strong> <?php echo htmlspecialchars($curso['Tipo_Curso']); ?></p>
@@ -108,7 +109,8 @@ $acesso = !empty($rolper) && $rolper !== 'estudiante' && ($rolper === 'docente' 
                                     <input type="hidden" name="ID_Curso" value="<?= $curso['ID_Curso'] ?>">
                                     <button type="submit" class="btn-confirmar">Inscribirme</button>
                                 </form>
-
+                                
+                                <!-- Condicional que evlua si el rol es de tipo administrador para permitirle al usuario eliminar cursos. -->
                                 <?php if (isset($_SESSION['Rol']) && $_SESSION['Rol'] === 'administrador'): ?>
                                     <form action="../PHP conexiones/eliminarcurso.php" method="POST" onsubmit="return confirm('¿Está seguro de eliminar este curso?');">
                                         <input type="hidden" name="ID_Curso" value="<?= $curso['ID_Curso'] ?>">

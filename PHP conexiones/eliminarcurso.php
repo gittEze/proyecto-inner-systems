@@ -11,7 +11,7 @@ if (!isset($_SESSION['Rol']) || $_SESSION['Rol'] !== 'administrador') {
     exit();
 }
 
-// Se evalua si los datos son recibidos por el metodo POST y verifican qu este idCurso
+// Se evalua si los datos son recibidos por el metodo POST y verifican que este idCurso
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ID_Curso'])) {
     $ID_Curso = intval($_POST['ID_Curso']);
 
