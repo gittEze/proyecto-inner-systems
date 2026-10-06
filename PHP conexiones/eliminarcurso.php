@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once 'conexion.php';
+require_once ('conexion.php');
 
 // Validar que el usuario haya iniciado sesión y tenga el rol de administrador
 if (!isset($_SESSION['Rol']) || $_SESSION['Rol'] !== 'administrador') {
