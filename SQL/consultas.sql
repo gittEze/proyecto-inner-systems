@@ -66,10 +66,10 @@ CREATE TABLE carpetas (
 CREATE TABLE materiales (
     ID_Material INT AUTO_INCREMENT PRIMARY KEY,
     ID_Carpeta INT NOT NULL,
-    Nombre_Material VARCHAR(150) NOT NULL,
+    Titulo_Material VARCHAR(150) NOT NULL,
     Descripcion_Material TEXT,
     Tipo_Material VARCHAR(50),
-    Archivo VARCHAR(255),
+    Contenido_URL VARCHAR(255),
 
     CONSTRAINT fk_material_carpeta
         FOREIGN KEY (ID_Carpeta)

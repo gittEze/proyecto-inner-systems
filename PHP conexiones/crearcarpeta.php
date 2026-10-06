@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once 'conexion.php';
+require_once ('conexion.php');
 
 // Validar que la petición sea POST y provenga de un docente o administrador
 $rol = strtolower(trim($_SESSION['Rol'] ?? ''));
