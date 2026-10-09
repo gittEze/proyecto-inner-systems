@@ -46,7 +46,7 @@
                         <label for="Contrasena">Contraseña:</label>
                         <input type="password" id="Contrasena" name="Contrasenia" placeholder="Ingrese su contraseña">
 
-                        <a id="recuperarContrasenia" href="">Recuperar contraseña.</a>
+                        <a id="recuperarContrasenia" href="recuperarcon.php">Recuperar contraseña.</a>
 
                         <!-- Link que aparece en el apartado del formulario de login que envia al usuario a registrase si aun no lo ha hecho. -->
                         <p class="regisAqui">¿No tienes cuenta aún?
