@@ -1,6 +1,6 @@
 <?php 
 session_start();
-require_once '../PHP conexiones/conexion.php';
+require_once '../PHP_conexiones/conexion.php';
 
 // Esta consulta que permite obtener los cursos de la base de datos ordenados por su id y de forma descendente. 
 

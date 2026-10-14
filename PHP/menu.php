@@ -1,7 +1,7 @@
 <?php
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
-    require_once '../PHP conexiones/conexion.php';  
+    require_once '../PHP_conexiones/conexion.php';  
 }
 // Condicional para evluar el inicio de la sesion
 if (isset($_SESSION['Sesion'])) {
@@ -20,18 +20,31 @@ if (isset($_SESSION['Sesion'])) {
         <img id="logoMainImg" src="../IMG/Logo.png" alt="Logo de Aprendomo">
     </a>
 
-    <!-- Condicional que evalua si el usuario se logeo, en caso de que si, aplica el if y muestra todos los enlaces, en caso contrario muestra todos menos mis cursos y mentorías. -->
+   
+     
+     <!-- El condicional toma en cuenta si soy un visitante,un usuario logeado  o un administrador para mostrar los enlaces-->
 
-    <?php if (isset($_SESSION['Sesion'])) { ?>
-    <a class="Serv" href="main.php">Inicio</a>
-    <a class="Serv" href="cursos.php">Cursos</a>
-    <a class="Serv" href="proyectos.php">Proyectos educativos</a>
-    <a class="Serv" href="mentorías.php">Mentorías</a>
-    <?php } else { ?>
-    <a class="Serv" href="main.php">Inicio</a>
-    <a class="Serv" href="cursos.php">Cursos</a>
-    <a class="Serv" href="proyectos.php">Proyectos educativos</a>
-    <?php } ?>
+<?php if (isset($_SESSION['Sesion']) && isset($usuario['Rol']) && $usuario['Rol'] === 'Administrador') { ?>
+    <!-- Enlaces para el ADMINISTRADOR -->
+    <a class="Serv" href="/proyecto-inner-systems/PHP/main.php">Inicio</a>
+    <a class="Serv" href="/proyecto-inner-systems/PHP/cursos.php">Cursos</a>
+    <a class="Serv" href="/proyecto-inner-systems/PHP/proyectos.php">Proyectos educativos</a>
+    <a class="Serv" href="/proyecto-inner-systems/PHP/mentorías.php">Mentorías</a>
+    <a class="Serv" href="/proyecto-inner-systems/PHP/PHPAdmin/menuadmin.php">Panelcheto</a>
+
+<?php } elseif (isset($_SESSION['Sesion'])) { ?>
+    <!-- Enlaces para USUARIOS NORMALES logueados -->
+    <a class="Serv" href="/proyecto-inner-systems/PHP/main.php">Inicio</a>
+    <a class="Serv" href="/proyecto-inner-systems/PHP/cursos.php">Cursos</a>
+    <a class="Serv" href="/proyecto-inner-systems/PHP/proyectos.php">Proyectos educativos</a>
+    <a class="Serv" href="/proyecto-inner-systems/PHP/mentorías.php">Mentorías</a>
+
+<?php } else { ?>
+    <!-- Enlaces para VISITANTES (no logueados) -->
+    <a class="Serv" href="/proyecto-inner-systems/PHP/main.php">Inicio</a>
+    <a class="Serv" href="/proyecto-inner-systems/PHP/cursos.php">Cursos</a>
+    <a class="Serv" href="/proyecto-inner-systems/PHP/proyectos.php">Proyectos educativos</a>
+<?php } ?>
 
     <input id="buscador" type="search" placeholder="Buscar cursos, servicios...">
 
