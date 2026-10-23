@@ -1,7 +1,7 @@
 <?php
 // Inicia la sesión 
 session_start();
-require_once '../PHP_conexiones/conexion.php';
+require_once '../PHP conexiones/conexion.php';
 
 // Validar que exista la sesión del usuario, en cada de que exista la sesión, el usuario es enviado a login si la sesion existe. 
 if (!isset($_SESSION['Sesion'])) {

@@ -1,6 +1,6 @@
 <?php
 // Ubicación del archivo que compara la ubicación actual y le suma la ubicación de  la base dde datos .
-require_once __DIR__ . '/../PHP_conexiones/conexion.php';
+require_once __DIR__ . '/../PHP conexiones/conexion.php';
 
 // Verificador para que exista la conexión  y que la instancia valida.
 if (!isset($pdo) || !($pdo instanceof PDO)) {

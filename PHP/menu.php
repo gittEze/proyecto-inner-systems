@@ -4,7 +4,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 // Solución al error de ruta usando __DIR__ para un acceso absoluto y seguro
-require_once __DIR__ . '/../PHP_conexiones/conexion.php';  
+require_once __DIR__ . '/../PHP conexiones/conexion.php';  
 
 // Inicializar la variable $usuario por seguridad
 $usuario = null;
@@ -23,44 +23,55 @@ if (isset($_SESSION['Sesion'])) {
 ?>
 
 <div class="contenedorMain">
-    <a class="logo" id="logoMain" href="/proyecto-inner-systems/PHP/main.php">
-        <img id="logoMainImg" src="/proyecto-inner-systems/IMG/Logo.png" alt="Logo de Aprendomo">
+    <a class="logo" id="logoMain" href="../PHP/main.php">
+        <img id="logoMainImg" src="../IMG/Logo.png" alt="Logo de Aprendomo">
     </a>
      
      <!-- Enlaces según el rol -->
-<?php if (isset($_SESSION['Sesion']) && isset($usuario['Rol']) && $usuario['Rol'] === 'Administrador') { ?>
-    <!-- Enlaces para el Administrador -->
-    <a class="Serv" href="/proyecto-inner-systems/PHP/main.php">Inicio</a>
-    <a class="Serv" href="/proyecto-inner-systems/PHP/cursos.php">Cursos</a>
-    <a class="Serv" href="/proyecto-inner-systems/PHP/proyectos.php">Proyectos educativos</a>
-    <a class="Serv" href="/proyecto-inner-systems/PHP/mentorías.php">Mentorías</a>
-    <a class="Serv" href="/proyecto-inner-systems/PHP/PHPAdmin/menuadmin.php">Panel de Administración</a>
+<?php if (
+    isset($_SESSION['Sesion']) &&
+    isset($usuario['Rol']) &&
+    $usuario['Rol'] === 'Administrador'
+) { ?>
 
-<?php } elseif (isset($_SESSION['Sesion'])) { ?>
-    <!-- Enlaces para los usuarios Normales logueados -->
-    <a class="Serv" href="/proyecto-inner-systems/PHP/main.php">Inicio</a>
-    <a class="Serv" href="/proyecto-inner-systems/PHP/cursos.php">Cursos</a>
-    <a class="Serv" href="/proyecto-inner-systems/PHP/proyectos.php">Proyectos educativos</a>
-    <a class="Serv" href="/proyecto-inner-systems/PHP/mentorías.php">Mentorías</a>
-
-    <?php if (isset($_SESSION['Sesion'])) { ?>
-    <a class="Serv" href="main.php">Inicio</a>
-    <a class="Serv" href="cursos.php">Cursos</a>
-    <a class="Serv" href="proyectos.php">Proyectos educativos</a>
-    <a class="Serv" href="mentorías.php">Mentorías</a>
-    <?php
-        $cantCarrito = (isset($_SESSION['carrito']) && is_array($_SESSION['carrito']))
-            ? count($_SESSION['carrito'])
-            : 0;
-    ?>
-    <a class="Serv" href="carrito.php">
-        Carrito<?php if ($cantCarrito > 0): ?> (<?= $cantCarrito ?>)<?php endif; ?>
+    <!-- Administrador -->
+    <a class="Serv" href="../PHP/main.php">Inicio</a>
+    <a class="Serv" href="../PHP/cursos.php">Cursos</a>
+    <a class="Serv" href="../PHP/proyectos.php">Proyectos educativos</a>
+    <a class="Serv" href="../PHP/mentorías.php">Mentorías</a>
+    <a class="Serv" href="../PHP/PHPAdmin/menuadmin.php">
+        Panel de Administración
     </a>
-    <?php } else { ?>
-    <a class="Serv" href="main.php">Inicio</a>
-    <a class="Serv" href="cursos.php">Cursos</a>
-    <a class="Serv" href="proyectos.php">Proyectos educativos</a>
-    <?php } ?>
+
+<?php } elseif (isset($_SESSION['Sesion']) && $usuario) { ?>
+
+    <!-- Usuario normal -->
+    <a class="Serv" href="../PHP/main.php">Inicio</a>
+    <a class="Serv" href="../PHP/cursos.php">Cursos</a>
+    <a class="Serv" href="../PHP/proyectos.php">Proyectos educativos</a>
+    <a class="Serv" href="../PHP/mentorías.php">Mentorías</a>
+    <a class="Serv" href="../PHP/carrito.php">
+        Carrito
+        <?php
+        $cantCarrito = (
+            isset($_SESSION['carrito']) &&
+            is_array($_SESSION['carrito'])
+        ) ? count($_SESSION['carrito']) : 0;
+
+        if ($cantCarrito > 0) {
+            echo " (" . $cantCarrito . ")";
+        }
+        ?>
+    </a>
+
+<?php } else { ?>
+
+    <!-- Visitante sin sesión -->
+    <a class="Serv" href="../PHP/main.php">Inicio</a>
+    <a class="Serv" href="../PHP/cursos.php">Cursos</a>
+    <a class="Serv" href="../PHP/proyectos.php">Proyectos educativos</a>
+
+<?php } ?>
 
     <input id="buscador" type="search" placeholder="Buscar cursos, servicios...">
 
@@ -68,27 +79,27 @@ if (isset($_SESSION['Sesion'])) {
         <!-- Icono del usuario con menú desplegable. -->
         <div class="usuario">
             <?php if (!empty($usuario['Foto_Perfil'])): ?>
-                <img src="/proyecto-inner-systems/IMG/perfiles/<?php echo htmlspecialchars($usuario['Foto_Perfil']); ?>" alt="Foto de perfil" class="userIcon">
+                <img src="../IMG/perfiles/<?php echo htmlspecialchars($usuario['Foto_Perfil']); ?>" alt="Foto de perfil" class="userIcon">
             <?php else: ?>
-                <img src="/proyecto-inner-systems/IMG/aprendomoUser.jpg" alt="Foto de perfil" class="userIcon">
+                <img src="../IMG/aprendomoUser.jpg" alt="Foto de perfil" class="userIcon">
             <?php endif; ?>
 
             <div class="userMenu">
                 <div class="userMenuBox">
                     <div class="userInfo">
                         <?php if (!empty($usuario['Foto_Perfil'])): ?>
-                            <img src="/proyecto-inner-systems/IMG/perfiles/<?php echo htmlspecialchars($usuario['Foto_Perfil']); ?>" alt="Foto de perfil">
+                            <img src="../IMG/perfiles/<?php echo htmlspecialchars($usuario['Foto_Perfil']); ?>" alt="Foto de perfil">
                         <?php else: ?>
-                            <img src="/proyecto-inner-systems/IMG/aprendomoUser.jpg" alt="Foto de perfil">
+                            <img src="../IMG/aprendomoUser.jpg" alt="Foto de perfil">
                         <?php endif; ?>
                         <h2><?php echo htmlspecialchars(($usuario['Nombre'] ?? '') . " " . ($usuario['Apellido'] ?? '')); ?></h2>
                     </div>
                     <hr>
                     <div class="userMenuOptions">
                         <!-- Mi Perfil -->
-                         <a href="/proyecto-inner-systems/PHP/perfil.php">
+                         <a href="../PHP/perfil.php">
                             <div>
-                                <img src="/proyecto-inner-systems/IMG/MyProfileIcon.png" alt="Mi Perfil Icon">
+                                <img src="../IMG/MyProfileIcon.png" alt="Mi Perfil Icon">
                                 <p>Mi perfil</p>
                                 <div class="userSpanContenedor">
                                     <span> </span>
@@ -96,9 +107,9 @@ if (isset($_SESSION['Sesion'])) {
                             </div>
                          </a>
                         <!-- Mis Cursos -->
-                         <a href="/proyecto-inner-systems/PHP/miscursos.php">
+                         <a href="../PHP/miscursos.php">
                             <div>
-                                <img src="/proyecto-inner-systems/IMG/MisCursosIcon.jpg" alt="Mis Cursos Icon">
+                                <img src="../IMG/MisCursosIcon.jpg" alt="Mis Cursos Icon">
                                 <p>Mis cursos</p>
                                 <div class="userSpanContenedor">
                                     <span> </span>
@@ -106,9 +117,9 @@ if (isset($_SESSION['Sesion'])) {
                             </div>
                          </a>
                         <!-- Cerrar sesión -->
-                        <a href="/proyecto-inner-systems/PHP_conexiones/logout.php">
+                        <a href="../PHP conexiones/logout.php">
                             <div>
-                                <img src="/proyecto-inner-systems/IMG/ExitIcon.jpg" alt="Cerrar Sesión Icon">
+                                <img src="../IMG/ExitIcon.jpg" alt="Cerrar Sesión Icon">
                                 <p>Cerrar sesión</p>
                                 <div class="userSpanContenedor">
                                     <span> </span>
@@ -120,13 +131,13 @@ if (isset($_SESSION['Sesion'])) {
             </div>
         </div>        
     <?php } else { ?>
-        <form action="/proyecto-inner-systems/PHP/login.php" method="POST">
+        <form action="../PHP/login.php" method="POST">
             <button class="loginBtn" name="btnLogin" value="login" type="submit">
                 Iniciar sesión
             </button>
         </form>
 
-        <form action="/proyecto-inner-systems/PHP/login.php" method="POST">
+        <form action="../PHP/login.php" method="POST">
             <button class="loginBtn" name="btnRegister" value="register" type="submit">
                 Registrarse
             </button>
