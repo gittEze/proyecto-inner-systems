@@ -27,6 +27,14 @@ if (isset($_SESSION['Sesion'])) {
     <a class="Serv" href="cursos.php">Cursos</a>
     <a class="Serv" href="proyectos.php">Proyectos educativos</a>
     <a class="Serv" href="mentorías.php">Mentorías</a>
+    <?php
+        $cantCarrito = (isset($_SESSION['carrito']) && is_array($_SESSION['carrito']))
+            ? count($_SESSION['carrito'])
+            : 0;
+    ?>
+    <a class="Serv" href="carrito.php">
+        Carrito<?php if ($cantCarrito > 0): ?> (<?= $cantCarrito ?>)<?php endif; ?>
+    </a>
     <?php } else { ?>
     <a class="Serv" href="main.php">Inicio</a>
     <a class="Serv" href="cursos.php">Cursos</a>
