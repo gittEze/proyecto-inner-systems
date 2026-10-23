@@ -20,7 +20,7 @@
                 <a id="volver" href="main.php">Volver</a>
 
 
-                <!-- Comprobante de envio de los datos por los meotods post y get -->
+                <!-- Comprobante de envio de los datos por los metodos post y get -->
                 <?php $envio = $_POST['btnRegister'] ?? $_POST['btnLogin'] ?? $_GET['pagina'] ?? 'login'; ?>
 
                 <?php if ($envio == "login") { ?>
@@ -30,7 +30,7 @@
                 <!-- Condicional que evalua si existe el parámetro exito en el método GET y si concuerda con lo dado en "conslogin" -->
                 <?php  if (isset($_GET['exito']) && $_GET['exito'] == 1) { ?>
 
-                <!-- Si se logra el coommprobante mmuestra un mensaje de que se logro el registro -->
+                <!-- Si se logra el comprobante muestra un mensaje de que se logro el registro -->
                     <div class="logrado">  
                         Registro exitoso. Por favor, inicie sesión.
                     </div>
@@ -69,6 +69,21 @@
                     <title>Registro - Aprendomo</title>
                     <h2>Formulario de Registro</h2>
 
+                    <!-- Cartel/Mensaje flotante si el correo ya existe o faltan campos -->
+                    <?php if (isset($_GET['error']) && $_GET['error'] == 'correo_existe') { ?>
+                        <div class="mensaje-error" style="background-color: #ffdddd; color: #d8000c; border: 1px solid #d8000c; padding: 10px; border-radius: 5px; margin-bottom: 15px; text-align: center; font-weight: bold;">
+                            ⚠️ El correo electrónico ya se encuentra registrado. Intente con otro o inicie sesión.
+                        </div>
+                    <?php } elseif (isset($_GET['error']) && $_GET['error'] == 'campos_vacios') { ?>
+                        <div class="mensaje-error" style="background-color: #ffffcc; color: #9f6000; border: 1px solid #9f6000; padding: 10px; border-radius: 5px; margin-bottom: 15px; text-align: center;">
+                            ⚠️ Por favor complete todos los campos obligatorios.
+                        </div>
+                    <?php } elseif (isset($_GET['error']) && $_GET['error'] == 'formato_invalido') { ?>
+                        <div class="mensaje-error" style="background-color: #ffdddd; color: #d8000c; border: 1px solid #d8000c; padding: 10px; border-radius: 5px; margin-bottom: 15px; text-align: center;">
+                            ⚠️ Error: Cédula y Teléfono deben ser números.
+                        </div>
+                    <?php } ?>
+
                     <form id="contenedorRegister" action="../PHP conexiones/consreg.php" method="post">
                         <label for="Nm">Nombre</label>
                         <input type="text" id="Nm" name="Nombre" placeholder="Ej: Juan">
@@ -106,9 +121,8 @@
                         <div class="botones">
                             <a href="login.php" class="claseo"> 
                             <button type="submit" class="btnDato" >Registrarse</button>
-                            <a>
-                            <button type="reset" class="btnDato">Limpiar formulario</button>
                             </a>
+                            <button type="reset" class="btnDato">Limpiar formulario</button>
                         </div>
                     </form>
 

@@ -58,21 +58,39 @@ if ($usuario) {
         $mail->isHTML(true);                                 
         $mail->CharSet ='UTF-8';
         $mail->Subject = 'Recuperación de Contraseña - Empresa Inner';
-        $mail->Body    = 'Hola <b>' . htmlspecialchars($nombreUsuario) . '</b>,<br><br>' .
+        
+        // 1. Incrustar la imagen usando un identificador único (CID)
+        $mail->addEmbeddedImage('../IMG/Logo.png', 'logo_aprendomo');
+
+        // 2. Apuntar el src de la imagen a 'cid:logo_aprendomo'
+        $mail->Body    = '<img src="cid:logo_aprendomo" alt="Logo de Aprendomo" style="width: 150px;"><br><br>' .
+                         'Hola <b>' . htmlspecialchars($nombreUsuario) . '</b>,<br><br>' .
                          'Hemos recibido una solicitud para restablecer tu contraseña.<br>' .
                          'Haz clic en el siguiente enlace para continuar con el proceso:<br><br>' .
                          '<a href="' . $enlaceRecuperacion . '" style="background-color: #007bff; color: white; padding: 10px 15px; text-decoration: none; border-radius: 5px; display: inline-block;">Restablecer Contraseña</a><br><br>' .
                          'Este enlace vencerá en 1 hora.';
+        
         $mail->AltBody = 'Hola ' . $nombreUsuario . ', has solicitado restablecer tu contraseña.';
 
         $mail->send();
-        echo 'El enlace de recuperación ha sido enviado a su correo.';
+        echo "<script>
+            alert('El enlace de recuperación ha sido enviado a su correo.');
+            window.location.href='../PHP/login.php?pagina=login';
+        </script>";
+        exit();
     } catch (Exception $e) {
-        echo "No se pudo enviar el correo. Error: {$mail->ErrorInfo}";
+        echo "<script>
+            alert('No se pudo enviar el correo. Error: {$mail->ErrorInfo}');
+            window.location.href='../PHP/login.php?pagina=login';
+        </script>";
+        exit();
     }    
 
 } else {
-    header("Location: ../PHP/login.php");
-    exit;
+    // Opcional: También puedes agregar un alert aquí para cuando el correo no esté registrado
+    echo "<script>
+        alert('El correo ingresado no se encuentra registrado.');
+        window.location.href='../PHP/login.php?pagina=login';
+    </script>";
+    exit();
 }
-?>

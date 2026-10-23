@@ -1902,6 +1902,17 @@ details.desplegable-miembros summary {
     text-decoration: underline;
 }
 
+
+.mensaje-error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    padding: 12px 15px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    text-align: center;
+    font-size: 0.95rem;
+}
 /* ==========================================================================
 11. MANUAL DE USUARIO
 ========================================================================== */
