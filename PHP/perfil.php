@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once '../PHP_conexiones/conexion.php';
+require_once '../PHP conexiones/conexion.php';
 
 // Verifica que exista una sesión iniciada
 if (!isset($_SESSION['Sesion'])) {
