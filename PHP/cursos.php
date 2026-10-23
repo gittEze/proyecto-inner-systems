@@ -1,6 +1,6 @@
 <?php 
 session_start();
-require_once '../PHP conexiones/conexion.php';
+require_once '../PHP_conexiones/conexion.php';
 
 // Esta consulta que permite obtener los cursos de la base de datos ordenados por su id y de forma descendente. 
 
@@ -132,7 +132,7 @@ $acesso = !empty($rolper) && $rolper !== 'estudiante' && ($rolper === 'docente' 
                                 <p><strong>Valoración:</strong>
                                     <?php if ($totalCard > 0): ?>
                                         <?php for ($i = 1; $i <= 5; $i++): ?>
-                                            <span style="color: <?= $i <= $estrellasLlenas ? '#ffb400' : '#ccc' ?>; font-size: 0.95rem;">★</span>                                          <?php endfor; ?>
+                                            <span style="color: <?= $i <= $estrellasLlenas ? '#ffb400' : '#ccc' ?>; font-size: 22px;">★</span>                                          <?php endfor; ?>
                                         <?= number_format($promedioCard, 1) ?>
                                         (<?= $totalCard ?> valoración<?= $totalCard !== 1 ? 'es' : '' ?>)
                                     <?php else: ?>
@@ -144,10 +144,21 @@ $acesso = !empty($rolper) && $rolper !== 'estudiante' && ($rolper === 'docente' 
                             </div>
 
                             <div class="modal-acciones">
-                                <form action="../PHP conexiones/inscripcion.php" method="POST">
-                                    <input type="hidden" name="ID_Curso" value="<?= $curso['ID_Curso'] ?>">
-                                    <button type="submit" class="btn-confirmar">Inscribirme</button>
-                                </form>
+                                <?php if (isset($_SESSION['Sesion'])): ?>
+                                    <!-- Agregar al carrito -->
+                                    <form action="../PHP conexiones/agregarCarrito.php" method="POST">
+                                        <input type="hidden" name="ID_Curso" value="<?= $curso['ID_Curso'] ?>">
+                                        <button type="submit" class="btn-confirmar">Agregar al carrito</button>
+                                    </form>
+
+                                    <!-- Inscripción directa (un solo curso) -->
+                                    <form action="../PHP conexiones/inscripcion.php" method="POST">
+                                        <input type="hidden" name="ID_Curso" value="<?= $curso['ID_Curso'] ?>">
+                                        <button type="submit" class="btn-confirmar" style="background:#0d47a1;">Inscribirme ahora</button>
+                                    </form>
+                                <?php else: ?>
+                                    <a href="login.php" class="btn-confirmar">Inicia sesión para inscribirte</a>
+                                <?php endif; ?>
                                 
                                 <!-- Condicional que evlua si el rol es de tipo administrador para permitirle al usuario eliminar cursos. -->
                                 <?php if (isset($_SESSION['Rol']) && $_SESSION['Rol'] === 'administrador'): ?>

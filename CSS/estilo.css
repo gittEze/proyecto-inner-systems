@@ -1,6 +1,6 @@
 /* ==========================================================================
-   1. REGISTRO Y REGLAS GENERALES / RESET
-   ========================================================================== */
+1. REGISTRO Y REGLAS GENERALES / RESET
+========================================================================== */
 
 * {
     font-family: Ubuntu, sans-serif;
@@ -10,9 +10,18 @@
     box-sizing: border-box;
 }
 
-main {
+body {
+    min-height: 100vh;
+    margin: 0;
     background-image: url("../IMG/background2.png");
-    background-size: 700px;
+    background-size: 700px;          /* mismo tamaño de tesela que tenías */
+    background-repeat: repeat;       /* se repite por toda la pantalla */
+    background-position: top left;
+    background-attachment: fixed;
+}
+
+html {
+    height: 100%;
 }
 
 hr {
@@ -35,11 +44,11 @@ select {
 }
 
 /* ==========================================================================
-   2. COMPONENTES GLOBALES (Botones y Animaciones)
-   ========================================================================== */
+2. COMPONENTES GLOBALES (Botones y Animaciones)
+========================================================================== */
 
 .logo:hover {
-    animation: pulse 1s ease-in-out infinite; 
+    animation: pulse 1s ease-in-out infinite;
 }
 
 .botones {
@@ -74,8 +83,8 @@ select {
 }
 
 /* ==========================================================================
-   3. NAVEGACIÓN PRINCIPAL / HEADER / MENÚ DE USUARIO
-   ========================================================================== */
+3. NAVEGACIÓN PRINCIPAL / HEADER / MENÚ DE USUARIO
+========================================================================== */
 
 .top-nav {
     background-color: #1e293b;
@@ -85,6 +94,8 @@ select {
     align-items: center;
     padding: 15px 30px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 300;
 }
 
 .brand {
@@ -145,7 +156,7 @@ select {
 .Serv:hover {
     background-color: #1e88e5;
     color: white;
-    transform: scale(1.1); 
+    transform: scale(1.1);
 }
 
 /* Desplegable Perfil Usuario */
@@ -177,6 +188,9 @@ select {
     overflow: hidden;
     transition: max-height 0.5s ease-in-out;
     animation: ultraLightShimmer 5s ease-in-out infinite;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
 }
 
 .open-menu {
@@ -287,8 +301,8 @@ select {
 }
 
 /* ==========================================================================
-   4. SECCIÓN INICIO / LANDING PAGE
-   ========================================================================== */
+4. SECCIÓN INICIO / LANDING PAGE
+========================================================================== */
 
 .contenedorInicio {
     width: 100%;
@@ -304,7 +318,7 @@ select {
     margin-left: 150px;
 }
 
-.textoPrincipal h2, 
+.textoPrincipal h2,
 .textoPrincipal span {
     font-size: 4rem;
     font-weight: 700;
@@ -441,8 +455,8 @@ select {
 }
 
 /* ==========================================================================
-   5. SECCIÓN PERFIL DE USUARIO
-   ========================================================================== */
+5. SECCIÓN PERFIL DE USUARIO
+========================================================================== */
 
 .perfilMain {
     width: 100%;
@@ -485,7 +499,7 @@ select {
     border-radius: 50%/25%;
     corner-shape: bevel;
     transform: scale(1.2);
-} 
+}
 
 .profileIcon {
     width: 45px;
@@ -680,7 +694,6 @@ select {
 
 .nivelCurso {
     display: inline-block;
-    color: #1e88e5;
     background-color: #1e88e5;
     color: white;
     padding: 4px 12px;
@@ -717,8 +730,8 @@ select {
 }
 
 /* ==========================================================================
-   6. VISTAS GENERALES DE CURSOS (CATÁLOGO Y LADDER)
-   ========================================================================== */
+6. VISTAS GENERALES DE CURSOS
+========================================================================== */
 
 .h1cur {
     font-size: 30px;
@@ -790,7 +803,7 @@ select {
 }
 
 .box-imagen {
-    position: relative; 
+    position: relative;
     width: 100%;
     height: 150px;
     border-radius: 12px;
@@ -855,7 +868,7 @@ select {
     margin-bottom: 2px;
 }
 
-.dato-item .valor, 
+.dato-item .valor,
 .dato-item .valor-precio {
     font-size: 0.95rem;
     font-weight: bold;
@@ -867,7 +880,6 @@ select {
     font-size: 1.1rem;
 }
 
-/* Grilla alternativa dentro de plataformas */
 .grid-cursos {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -907,8 +919,8 @@ select {
 }
 
 /* ==========================================================================
-   7. SISTEMA LMS / PLATAFORMA DE APRENDIZAJE
-   ========================================================================== */
+7. SISTEMA LMS
+========================================================================== */
 
 .lms-container {
     display: grid;
@@ -919,7 +931,6 @@ select {
     padding: 0 20px;
 }
 
-/* Columna Izquierda */
 .sidebar-left {
     background: #ffffff;
     border-radius: 8px;
@@ -961,7 +972,6 @@ select {
     font-weight: bold;
 }
 
-/* Columna Central */
 .content-center {
     background: #ffffff;
     border-radius: 8px;
@@ -1012,7 +1022,6 @@ select {
     text-decoration: underline;
 }
 
-/* Desplegables / Carpetas */
 details.carpeta {
     display: block;
     padding: 0;
@@ -1084,13 +1093,12 @@ details.desplegable-miembros summary {
     width: 100%;
 }
 
-.media-container video, 
+.media-container video,
 .media-container audio {
     margin-top: 8px;
     border-radius: 6px;
 }
 
-/* Columna Derecha */
 .sidebar-right {
     background: #ffffff;
     border-radius: 8px;
@@ -1111,8 +1119,8 @@ details.desplegable-miembros summary {
 }
 
 /* ==========================================================================
-   8. CREACIÓN DE CURSOS (GESTIÓN DOCENTE)
-   ========================================================================== */
+8. CREACIÓN DE CURSOS
+========================================================================== */
 
 #Crearbot {
     display: flex;
@@ -1222,7 +1230,7 @@ details.desplegable-miembros summary {
 
 #horarios,
 #Plata {
-    display: flex;                           
+    display: flex;
     margin: 10px 0;
 }
 
@@ -1304,7 +1312,6 @@ details.desplegable-miembros summary {
     transform: translateY(-1px);
 }
 
-/* Vista Previa de Cursos */
 .Visprev {
     flex: 1;
     border: 1px solid gray;
@@ -1451,8 +1458,8 @@ details.desplegable-miembros summary {
 }
 
 /* ==========================================================================
-   9. VENTANAS MODALES / EMERGENTES
-   ========================================================================== */
+9. VENTANAS MODALES
+========================================================================== */
 
 .modal-overlay {
     position: fixed;
@@ -1546,8 +1553,8 @@ details.desplegable-miembros summary {
 }
 
 /* ==========================================================================
-   10. LOGIN Y RECUPERACIÓN DE CONTRASEÑA
-   ========================================================================== */
+10. LOGIN Y RECUPERACIÓN DE CONTRASEÑA
+========================================================================== */
 
 .bodyLogin {
     background-image: url("../IMG/background2.png");
@@ -1572,7 +1579,7 @@ details.desplegable-miembros summary {
 }
 
 #Ocupacion {
-    margin-bottom: 0.5px;   
+    margin-bottom: 0.5px;
 }
 
 #recuperarContrasenia {
@@ -1582,7 +1589,7 @@ details.desplegable-miembros summary {
     margin-bottom: 15px;
 }
 
-#recuperarContrasenia:hover, 
+#recuperarContrasenia:hover,
 .linkRegistro:hover {
     color: #54adfa;
 }
@@ -1648,7 +1655,6 @@ details.desplegable-miembros summary {
     text-align: center;
 }
 
-/* Vista Recuperar Contraseña Hexagonal (Clases con Guion Medio) */
 .recuperar-wrapper {
     min-height: 100vh;
     display: flex;
@@ -1771,10 +1777,7 @@ details.desplegable-miembros summary {
     text-decoration: underline;
 }
 
-/* ==========================================================================
-   10.1 COMPATIBILIDAD DE RECUPERACIÓN (Clases con Guion Bajo e IDs)
-   ========================================================================== */
-
+/* Compatibilidad recuperación */
 .recuperar_Ultracontenedor,
 .Contenedor_recuperar {
     min-height: 100vh;
@@ -1900,11 +1903,10 @@ details.desplegable-miembros summary {
 }
 
 /* ==========================================================================
-   11. MANUAL DE USUARIO
-   ========================================================================== */
+11. MANUAL DE USUARIO
+========================================================================== */
 
 .manualUsuario {
-    background-image: url("../IMG/background2.png");
     margin: 0;
     padding: 40px 0;
 }
@@ -1961,10 +1963,13 @@ details.desplegable-miembros summary {
 }
 
 /* ==========================================================================
-   12. PIE DE PÁGINA (FOOTER)
-   ========================================================================== */
+12. PIE DE PÁGINA (FOOTER)
+========================================================================== */
 
 .footerMain {
+    flex-shrink: 0;
+    margin-top: auto;
+    width: 100%;
     color: white;
     display: flex;
     justify-content: space-evenly;
@@ -1972,6 +1977,8 @@ details.desplegable-miembros summary {
     flex-wrap: wrap;
     padding: 20px 10px;
     background: linear-gradient(#1e88e5, #0d47a1);
+    position: relative;
+    z-index: 50;
 }
 
 .footerNombre {
@@ -2032,7 +2039,7 @@ details.desplegable-miembros summary {
     transition: all 500ms ease;
 }
 
-#manualUsuario:hover .footerItem p, 
+#manualUsuario:hover .footerItem p,
 #manualUsuario:hover .footerItem h3 {
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
 }
@@ -2259,12 +2266,478 @@ details.desplegable-miembros summary {
     opacity: 0.75;
     color: #e0e0e0;
     font-style: italic;
+}
+
+/* ========== CARRITO ========== */
+
+.carrito-main {
+    max-width: 900px;
+    margin: 30px auto 60px;
+    padding: 0 20px;
+}
+
+.carrito-vacio {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.carrito-vacio .btn-confirmar {
+    display: inline-block;
+    margin-top: 16px;
+    text-decoration: none;
+}
+
+.carrito-resumen-top {
+    margin-bottom: 20px;
+    color: #555;
+}
+
+.carrito-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.carrito-item {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px;
+    background: #fff;
+    border: 2px solid #dceaf5;
+    border-radius: 12px;
+    padding: 14px 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.carrito-item-img {
+    width: 90px;
+    height: 70px;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #0d47a1;
+    flex-shrink: 0;
+}
+
+.carrito-item-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.carrito-item-info {
+    flex: 1;
+    min-width: 180px;
+}
+
+.carrito-item-info h3 {
+    margin: 0 0 4px;
+    color: #0d47a1;
+    font-size: 1.1rem;
+}
+
+.carrito-item-info .text-muted {
+    font-size: 0.85rem;
+    margin: 0 0 4px;
+    color: #666;
+}
+
+.carrito-valoracion {
+    margin: 4px 0;
+    font-size: 0.9rem;
+}
+
+.carrito-precio {
+    margin: 4px 0 0;
+    font-weight: 700;
+    color: #1e88e5;
+    font-size: 1.05rem;
+}
+
+.carrito-item-acciones {
+    flex-shrink: 0;
+}
+
+.carrito-footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px;
+    padding: 20px;
+    margin-top: 10px;
+}
+
+.carrito-total {
+    flex: 1;
+    font-size: 1.15rem;
+    color: #0d47a1;
+}
+
+.carrito-total strong {
+    font-size: 1.4rem;
+    margin-left: 8px;
+}
+
+.btn-inscribir-todos {
+    min-width: 200px;
+}
+
+.img-carrito-vacio {
+    display: block;
+    max-width: 180px;   
+    width: 40%;
+    height: auto;
+    margin: 0 auto 16px; 
+    opacity: 0.4;
+}
+
 /* ==========================================================================
-   13. MEDIA QUERIES / DISEÑO RESPONSIVO
-   ========================================================================== */
+13. PANEL DE ADMINISTRACIÓN Y GESTOR DE USUARIOS
+========================================================================== */
+
+.admin-sidebar {
+    display: flex;
+    flex-direction: column;
+    width: 260px;
+    height: calc(100vh - 90px);
+    position: fixed !important;
+    left: 0 !important;
+    top: 90px !important;
+    background-color: #ffffff !important;
+    border-right: 1px solid #e2e8f0 !important;
+    padding: 0 0 20px 0;
+    gap: 6px;
+    box-shadow: 4px 0 18px rgba(0, 0, 0, 0.06) !important;
+    z-index: 200 !important;
+    box-sizing: border-box !important;
+    overflow-y: auto !important;
+}
+
+.admin-sidebar .admin-title {
+    color: #0d47a1;
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+    padding: 22px 16px 18px;
+    border-bottom: 1px solid #e2e8f0;
+    margin-bottom: 12px;
+    background: linear-gradient(to right, #e3f2fd, #f0f7ff);
+}
+
+.admin-sidebar .admin-link {
+    display: flex;
+    align-items: center;
+    width: calc(100% - 24px);
+    margin: 0 12px;
+    padding: 14px 18px;
+    text-decoration: none;
+    color: #334155;
+    font-weight: 500;
+    font-size: 15px;
+    border-radius: 10px;
+    transition: all 0.25s ease;
+    box-sizing: border-box;
+    white-space: nowrap;
+}
+
+.admin-sidebar .admin-link:hover {
+    background: #e3f2fd;
+    color: #1e88e5;
+    transform: translateX(4px);
+}
+
+.admin-sidebar .admin-link.active {
+    background: #1e88e5;
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(30, 136, 229, 0.25);
+}
+
+/* Contenido Principal Administrador */
+.admin-main-content {
+    margin-left: 280px !important;
+    padding: 30px !important;
+    box-sizing: border-box !important;
+    min-height: 80vh !important;
+}
+
+body.admin-active main,
+body.admin-active .footerMain {
+    margin-left: 260px;
+    width: calc(100% - 260px);
+    transition: margin-left 0.3s ease, width 0.3s ease;
+}
+
+/* Tabla de usuarios en tono blanco y azul */
+.tabla-usuarios {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 20px;
+}
+
+.tabla-usuarios th {
+    background-color: #1e88e5;
+    color: #ffffff;
+    text-align: left;
+    padding: 14px 16px;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+}
+
+.tabla-usuarios td {
+    padding: 12px 16px;
+    border-bottom: 1px solid #e3f2fd;
+    vertical-align: middle;
+    color: #333333;
+    font-size: 14px;
+}
+
+.tabla-usuarios tbody tr:hover {
+    background-color: #f5f9ff;
+}
+
+/* Campos de texto editables */
+.input-editable {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #cfd8dc;
+    border-radius: 6px;
+    background-color: #ffffff;
+    color: #333333;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+.input-editable[readonly] {
+    background-color: transparent;
+    border-color: transparent;
+    color: #495057;
+    pointer-events: none;
+}
+
+.input-editable:not([readonly]) {
+    background-color: #ffffff;
+    border-color: #1e88e5;
+    box-shadow: 0 0 0 3px rgba(30, 136, 229, 0.15);
+    outline: none;
+}
+
+/* Botones de acción */
+.btn-accion {
+    padding: 7px 14px;
+    border: none;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+}
+
+.btn-editar {
+    background-color: #e3f2fd;
+    color: #1565c0;
+    border: 1px solid #90caf9;
+}
+
+.btn-editar:hover {
+    background-color: #bbdefb;
+    color: #0d47a1;
+}
+
+.btn-guardar {
+    background-color: #1e88e5;
+    color: #ffffff;
+}
+
+.btn-guardar:hover {
+    background-color: #1565c0;
+    box-shadow: 0 2px 6px rgba(30, 136, 229, 0.3);
+}
+
+.btn-eliminar {
+    background-color: #ffebee;
+    color: #c62828;
+    border: 1px solid #ef9a9a;
+}
+
+.btn-eliminar:hover {
+    background-color: #ffcdd2;
+    color: #b71c1c;
+}
+
+/* ==========================================================================
+14. MEDIA QUERIES (DISEÑO RESPONSIVO)
+========================================================================== */
+
+@media (max-width: 1100px) {
+    .lms-container {
+        grid-template-columns: 200px 1fr 240px;
+    }
+
+    .textoPrincipal {
+        margin-left: 40px;
+    }
+
+    .imagenPrincipal {
+        margin-right: 40px;
+    }
+
+    .cursosPopulares,
+    .cursosPopularesTitulo {
+        margin-left: 30px;
+        margin-right: 30px;
+    }
+
+    #contotal {
+        margin-left: 20px;
+        width: 95%;
+    }
+}
 
 @media (max-width: 900px) {
+    .top-nav {
+        padding: 12px 15px;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .contenedorMain {
+        gap: 10px;
+        padding: 8px;
+    }
+
+    #logoMain {
+        width: 12%;
+    }
+
+    .Serv {
+        padding: 15px 10px;
+        font-size: 0.9rem;
+    }
+
+    .admin-sidebar {
+        position: relative !important;
+        top: 0 !important;
+        width: 100% !important;
+        height: auto !important;
+        box-shadow: none !important;
+    }
+
+    .admin-main-content {
+        margin-left: 0 !important;
+        padding: 15px !important;
+    }
+
+    body.admin-active main,
+    body.admin-active .footerMain {
+        margin-left: 0;
+        width: 100%;
+    }
+
     .lms-container {
         grid-template-columns: 1fr;
+        padding: 0 10px;
+    }
+
+    .contenedorInicio {
+        flex-direction: column;
+        padding: 50px 20px;
+        gap: 30px;
+        text-align: center;
+    }
+
+    .textoPrincipal {
+        margin-left: 0;
+    }
+
+    .textoPrincipal h2,
+    .textoPrincipal span {
+        font-size: 2.4rem;
+    }
+
+    .imagenPrincipal {
+        margin-right: 0;
+    }
+
+    .cursosPopulares {
+        flex-direction: column;
+        margin: 0 20px;
+        gap: 20px;
+    }
+
+    .cursosPopularesTitulo {
+        margin: 30px 20px 20px;
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+
+    .perfilUsuario {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .listaCursosPerfil {
+        grid-template-columns: 1fr;
+    }
+
+    .tareasPendientes {
+        width: 100%;
+        padding: 40px 15px;
+    }
+
+    #contotal {
+        flex-direction: column;
+        margin: 10px auto;
+        width: 95%;
+    }
+
+    .contenedorLogin {
+        width: 95%;
+        max-width: 500px;
+    }
+
+    .footerMain {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+
+    .footerItem {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .top-nav {
+        padding: 10px;
+    }
+
+    .userMenu {
+        width: 95vw;
+        right: -10px;
+    }
+
+    .textoPrincipal h2,
+    .textoPrincipal span {
+        font-size: 1.9rem;
+    }
+
+    .btnPrincipal {
+        width: 100%;
+        max-width: 280px;
+        justify-content: center;
     }
 }
