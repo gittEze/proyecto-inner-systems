@@ -10,9 +10,18 @@
     box-sizing: border-box;
 }
 
-main {
+body {
+    min-height: 100vh;
+    margin: 0;
     background-image: url("../IMG/background2.png");
-    background-size: 700px;
+    background-size: 700px;          /* mismo tamaño de tesela que tenías */
+    background-repeat: repeat;       /* se repite por toda la pantalla */
+    background-position: top left;
+    background-attachment: fixed;
+}
+
+html {
+    height: 100%;
 }
 
 hr {
@@ -1898,7 +1907,6 @@ details.desplegable-miembros summary {
 ========================================================================== */
 
 .manualUsuario {
-    background-image: url("../IMG/background2.png");
     margin: 0;
     padding: 40px 0;
 }
@@ -1959,6 +1967,9 @@ details.desplegable-miembros summary {
 ========================================================================== */
 
 .footerMain {
+    flex-shrink: 0;
+    margin-top: auto;
+    width: 100%;
     color: white;
     display: flex;
     justify-content: space-evenly;
@@ -2255,6 +2266,133 @@ details.desplegable-miembros summary {
     opacity: 0.75;
     color: #e0e0e0;
     font-style: italic;
+}
+
+/* ========== CARRITO ========== */
+
+.carrito-main {
+    max-width: 900px;
+    margin: 30px auto 60px;
+    padding: 0 20px;
+}
+
+.carrito-vacio {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.carrito-vacio .btn-confirmar {
+    display: inline-block;
+    margin-top: 16px;
+    text-decoration: none;
+}
+
+.carrito-resumen-top {
+    margin-bottom: 20px;
+    color: #555;
+}
+
+.carrito-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.carrito-item {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px;
+    background: #fff;
+    border: 2px solid #dceaf5;
+    border-radius: 12px;
+    padding: 14px 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.carrito-item-img {
+    width: 90px;
+    height: 70px;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #0d47a1;
+    flex-shrink: 0;
+}
+
+.carrito-item-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.carrito-item-info {
+    flex: 1;
+    min-width: 180px;
+}
+
+.carrito-item-info h3 {
+    margin: 0 0 4px;
+    color: #0d47a1;
+    font-size: 1.1rem;
+}
+
+.carrito-item-info .text-muted {
+    font-size: 0.85rem;
+    margin: 0 0 4px;
+    color: #666;
+}
+
+.carrito-valoracion {
+    margin: 4px 0;
+    font-size: 0.9rem;
+}
+
+.carrito-precio {
+    margin: 4px 0 0;
+    font-weight: 700;
+    color: #1e88e5;
+    font-size: 1.05rem;
+}
+
+.carrito-item-acciones {
+    flex-shrink: 0;
+}
+
+.carrito-footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px;
+    padding: 20px;
+    margin-top: 10px;
+}
+
+.carrito-total {
+    flex: 1;
+    font-size: 1.15rem;
+    color: #0d47a1;
+}
+
+.carrito-total strong {
+    font-size: 1.4rem;
+    margin-left: 8px;
+}
+
+.btn-inscribir-todos {
+    min-width: 200px;
+}
+
+.img-carrito-vacio {
+    display: block;
+    max-width: 180px;   
+    width: 40%;
+    height: auto;
+    margin: 0 auto 16px; 
+    opacity: 0.4;
+}
+
 /* ==========================================================================
 13. PANEL DE ADMINISTRACIÓN Y GESTOR DE USUARIOS
 ========================================================================== */

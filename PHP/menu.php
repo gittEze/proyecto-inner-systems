@@ -43,12 +43,24 @@ if (isset($_SESSION['Sesion'])) {
     <a class="Serv" href="/proyecto-inner-systems/PHP/proyectos.php">Proyectos educativos</a>
     <a class="Serv" href="/proyecto-inner-systems/PHP/mentorías.php">Mentorías</a>
 
-<?php } else { ?>
-    <!-- Enlaces para los Visitantes o no logueados -->
-    <a class="Serv" href="/proyecto-inner-systems/PHP/main.php">Inicio</a>
-    <a class="Serv" href="/proyecto-inner-systems/PHP/cursos.php">Cursos</a>
-    <a class="Serv" href="/proyecto-inner-systems/PHP/proyectos.php">Proyectos educativos</a>
-<?php } ?>
+    <?php if (isset($_SESSION['Sesion'])) { ?>
+    <a class="Serv" href="main.php">Inicio</a>
+    <a class="Serv" href="cursos.php">Cursos</a>
+    <a class="Serv" href="proyectos.php">Proyectos educativos</a>
+    <a class="Serv" href="mentorías.php">Mentorías</a>
+    <?php
+        $cantCarrito = (isset($_SESSION['carrito']) && is_array($_SESSION['carrito']))
+            ? count($_SESSION['carrito'])
+            : 0;
+    ?>
+    <a class="Serv" href="carrito.php">
+        Carrito<?php if ($cantCarrito > 0): ?> (<?= $cantCarrito ?>)<?php endif; ?>
+    </a>
+    <?php } else { ?>
+    <a class="Serv" href="main.php">Inicio</a>
+    <a class="Serv" href="cursos.php">Cursos</a>
+    <a class="Serv" href="proyectos.php">Proyectos educativos</a>
+    <?php } ?>
 
     <input id="buscador" type="search" placeholder="Buscar cursos, servicios...">
 
