@@ -38,7 +38,7 @@
 
                     <h2>Iniciar Sesión</h2>
 
-                    <form id="login" action="../PHP conexiones/conlogin.php" method="post">
+                    <form id="login" action="../PHP_conexiones/conlogin.php" method="post">
 
                         <label for="Correo">Correo electrónico:</label>
                         <input type="email" id="Correo" name="Correo" placeholder="Ingrese su correo">

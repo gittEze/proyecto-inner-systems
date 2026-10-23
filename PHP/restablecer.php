@@ -1,8 +1,8 @@
 <?php
-// Ubicación del archivo que almacena la conexión de la base de datos.
-require_once __DIR__ . '/../PHP conexiones/conexion.php';
+// Ubicación del archivo que compara la ubicación actual y le suma la ubicación de  la base dde datos .
+require_once __DIR__ . '/../PHP_conexiones/conexion.php';
 
-// Verificar que exista $pdo y sea una instancia válida de PDO
+// Verificador para que exista la conexión  y que la instancia valida.
 if (!isset($pdo) || !($pdo instanceof PDO)) {
     die("No se pudo establecer la conexión con la base de datos.");
 }
@@ -27,7 +27,7 @@ if (!$usuario) {
 
 $idUsuario = $usuario['ID_Usuario'];
 
-// Procesar cuando el usuario presione el botón de Actualizar
+// Procesamiento para cuando el usuario toque el boton de actualizar.
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nuevaClave = $_POST['password'] ?? '';
     $confirmarClave = $_POST['confirmar_password'] ?? '';
@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         $claveHash = password_hash($nuevaClave, PASSWORD_DEFAULT);
 
-        // Actualizar contraseña y limpiar el token con PDO
+        // COnsulta para actualizar contraseña y limpiar el token
         $updateQuery = "UPDATE usuarios SET Contrasenia = :clave, token_recuperacion = NULL, token_expiracion = NULL WHERE ID_Usuario = :id";
         $updateStmt = $pdo->prepare($updateQuery);
 

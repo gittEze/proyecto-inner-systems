@@ -47,14 +47,13 @@ if ($usuario) {
         $mail->isSMTP();                                            
         $mail->Host       = 'smtp.gmail.com';                     
         $mail->SMTPAuth   = true;                                 
-        $mail->Username   = 'aprendomo@gmail.com';                   
-        $mail->Password   = 'Aprendomitos_';
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;                               
-        $mail->Port       = 587;       
-        
+        $mail->Username   = 'innersystems.contacto@gmail.com';                   
+        $mail->Password   = 'oovw zjot xarz gffh';
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // SSL
+        $mail->Port       = 587;                        // Puerto 465
 
         $mail->setFrom('aprendomo@gmail.com', 'Empresa Inner');
-        $mail->addAddress($usuario['Correo'], $nombreUsuario);
+        $mail->addAddress($usuario['Correo']);
 
         $mail->isHTML(true);                                 
         $mail->CharSet ='UTF-8';
