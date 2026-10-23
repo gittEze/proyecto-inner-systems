@@ -4,7 +4,14 @@ require_once '../PHP_conexiones/conexion.php';
 
 // Esta consulta que permite obtener los cursos de la base de datos ordenados por su id y de forma descendente. 
 
-$sql = "SELECT * FROM cursos ORDER BY ID_Curso DESC";
+// Cursos con promedio y cantidad de valoraciones (LEFT JOIN para incluir cursos sin valoraciones)
+$sql = "SELECT c.*,
+               ROUND(AVG(v.Puntuacion), 1) AS promedio_valoracion,
+               COUNT(v.ID_Valoracion) AS total_valoraciones
+        FROM cursos c
+        LEFT JOIN valoraciones v ON v.ID_Curso = c.ID_Curso
+        GROUP BY c.ID_Curso
+        ORDER BY c.ID_Curso DESC";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
 $cursos = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -69,6 +76,28 @@ $acesso = !empty($rolper) && $rolper !== 'estudiante' && ($rolper === 'docente' 
 
                             <p class="desc-curso"><?php echo htmlspecialchars($curso['Descripcion_Curso']); ?></p>
 
+                            <!-- Valoración promedio del curso -->
+                            <?php
+                                $promedioCard = isset($curso['promedio_valoracion']) ? (float)$curso['promedio_valoracion'] : 0;
+                                $totalCard    = isset($curso['total_valoraciones']) ? (int)$curso['total_valoraciones'] : 0;
+                                $estrellasLlenas = $promedioCard > 0 ? (int)round($promedioCard) : 0;
+                            ?>
+                            <div class="valoracion-tarjeta">
+                                <?php if ($totalCard > 0): ?>
+                                    <div class="estrellas-tarjeta">
+                                        <?php for ($i = 1; $i <= 5; $i++): ?>
+                                            <span class="<?= $i <= $estrellasLlenas ? 'estrella-llena-card' : 'estrella-vacia-card' ?>">★</span>
+                                        <?php endfor; ?>
+                                    </div>
+                                    <span class="texto-valoracion-card">
+                                        <?= number_format($promedioCard, 1) ?>
+                                        <span class="total-val-card">(<?= $totalCard ?>)</span>
+                                    </span>
+                                <?php else: ?>
+                                    <span class="sin-valoracion-card">Sin valoraciones aún</span>
+                                <?php endif; ?>
+                            </div>
+
                             <div class="info-curso">
                                 <div class="dato-item">
                                     <span class="label">Nivel</span>
@@ -100,6 +129,16 @@ $acesso = !empty($rolper) && $rolper !== 'estudiante' && ($rolper === 'docente' 
                                 <p><strong>Nivel:</strong> <?php echo htmlspecialchars($curso['Nivel_Curso'] ?? $curso['Nivel_Curso'] ?? ''); ?></p>
                                 <p><strong>Duración:</strong> <?php echo htmlspecialchars($curso['Duracion_Estimada']); ?> hs</p>
                                 <p><strong>Precio:</strong> $<?php echo htmlspecialchars($curso['Precio']); ?></p>
+                                <p><strong>Valoración:</strong>
+                                    <?php if ($totalCard > 0): ?>
+                                        <?php for ($i = 1; $i <= 5; $i++): ?>
+                                            <span style="color: <?= $i <= $estrellasLlenas ? '#ffb400' : '#ccc' ?>; font-size: 0.95rem;">★</span>                                          <?php endfor; ?>
+                                        <?= number_format($promedioCard, 1) ?>
+                                        (<?= $totalCard ?> valoración<?= $totalCard !== 1 ? 'es' : '' ?>)
+                                    <?php else: ?>
+                                        Sin valoraciones aún
+                                    <?php endif; ?>
+                                </p>
                                 <hr>
                                 <p class="modal-desc"><?php echo htmlspecialchars($curso['Descripcion_Curso']); ?></p>
                             </div>

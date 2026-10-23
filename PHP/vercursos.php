@@ -51,6 +51,40 @@ $stmtMiembros = $pdo->prepare("SELECT u.Nombre, u.Apellido, u.Correo
 $stmtMiembros->bindParam(':ID_Curso', $idCurso, PDO::PARAM_INT);
 $stmtMiembros->execute();
 $miembros = $stmtMiembros->fetchAll(PDO::FETCH_ASSOC);
+
+// VALORACIONES
+$idUsuarioSesion = isset($_SESSION['ID_Usuario']) ? intval($_SESSION['ID_Usuario']) : 0;
+
+// Promedio y total de valoraciones del curso
+$stmtStats = $pdo->prepare("SELECT 
+    ROUND(AVG(Puntuacion), 1) AS promedio, 
+    COUNT(*) AS total 
+    FROM valoraciones 
+    WHERE ID_Curso = :ID_Curso");
+$stmtStats->execute([':ID_Curso' => $idCurso]);
+$statsVal = $stmtStats->fetch(PDO::FETCH_ASSOC);
+$promedio = $statsVal['promedio'] ?? 0;
+$totalValoraciones = (int)($statsVal['total'] ?? 0);
+
+// Listado de valoraciones con nombre del autor (más recientes primero)
+$stmtVals = $pdo->prepare("SELECT v.Puntuacion, v.Comentario, v.Fecha,
+                                   u.Nombre, u.Apellido, u.Correo, u.ID_Usuario
+                            FROM valoraciones v
+                            INNER JOIN usuarios u ON u.ID_Usuario = v.ID_Usuario
+                            WHERE v.ID_Curso = :ID_Curso
+                            ORDER BY v.Fecha DESC");
+$stmtVals->execute([':ID_Curso' => $idCurso]);
+$listaValoraciones = $stmtVals->fetchAll(PDO::FETCH_ASSOC);
+
+// Valoración propia del usuario logueado (si existe)
+$miValoracion = null;
+if ($idUsuarioSesion > 0) {
+    $stmtMia = $pdo->prepare("SELECT Puntuacion, Comentario FROM valoraciones 
+                              WHERE ID_Curso = :ID_Curso AND ID_Usuario = :ID_Usuario");
+    $stmtMia->execute([':ID_Curso' => $idCurso, ':ID_Usuario' => $idUsuarioSesion]);
+    $miValoracion = $stmtMia->fetch(PDO::FETCH_ASSOC);
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -87,6 +121,14 @@ $miembros = $stmtMiembros->fetchAll(PDO::FETCH_ASSOC);
                     <li>
                         <a href="vercursos.php?ID_Curso=<?= $idCurso ?>&tab=miembros" class="<?= $tabActiva === 'miembros' ? 'active' : '' ?>">
                             👥 Miembros (<?= count($miembros) ?>)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="vercursos.php?ID_Curso=<?= $idCurso ?>&tab=valoraciones" class="<?= $tabActiva === 'valoraciones' ? 'active' : '' ?>">
+                            ⭐ Valoraciones
+                            <?php if ($totalValoraciones > 0): ?>
+                                (<?= $totalValoraciones ?>)
+                            <?php endif; ?>
                         </a>
                     </li>
                 </ul>
@@ -240,6 +282,120 @@ $miembros = $stmtMiembros->fetchAll(PDO::FETCH_ASSOC);
                 </section>
             <?php endif; ?>
 
+            <!-- PESTAÑA 4: VALORACIONES Y COMENTARIOS -->
+            <?php if ($tabActiva === 'valoraciones'): ?>
+                <section class="seccion-tab">
+                    <h3>Valoraciones del curso</h3>
+                    <br>
+
+                    <!-- Resumen de promedio -->
+                    <div class="resumen-valoraciones">
+                        <?php if ($totalValoraciones > 0): ?>
+                            <div class="promedio-box">
+                                <span class="promedio-numero"><?= number_format((float)$promedio, 1) ?></span>
+                                <div class="estrellas-static">
+                                    <?php
+                                    $promedioRedondeado = round((float)$promedio);
+                                    for ($i = 1; $i <= 5; $i++):
+                                        $clase = ($i <= $promedioRedondeado) ? 'estrella-llena' : 'estrella-vacia';
+                                    ?>
+                                        <span class="<?= $clase ?>">★</span>
+                                    <?php endfor; ?>
+                                </div>
+                                <p class="total-valoraciones"><?= $totalValoraciones ?> valoración<?= $totalValoraciones !== 1 ? 'es' : '' ?></p>
+                            </div>
+                        <?php else: ?>
+                            <p class="text-muted">Aún no hay valoraciones para este curso. ¡Sé el primero en opinar!</p>
+                        <?php endif; ?>
+                    </div>
+
+                    <hr>
+
+                    <!-- Formulario para valorar (solo usuarios logueados) -->
+                    <?php if (isset($_SESSION['Sesion']) && $idUsuarioSesion > 0): ?>
+                        <div class="form-valoracion card-widget">
+                            <h4><?= $miValoracion ? 'Actualizar mi valoración' : 'Deja tu valoración' ?></h4>
+
+                            <?php if (isset($_GET['ok'])): ?>
+                                <p class="mensaje-ok">✅ Valoración guardada correctamente.</p>
+                            <?php endif; ?>
+
+                            <form action="../PHP conexiones/guardarValoracion.php" method="POST" id="formValoracion">
+                                <input type="hidden" name="ID_Curso" value="<?= $idCurso ?>">
+                                <input type="hidden" name="Puntuacion" id="inputPuntuacion" value="<?= $miValoracion['Puntuacion'] ?? 0 ?>" required>
+
+                                <label>Puntuación (1 a 5 estrellas):</label>
+                                <div class="estrellas-selector" id="estrellasSelector" role="radiogroup" aria-label="Seleccionar puntuación">
+                                    <?php for ($i = 1; $i <= 5; $i++): ?>
+                                        <button type="button"
+                                                class="estrella-btn <?= (isset($miValoracion['Puntuacion']) && $i <= $miValoracion['Puntuacion']) ? 'seleccionada' : '' ?>"
+                                                data-valor="<?= $i ?>"
+                                                aria-label="<?= $i ?> estrella<?= $i > 1 ? 's' : '' ?>">★</button>
+                                    <?php endfor; ?>
+                                </div>
+                                <p class="texto-puntuacion" id="textoPuntuacion">
+                                    <?= isset($miValoracion['Puntuacion']) ? $miValoracion['Puntuacion'] . ' estrella(s)' : 'Selecciona una puntuación' ?>
+                                </p>
+
+                                <label for="Comentario">Comentario (opcional):</label>
+                                <textarea name="Comentario" id="Comentario" rows="4"
+                                          placeholder="Escribe tu opinión sobre el curso..."
+                                          maxlength="2000"><?= htmlspecialchars($miValoracion['Comentario'] ?? '') ?></textarea>
+
+                                <div class="modal-acciones" style="margin-top: 15px;">
+                                    <button type="submit" class="btn-confirmar" id="btnEnviarValoracion">
+                                        <?= $miValoracion ? 'Actualizar valoración' : 'Publicar valoración' ?>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    <?php else: ?>
+                        <div class="item-recurso">
+                            <p>Para dejar una valoración debes <a href="login.php">iniciar sesión</a>.</p>
+                        </div>
+                    <?php endif; ?>
+
+                    <hr>
+
+                    <!-- Listado de comentarios -->
+                    <h4>Opiniones de los alumnos</h4>
+                    <div class="lista-comentarios">
+                        <?php if (count($listaValoraciones) > 0): ?>
+                            <?php foreach ($listaValoraciones as $val): ?>
+                                <?php
+                                    $nombreAutor = trim(($val['Nombre'] ?? '') . ' ' . ($val['Apellido'] ?? ''));
+                                    if ($nombreAutor === '') {
+                                        $nombreAutor = explode('@', $val['Correo'])[0];
+                                    }
+                                    $fechaFormateada = date('d/m/Y H:i', strtotime($val['Fecha']));
+                                ?>
+                                <article class="comentario-item item-recurso">
+                                    <div class="comentario-cabecera">
+                                        <span class="icon">👤</span>
+                                        <strong><?= htmlspecialchars($nombreAutor) ?></strong>
+                                        <span class="estrellas-static-small">
+                                            <?php for ($i = 1; $i <= 5; $i++): ?>
+                                                <span class="<?= $i <= $val['Puntuacion'] ? 'estrella-llena' : 'estrella-vacia' ?>">★</span>
+                                            <?php endfor; ?>
+                                        </span>
+                                        <time class="fecha-comentario" datetime="<?= htmlspecialchars($val['Fecha']) ?>">
+                                            <?= $fechaFormateada ?>
+                                        </time>
+                                    </div>
+                                    <?php if (!empty($val['Comentario'])): ?>
+                                        <p class="texto-comentario"><?= nl2br(htmlspecialchars($val['Comentario'])) ?></p>
+                                    <?php else: ?>
+                                        <p class="texto-comentario text-muted"><em>Sin comentario escrito.</em></p>
+                                    <?php endif; ?>
+                                </article>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <p class="text-muted">Todavía no hay opiniones publicadas.</p>
+                        <?php endif; ?>
+                    </div>
+                </section>
+            <?php endif; ?>
+
         </main>
 
         <!-- Columna derecha -->
@@ -305,6 +461,66 @@ $miembros = $stmtMiembros->fetchAll(PDO::FETCH_ASSOC);
     <?php endif; ?>
 
     <?php include 'footer.php'; ?>
+
+    <script>
+        (function () {
+            const selector = document.getElementById('estrellasSelector');
+            const inputPunt = document.getElementById('inputPuntuacion');
+            const textoPunt = document.getElementById('textoPuntuacion');
+            const form = document.getElementById('formValoracion');
+
+            if (!selector || !inputPunt) return;
+
+            const botones = selector.querySelectorAll('.estrella-btn');
+
+            function pintar(valor) {
+                botones.forEach(function (btn) {
+                    const v = parseInt(btn.getAttribute('data-valor'), 10);
+                    if (v <= valor) {
+                        btn.classList.add('seleccionada');
+                    } else {
+                        btn.classList.remove('seleccionada');
+                    }
+                });
+                inputPunt.value = valor;
+                if (textoPunt) {
+                    textoPunt.textContent = valor > 0 ? valor + ' estrella' + (valor > 1 ? 's' : '') : 'Selecciona una puntuación';
+                }
+            }
+
+            botones.forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    const valor = parseInt(this.getAttribute('data-valor'), 10);
+                    pintar(valor);
+                });
+
+                btn.addEventListener('mouseenter', function () {
+                    const valor = parseInt(this.getAttribute('data-valor'), 10);
+                    botones.forEach(function (b) {
+                        const v = parseInt(b.getAttribute('data-valor'), 10);
+                        b.classList.toggle('hover-temp', v <= valor);
+                    });
+                });
+            });
+
+            selector.addEventListener('mouseleave', function () {
+                botones.forEach(function (b) {
+                    b.classList.remove('hover-temp');
+                });
+            });
+
+            if (form) {
+                form.addEventListener('submit', function (e) {
+                    const p = parseInt(inputPunt.value, 10);
+                    if (isNaN(p) || p < 1 || p > 5) {
+                        e.preventDefault();
+                        alert('Debes seleccionar una puntuación entre 1 y 5 estrellas.');
+                        return false;
+                    }
+                });
+            }
+        })();
+        </script>
 
 </body>
 </html>

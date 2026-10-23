@@ -2047,6 +2047,214 @@ details.desplegable-miembros summary {
     margin: 0;
 }
 
+/* Margen superior para el contenedor principal de los archivos */
+.lista-recursos {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;                 /* Espacio uniforme entre cada archivo y carpeta */
+    margin-top: 10px;
+}
+
+/* VALORACIONES */
+
+.resumen-valoraciones {
+    margin-bottom: 20px;
+}
+
+.promedio-box {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    background: #ebf3f7;
+    border: 1px solid #dceaf5;
+    border-radius: 10px;
+    padding: 16px 20px;
+}
+
+.promedio-numero {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #0d47a1;
+    line-height: 1;
+}
+
+.estrellas-static,
+.estrellas-static-small {
+    display: inline-flex;
+    gap: 2px;
+}
+
+.estrella-llena {
+    color: #ffb400;
+    font-size: 1.4rem;
+}
+
+.estrella-vacia {
+    color: #c5c5c5;
+    font-size: 1.4rem;
+}
+
+.estrellas-static-small .estrella-llena,
+.estrellas-static-small .estrella-vacia {
+    font-size: 1rem;
+}
+
+.total-valoraciones {
+    color: #555;
+    margin: 0;
+    font-size: 0.95rem;
+}
+
+.form-valoracion {
+    margin: 20px 0;
+    padding: 20px;
+}
+
+.form-valoracion h4 {
+    margin-top: 0;
+    color: #0d47a1;
+}
+
+.estrellas-selector {
+    display: flex;
+    gap: 6px;
+    margin: 10px 0 6px;
+}
+
+.estrella-btn {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    color: #c5c5c5;
+    cursor: pointer;
+    padding: 0 2px;
+    transition: color 0.15s ease, transform 0.15s ease;
+    line-height: 1;
+}
+
+.estrella-btn:hover,
+.estrella-btn.hover-temp,
+.estrella-btn.seleccionada {
+    color: #ffb400;
+    transform: scale(1.15);
+}
+
+.texto-puntuacion {
+    font-size: 0.9rem;
+    color: #555;
+    margin: 0 0 12px;
+}
+
+.form-valoracion textarea {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    border: 2px solid #dceaf5;
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    resize: vertical;
+    min-height: 90px;
+}
+
+.form-valoracion textarea:focus {
+    outline: none;
+    border-color: #1e88e5;
+}
+
+.mensaje-ok {
+    background: #e8f5e9;
+    color: #2e7d32;
+    border: 1px solid #a5d6a7;
+    border-radius: 6px;
+    padding: 8px 12px;
+    margin-bottom: 12px;
+}
+
+.lista-comentarios {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 12px;
+}
+
+.comentario-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.comentario-cabecera {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 12px;
+    width: 100%;
+}
+
+.comentario-cabecera strong {
+    color: #0d47a1;
+}
+
+.fecha-comentario {
+    font-size: 0.8rem;
+    color: #777;
+    margin-left: auto;
+}
+
+.texto-comentario {
+    margin: 0;
+    color: #333;
+    line-height: 1.45;
+    width: 100%;
+    word-break: break-word;
+}
+
+.valoracion-tarjeta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin: 6px 0 10px;
+    min-height: 28px;
+}
+
+.estrellas-tarjeta {
+    display: inline-flex;
+    gap: 1px;
+    line-height: 1;
+}
+
+.estrella-llena-card {
+    color: #ffd700;
+    font-size: 1.05rem;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.estrella-vacia-card {
+    color: rgba(255, 255, 255, 0.35);
+    font-size: 1.05rem;
+}
+
+.texto-valoracion-card {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.total-val-card {
+    font-weight: 400;
+    opacity: 0.85;
+    font-size: 0.8rem;
+}
+
+.sin-valoracion-card {
+    font-size: 0.8rem;
+    opacity: 0.75;
+    color: #e0e0e0;
+    font-style: italic;
 /* ==========================================================================
 13. PANEL DE ADMINISTRACIÓN Y GESTOR DE USUARIOS
 ========================================================================== */

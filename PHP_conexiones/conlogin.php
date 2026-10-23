@@ -1,41 +1,34 @@
- <?php
+<?php
+
 session_start();
-require 'conexion.php';
 
-// Aqui el condicional evalua si existelos parametros enviados por post y get de 'Corre' y 'Contrasenia'
- if(isset($_POST['Correo']) && isset($_POST['Contrasenia'])){
-// Estructura que guarda el correo y la contraseña.
+require ('conexion.php');
+require_once ('../PHP/clases/Usuario.php');
+
+if(isset($_POST['Correo']) && isset($_POST['Contrasenia'])){
+
     $correo = trim($_POST['Correo']);
-    $contraseña_ingresada= trim($_POST['Contrasenia']);
+    $contrasenia = trim($_POST['Contrasenia']);
 
-    // La consulta trae el correo y contraseña de la base de datos.
-                $sql = "SELECT ID_Usuario, Correo, Contrasenia, Rol FROM usuarios WHERE Correo = :Correo";
-                // Se prepara la consulta para mayor seguridad.
-                $consulta = $pdo->prepare($sql);
+    $usuario = new Usuario($correo, $contrasenia);
+    $datosUsuario = $usuario->autenticar($pdo);
 
-                $consulta->bindParam(':Correo', $_POST['Correo'], PDO::PARAM_STR);
-               
-                $consulta->execute();
+    if($datosUsuario){
 
-                $usuario = $consulta->fetch(PDO::FETCH_ASSOC);
-            
-            // Condicional que verifica si la sesión de correo contiene el parametro de 'Correo'.
-            if($usuario && password_verify($contraseña_ingresada,$usuario['Contrasenia'])){
-                $_SESSION['Sesion'] = $usuario['Correo'];
-                $_SESSION['ID_Usuario'] = $usuario['ID_Usuario'];
-                $_SESSION['Rol'] = strtolower($usuario['Rol']);
+        $_SESSION['Sesion'] = $datosUsuario['Correo'];
+        $_SESSION['ID_Usuario'] = $datosUsuario['ID_Usuario'];
+        $_SESSION['Rol'] = strtolower($datosUsuario['Rol']);
 
-                header("Location: ../PHP/main.php");
-                exit();
-             //En caso de que la contraseña sea incorrecta despligue un alert/mensaje que muestra un mensaje 
-            } else {
-                echo "<script>
-                alert('Correo o contraseña incorrectos..');
-                window.location.href='../PHP/login.php?pagina=login';  
-                </script>";
-                //Una vez le das al boton de aceptar del alert, el usuario se ira al login nuevamente.
-                exit();
-            }
+        header("Location: ../PHP/main.php");
+        exit();
 
- }
-?>
+    } else {
+
+        echo "<script>
+        alert('Correo o contraseña incorrectos.');
+        window.location.href='../PHP/login.php?pagina=login';
+        </script>";
+
+        exit();
+    }
+}

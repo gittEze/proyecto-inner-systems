@@ -1,6 +1,6 @@
 <?php
 
-require 'conexion.php';
+require ('conexion.php');
 
 
 // Validación para espacios de los datos insertados por medio de trim.

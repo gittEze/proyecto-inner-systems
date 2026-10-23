@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-require 'conexion.php';
+require ('conexion.php');
 
 // Verifica que exista una sesión iniciada
 if (!isset($_SESSION['Sesion'])) {
@@ -12,7 +12,7 @@ if (!isset($_SESSION['Sesion'])) {
 $correo = $_SESSION['Sesion'];
 
 // Consulta que permite obtener el ID del usuario actual
-$sql = "SELECT idUsu FROM usuario WHERE Correo = :correo";
+$sql = "SELECT ID_Usuario FROM usuario WHERE Correo = :correo";
 
 $consulta = $pdo->prepare($sql);
 $consulta->execute([':correo' => $correo]);
