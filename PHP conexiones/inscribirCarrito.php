@@ -7,7 +7,8 @@ if (!isset($_SESSION['Sesion']) || !isset($_SESSION['ID_Usuario'])) {
     exit();
 }
 
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+// Estructura que valida la información traida de Paypal por medio de POST válido.
+if (!isset($_GET['paymentID']) && $_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: ../PHP/carrito.php');
     exit();
 }

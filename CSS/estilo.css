@@ -2751,4 +2751,22 @@ body.admin-active .footerMain {
         max-width: 280px;
         justify-content: center;
     }
+
+/* ==========================================
+Estilos para la integración de PayPal en el Carrito
+========================================== */
+
+/* Contenedor del botón de PayPal */
+#paypal-button-container {
+width: 100%;
+max-width: 100%;
+margin-top: 15px;
+}
+
+/* Estilo responsivo opcional para centrar o ajustar la apariencia en tarjetas */
+.carrito-footer .btn-cancelar {
+text-align: center;
+text-decoration: none;
+box-sizing: border-box;
+}
 }

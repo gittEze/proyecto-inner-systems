@@ -3,7 +3,7 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-require_once '../../PHP_conexiones/conexion.php';
+require_once '../../PHP conexiones/conexion.php';
 
 $esAdministrador = false;
 $usuario = null;

@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once __DIR__ . '/../../PHP_conexiones/conexion.php';
+require_once __DIR__ . '/../../PHP conexiones/conexion.php';
 
 // Verificar si el usuario es administrador (igual que en tus otros archivos)
 // ... (puedes agregar tu validación de seguridad aquí)
