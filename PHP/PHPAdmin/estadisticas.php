@@ -4,7 +4,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 // Ruta de tu archivo de conexión
-require_once __DIR__ . '/../../PHP_conexiones/conexion.php';
+require_once __DIR__ . '/../../PHP conexiones/conexion.php';
 
 try {
     // Consulta de cantidad total de cursos.
