@@ -35,22 +35,22 @@ if (isset($_SESSION['Sesion'])) {
 ) { ?>
 
     <!-- Administrador -->
-    <a class="Serv" href="../PHP/main.php">Inicio</a>
-    <a class="Serv" href="../PHP/cursos.php">Cursos</a>
-    <a class="Serv" href="../PHP/proyectos.php">Proyectos educativos</a>
-    <a class="Serv" href="../PHP/mentorías.php">Mentorías</a>
-    <a class="Serv" href="../PHP/PHPAdmin/menuadmin.php">
+    <a class="Serv" href="main.php">Inicio</a>
+    <a class="Serv" href="cursos.php">Cursos</a>
+    <a class="Serv" href="proyectos.php">Proyectos educativos</a>
+    <a class="Serv" href="mentorías.php">Mentorías</a>
+    <a class="Serv" href="PHPAdmin/menuadmin.php">
         Panel de Administración
     </a>
 
 <?php } elseif (isset($_SESSION['Sesion']) && $usuario) { ?>
 
     <!-- Usuario normal -->
-    <a class="Serv" href="../PHP/main.php">Inicio</a>
-    <a class="Serv" href="../PHP/cursos.php">Cursos</a>
-    <a class="Serv" href="../PHP/proyectos.php">Proyectos educativos</a>
-    <a class="Serv" href="../PHP/mentorías.php">Mentorías</a>
-    <a class="Serv" href="../PHP/carrito.php">
+    <a class="Serv" href="main.php">Inicio</a>
+    <a class="Serv" href="cursos.php">Cursos</a>
+    <a class="Serv" href="proyectos.php">Proyectos educativos</a>
+    <a class="Serv" href="mentorías.php">Mentorías</a>
+    <a class="Serv" href="carrito.php">
         Carrito
         <?php
         $cantCarrito = (
@@ -67,9 +67,9 @@ if (isset($_SESSION['Sesion'])) {
 <?php } else { ?>
 
     <!-- Visitante sin sesión -->
-    <a class="Serv" href="../PHP/main.php">Inicio</a>
-    <a class="Serv" href="../PHP/cursos.php">Cursos</a>
-    <a class="Serv" href="../PHP/proyectos.php">Proyectos educativos</a>
+    <a class="Serv" href="main.php">Inicio</a>
+    <a class="Serv" href="cursos.php">Cursos</a>
+    <a class="Serv" href="proyectos.php">Proyectos educativos</a>
 
 <?php } ?>
 

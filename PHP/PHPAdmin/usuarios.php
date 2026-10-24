@@ -6,7 +6,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 // Conexión a la base de datos
-require_once __DIR__ . '/../../PHP_conexiones/conexion.php';
+require_once __DIR__ . '/../../PHP conexiones/conexion.php';
 
 $esAdministrador = false;
 $usuario = null;
