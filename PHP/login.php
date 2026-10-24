@@ -20,15 +20,17 @@
                 <a id="volver" href="main.php">Volver</a>
 
 
-                <!-- Comprobante de envio de los datos por los meotods post y get -->
+                <!-- Comprobante de envio de los datos por los metodos post y get -->
                 <?php $envio = $_POST['btnRegister'] ?? $_POST['btnLogin'] ?? $_GET['pagina'] ?? 'login'; ?>
 
                 <?php if ($envio == "login") { ?>
 
                     <title>Iniciar sesión - Aprendomo</title>
+
                 <!-- Condicional que evalua si existe el parámetro exito en el método GET y si concuerda con lo dado en "conslogin" -->
                 <?php  if (isset($_GET['exito']) && $_GET['exito'] == 1) { ?>
-                <!-- Si se logra el coommprbante mmuestra un mensaje de que se logro el registro -->
+
+                <!-- Si se logra el comprobante muestra un mensaje de que se logro el registro -->
                     <div class="logrado">  
                         Registro exitoso. Por favor, inicie sesión.
                     </div>
@@ -42,9 +44,9 @@
                         <input type="email" id="Correo" name="Correo" placeholder="Ingrese su correo">
 
                         <label for="Contrasena">Contraseña:</label>
-                        <input type="password" id="Contrasena" name="Contrasena" placeholder="Ingrese su contraseña">
+                        <input type="password" id="Contrasena" name="Contrasenia" placeholder="Ingrese su contraseña">
 
-                        <a id="recuperarContrasenia" href="">Recuperar contraseña.</a>
+                        <a id="recuperarContrasenia" href="recuperarcon.php">Recuperar contraseña.</a>
 
                         <!-- Link que aparece en el apartado del formulario de login que envia al usuario a registrase si aun no lo ha hecho. -->
                         <p class="regisAqui">¿No tienes cuenta aún?
@@ -67,6 +69,21 @@
                     <title>Registro - Aprendomo</title>
                     <h2>Formulario de Registro</h2>
 
+                    <!-- Cartel/Mensaje flotante si el correo ya existe o faltan campos -->
+                    <?php if (isset($_GET['error']) && $_GET['error'] == 'correo_existe') { ?>
+                        <div class="mensaje-error" style="background-color: #ffdddd; color: #d8000c; border: 1px solid #d8000c; padding: 10px; border-radius: 5px; margin-bottom: 15px; text-align: center; font-weight: bold;">
+                            ⚠️ El correo electrónico ya se encuentra registrado. Intente con otro o inicie sesión.
+                        </div>
+                    <?php } elseif (isset($_GET['error']) && $_GET['error'] == 'campos_vacios') { ?>
+                        <div class="mensaje-error" style="background-color: #ffffcc; color: #9f6000; border: 1px solid #9f6000; padding: 10px; border-radius: 5px; margin-bottom: 15px; text-align: center;">
+                            ⚠️ Por favor complete todos los campos obligatorios.
+                        </div>
+                    <?php } elseif (isset($_GET['error']) && $_GET['error'] == 'formato_invalido') { ?>
+                        <div class="mensaje-error" style="background-color: #ffdddd; color: #d8000c; border: 1px solid #d8000c; padding: 10px; border-radius: 5px; margin-bottom: 15px; text-align: center;">
+                            ⚠️ Error: Cédula y Teléfono deben ser números.
+                        </div>
+                    <?php } ?>
+
                     <form id="contenedorRegister" action="../PHP conexiones/consreg.php" method="post">
                         <label for="Nm">Nombre</label>
                         <input type="text" id="Nm" name="Nombre" placeholder="Ej: Juan">
@@ -78,13 +95,13 @@
                         <input type="text" id="Cedula" name="Cedula" placeholder="Ej: 1234567890">
 
                         <label for="Fecha">Fecha de nacimiento</label>
-                        <input type="date" id="Fecha" name="Fecha_De_Nacimiento" placeholder="Ej: 01/01/2000" required>
+                        <input type="date" id="Fecha" name="Fecha_De_Nacimiento" placeholder="Ej: 01/01/2000">
 
                         <label for="Correo">Correo electrónico</label>
                         <input type="email" id="Correo" name="Correo" placeholder="ejemplo@correo.com" required>
 
                         <label for="Contrasena">Contraseña</label>
-                        <input type="password" id="Contrasena" name="Contrasena" placeholder="Ingrese su contraseña" required>
+                        <input type="password" id="Contrasena" name="Contrasenia" placeholder="Ingrese su contraseña" required>
 
                         <label for="Telefono">Teléfono</label>
                         <input type="tel" id="Telefono" name="Telefono" placeholder="099123456">
@@ -104,9 +121,8 @@
                         <div class="botones">
                             <a href="login.php" class="claseo"> 
                             <button type="submit" class="btnDato" >Registrarse</button>
-                            <a>
-                            <button type="reset" class="btnDato">Limpiar formulario</button>
                             </a>
+                            <button type="reset" class="btnDato">Limpiar formulario</button>
                         </div>
                     </form>
 

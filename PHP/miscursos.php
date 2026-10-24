@@ -9,23 +9,36 @@ if (!isset($_SESSION['Sesion'])) {
     exit();
 }
 
+//Variables que toman la sessión y el id del usaurio.
 $correo = $_SESSION['Sesion'];
+$ID_Usuario = $_SESSION['ID_Usuario'] ?? 0;
 
-// Consulta SQL con JOIN para obtener solo los cursos en los que está inscripto el usuario actual.
+// Consulta con UNION que pemite juntar los cursos inscriptos mas los cursos creados por el docente,
+// De esta forma el usaurio puede ver lo que creo o esta inscripto sin importar el rol.
 $sql = "SELECT c.* 
         FROM cursos c
         INNER JOIN inscripciones i ON c.ID_Curso = i.ID_Curso
         INNER JOIN usuarios u ON i.ID_Usuario = u.ID_Usuario
-        WHERE u.Correo = :correo
-        ORDER BY c.ID_Curso DESC";
+        WHERE u.Correo = :Correo
 
-        
-// Se prepara la conuslta a traves del statment
+        UNION
+
+        SELECT c.* 
+        FROM cursos c
+        WHERE c.ID_Docente = :ID_Usuario
+
+        ORDER BY ID_Curso DESC";
+    
 $stmt = $pdo->prepare($sql);
-$stmt->execute([':correo' => $correo]);
+
+$stmt->execute([
+    ':Correo' => $correo,
+    ':ID_Usuario'  => $ID_Usuario
+]);
+
 $cursos = $stmt->fetchAll(PDO::FETCH_ASSOC);
-// Guarda los datos de la consulta en $cursos.
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -43,15 +56,17 @@ $cursos = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <div style="max-width: 1200px; margin: 30px auto; padding: 0 20px;">
         <h2>Mis Cursos</h2>
         
+        <!-- Estructura para mostrar los cursos -->
         <div class="grid-cursos">
             <?php if (count($cursos) > 0): ?>
                 <?php foreach ($cursos as $c): ?>
-                    <!-- Enlace conectado directamente a vercursos.php pasándole el ID_Curso -->
+                    <!-- Enlace conectado directamente a vercursos.php pasándole el idCurso -->
                     <a href="vercursos.php?ID_Curso=<?= $c['ID_Curso'] ?>" class="card-curso">
+                        <!-- En caso de no contar con una imágen asignda en la carpeta de imágenes para el curso se pone un default.png. -->
                         <img src="../PHP conexiones/Imagenes/<?= !empty($c['Dataso']) ? htmlspecialchars($c['Dataso']) : 'default.png' ?>" alt="Portada">
                         <div class="card-curso-body">
                             <h3><?= htmlspecialchars($c['Titulo_Curso']) ?></h3>
-                            <small class="text-muted"><?= htmlspecialchars($c['Nivel_Curso'] ??'') ?></small>
+                            <small class="text-muted"><?= htmlspecialchars($c['Nivel_Curso'] ?? $c['Nivel_curso'] ?? '') ?></small>
                         </div>
                     </a>
                 <?php endforeach; ?>

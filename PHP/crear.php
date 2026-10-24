@@ -30,7 +30,7 @@
                 <h2>Descripción del curso:</h2>
                 <textarea id="Desc" name="Descripcion_Curso"  rows="8" cols="50"></textarea>
 
-                <label class="Detalle" for="Cursotip">Tipo de curso:</label>
+                <label class="Detalle" for="Cursotip" id="Tcurso">Tipo de curso:</label>
                     <select id="Cursotip" name="Tipo_Curso">
                         <option value="Informática">Informática</option>
                         <option value="Programacion">Programación</option>
@@ -69,7 +69,7 @@
                 <div class="btncurso">
                 <button type="button" id="Visbut"> Vista previa </button>
   
-                <button type="Submit" id="Env"> Publicar Curso </button>
+                <button type="Submit" class="Public"> Publicar Curso </button>
                 </div>
 
                 </form>
