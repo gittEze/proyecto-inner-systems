@@ -6,6 +6,14 @@ session_start();
 // Se inclue la conexión a la Base de datos para la funcionalidad del archivo.
 require_once 'conexion.php';
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\SMTP;
+
+require '../PHPMailer/Exception.php';
+require '../PHPMailer/PHPMailer.php';
+require '../PHPMailer/SMTP.php';
+
 // Condicional isset que evalua si la sesion se inicio.
 
 // Es necesario inscribirse para entrar a un curso.
@@ -33,7 +41,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['ID_Curso'])) {
             ':ID_Usuario' => $idUsuario,
             ':ID_Curso' => $idCurso
         ]);
+        
+        // Consultar el título del curso al que se inscribió
+        $stmtCurso = $pdo->prepare("SELECT Titulo_Curso FROM cursos WHERE ID_Curso = :ID_Curso");
+        $stmtCurso->execute([':ID_Curso' => $idCurso]);
+        $cursoInfo = $stmtCurso->fetch(PDO::FETCH_ASSOC);
+
+        if ($cursoInfo) {
+            $mail = new PHPMailer(true);
+
+            try {
+                $mail->isSMTP();                                            
+                $mail->Host       = 'smtp.gmail.com';                     
+                $mail->SMTPAuth   = true;                                 
+                $mail->Username   = 'innersystems.contacto@gmail.com';                   
+                $mail->Password   = 'oovw zjot xarz gffh';
+                $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+                $mail->Port       = 587;                        
+
+                $mail->setFrom('aprendomo@gmail.com', 'Empresa Inner');
+                $mail->addAddress($usuario['Correo'], $usuario['Nombre']);
+
+                $mail->isHTML(true);                                 
+                $mail->CharSet ='UTF-8';
+                $mail->Subject = 'Inscripción Exitosa - Aprendomo';
+                $mail->Body    = 'Hola <b>' . htmlspecialchars($usuario['Nombre']) . '</b>,<br><br>' .
+                                 'Te has inscrito correctamente al curso: <b>' . htmlspecialchars($cursoInfo['Titulo_Curso']) . '</b>.<br>' .
+                                 'Ya puedes acceder a los contenidos desde la sección "Mis cursos".';
+
+                $mail->send();
+            } catch (Exception $e) {
+                // Manejo de error silencioso para no interrumpir el flujo de redirección si falla internet
+            }
+        }
     }
+    
     header("Location: ../PHP/miscursos.php");
     exit();
 
