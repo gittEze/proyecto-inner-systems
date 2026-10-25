@@ -63,6 +63,40 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $consulta->execute();
 }
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\SMTP;
+
+require '../PHPMailer/Exception.php';
+require '../PHPMailer/PHPMailer.php';
+require '../PHPMailer/SMTP.php';
+
+$mail = new PHPMailer(true);
+
+try {
+    $mail->isSMTP();                                            
+    $mail->Host       = 'smtp.gmail.com';                     
+    $mail->SMTPAuth   = true;                                 
+    $mail->Username   = 'innersystems.contacto@gmail.com';                   
+    $mail->Password   = 'oovw zjot xarz gffh';
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+    $mail->Port       = 587;                        
+
+    $mail->setFrom('aprendomo@gmail.com', 'Empresa Inner');
+    $mail->addAddress($correo_saneado, $nombre);
+
+    $mail->isHTML(true);                                 
+    $mail->CharSet ='UTF-8';
+    $mail->Subject = '¡Bienvenido a Aprendomo!';
+    $mail->Body    = 'Hola <b>' . htmlspecialchars($nombre) . '</b>,<br><br>' .
+                     'Te has registrado exitosamente en nuestra plataforma.<br>' .
+                     'Ya puedes iniciar sesión con tu cuenta.<br><br>¡Mucho éxito!';
+
+    $mail->send();
+} catch (Exception $e) {
+    // Si falla el correo, el registro continúa con normalidad
+}
+
 // Redirección con éxito al login
 header("Location: ../PHP/login.php?pagina=login&exito=1");
 exit();
