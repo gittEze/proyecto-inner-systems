@@ -3,9 +3,9 @@ session_start();
 require_once ('conexion.php');
 
 // Validar que el usuario haya iniciado sesión y tenga el rol de administrador
-if (!isset($_SESSION['Rol']) || $_SESSION['Rol'] !== 'administrador') {
+if (!isset($_SESSION['Rol']) || $_SESSION['Rol'] !== 'Administrador') {
     echo "<script>
-        alert('Acceso denegado: No tienes permisos de administrador.');
+        alert('Acceso denegado: No tienes permisos de Administrador.');
         window.location.href='../PHP/cursos.php';
     </script>";
     exit();

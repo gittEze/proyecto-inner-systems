@@ -34,8 +34,8 @@ try {
         $_SESSION['usuario'] = $filas['Nombre'];
 
         // Redirección basada en el rol del usuario.
-        if ($filas['Rol'] === 'Admin') {
-            header("location: admin/admin.php"); 
+        if ($filas['Rol'] === 'Administrador') {
+            header("location: ../menuadmin.php"); 
             exit();
         } elseif ($filas['Rol'] === 'Docente' || $filas['Rol'] === 'Estudiante') {
             header("location: main.php"); 
