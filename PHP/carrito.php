@@ -111,18 +111,46 @@ $cantidad = count($cursosCarrito);
                 <span>Total estimado:</span>
                 <strong>$<?= number_format($totalPrecio, 0, ',', '.') ?></strong>
             </div>
-            <form action="../PHP conexiones/inscribirCarrito.php" method="POST"
-                  onsubmit="return confirm('¿Confirmas la inscripción a los <?= $cantidad ?> curso(s) del carrito?');">
-                <button type="submit" class="btn-confirmar btn-inscribir-todos">
-                    Inscribirme a todos (<?= $cantidad ?>)
-                </button>
-            </form>
+
+            <div id="paypal-button-container"></div>
+
             <a href="cursos.php" class="btn-cancelar">Seguir explorando</a>
         </div>
     <?php endif; ?>
 </main>
 
 <?php include 'footer.php'; ?>
+
+<script src="https://www.paypal.com/sdk/js?client-id=AeYzyWAkXpGUqHvAmSxNOfK66DfK3fJ-JIGDGsVLFXnpt-8WuhV9-YBGZnRvN_HP_HGrQ7zdXRszlorK&currency=USD"></script>
+
+
+<!-- Estructura del SDK para la funcionalidad de Paypal -->
+<script>
+    paypal.Buttons({
+        createOrder: function(data, actions) {
+            return actions.order.create({
+                purchase_units: [{
+                    amount: {
+                        value: '<?php echo number_format($totalPrecio, 2, '.', ''); ?>'
+                    }
+                }]
+            });
+        },
+        onApprove: function(data, actions) {
+            return actions.order.capture().then(function(details) {
+                // Redirige al backend pasando el ID de la orden de pago
+                window.location.href = '../PHP conexiones/inscribirCarrito.php?paymentID=' + data.orderID;
+            });
+        },
+        onCancel: function (data) {
+            alert('El pago fue cancelado.');
+        },
+        onError: function (err) {
+            console.error(err);
+            alert('Hubo un error al conectar con PayPal.');
+        }
+    }).render('#paypal-button-container');
+</script>
 
 </body>
 </html>

@@ -3,7 +3,7 @@
 session_start();
 
 // Conexión a la base de datos
-include(__DIR__ . '/../PHP_conexiones/conexion.php');
+include(__DIR__ . '/../PHP conexiones/conexion.php');
 
 // Variables que almacenan nombre de usuario y contraseña.
 
