@@ -36,14 +36,12 @@ if (isset($_FILES['fotoPerfil']) && $_FILES['fotoPerfil']['error'] === 0) {
 
 
     // Guarda el nombre de la imagen en la base de datos
-    $sql = "UPDATE usuario 
-            SET Foto_Perfil = :Foto_Perfil 
-            WHERE idUsu = :idUsu";
+    $sql = "UPDATE usuarios SET Foto_Perfil = :Foto_Perfil WHERE ID_Usuario = :ID_Usuario";
 
     $consulta = $pdo->prepare($sql);
 
     $consulta->bindParam(':Foto_Perfil', $nombre_imagen, PDO::PARAM_STR);
-    $consulta->bindParam(':idUsu', $usuario['idUsu'], PDO::PARAM_INT);
+    $consulta->bindParam(':ID_Usuario', $usuario['ID_Usuario'], PDO::PARAM_INT);
 
     $consulta->execute();
 }
