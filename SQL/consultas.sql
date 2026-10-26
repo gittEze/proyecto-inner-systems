@@ -139,4 +139,30 @@ CONSTRAINT fk_val_usuario FOREIGN KEY (ID_Usuario) REFERENCES usuarios (ID_Usuar
 CONSTRAINT chk_puntuacion CHECK (Puntuacion BETWEEN 1 AND 5)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- 9. Tabla: proyectos_educativos
+
+CREATE TABLE IF NOT EXISTS proyectos_educativos (
+  ID_Proyecto int(11) NOT NULL AUTO_INCREMENT,
+  ID_Curso int(11) NOT NULL,
+  ID_Docente int(11) NOT NULL,
+  Titulo_Proyecto varchar(200) NOT NULL,
+  Descripcion text DEFAULT NULL,
+  Archivo_URL varchar(255) DEFAULT NULL,
+  Imagen_Portada varchar(255) DEFAULT NULL,
+  Fecha_Publicacion datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (ID_Proyecto),
+  KEY fk_proyecto_curso (ID_Curso),
+  KEY fk_proyecto_docente (ID_Docente),
+  CONSTRAINT fk_proyecto_curso
+    FOREIGN KEY (ID_Curso)
+    REFERENCES cursos (ID_Curso)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT fk_proyecto_docente
+    FOREIGN KEY (ID_Docente)
+    REFERENCES usuarios (ID_Usuario)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+);
+
 SET FOREIGN_KEY_CHECKS = 1;
