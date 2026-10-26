@@ -38,7 +38,7 @@ if (isset($_SESSION['Sesion'])) {
     <a class="Serv" href="main.php">Inicio</a>
     <a class="Serv" href="cursos.php">Cursos</a>
     <a class="Serv" href="proyectos.php">Proyectos educativos</a>
-    <a class="Serv" href="mentorías.php">Mentorías</a>
+    <a class="Serv" href="mentorias.php">Mentorías</a>
     <a class="Serv" href="PHPAdmin/menuadmin.php">
         Panel de Administración
     </a>
@@ -49,7 +49,7 @@ if (isset($_SESSION['Sesion'])) {
     <a class="Serv" href="main.php">Inicio</a>
     <a class="Serv" href="cursos.php">Cursos</a>
     <a class="Serv" href="proyectos.php">Proyectos educativos</a>
-    <a class="Serv" href="mentorías.php">Mentorías</a>
+    <a class="Serv" href="mentorias.php">Mentorías</a>
     <a class="Serv" href="carrito.php">
         Carrito
         <?php
