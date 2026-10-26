@@ -29,6 +29,11 @@ if (!$curso) {
 
 $rolSesion = strtolower(trim($_SESSION['Rol'] ?? ''));
 $esDocente = ($rolSesion === 'docente' || $rolSesion === 'administrador');
+$idUsuarioSesionTmp = isset($_SESSION['ID_Usuario']) ? intval($_SESSION['ID_Usuario']) : 0;
+$esCreadorCurso = $esDocente && (
+    $rolSesion === 'administrador' ||
+    ($idUsuarioSesionTmp > 0 && $idUsuarioSesionTmp === intval($curso['ID_Docente']))
+);
 
 
 // En esta consulta se obtienen las carpetas que hay en el curso.
@@ -169,9 +174,17 @@ $tareas = $stmtTareas->fetchAll(PDO::FETCH_ASSOC);
                     <!-- Acciones exclusivas para docentes/admins -->
                     <?php if ($esDocente): ?>
                         <div class="acciones-profesor">
-                            <a href="#modal-archivo" class="btn-confirmar"> 📄 Subir Archivo</a>
-                            <button type="button" class="btn-confirmar" id="btnAbrirModal">📝 Crear Tarea</button>
-                            <a href="#modal-carpeta" class="btn-confirmar">📁 Crear Carpeta</a>
+                            <?php if ($esCreadorCurso): ?>
+                                <a href="#modal-archivo" class="btn-confirmar"> 📄 Subir Archivo</a>
+                                <a href="#modal-carpeta" class="btn-confirmar">📁 Crear Carpeta</a>
+                                <a href="#modal-proyecto" class="btn-confirmar">🎓 Subir proyecto educativo</a>
+                            <?php endif; ?>
+                        </div>
+                    <?php endif; ?>
+
+                    <?php if (isset($_GET['proyecto']) && $_GET['proyecto'] === 'ok'): ?>
+                        <div class="logrado" style="margin-bottom: 15px;">
+                            Proyecto educativo publicado correctamente. Ya se puede ver en <a href="proyectos.php">Proyectos educativos</a>.
                         </div>
                     <?php endif; ?>
 
@@ -491,6 +504,33 @@ $tareas = $stmtTareas->fetchAll(PDO::FETCH_ASSOC);
         </div>
     <?php endif; ?>
 
+    
+    <!-- Modal: Subir proyecto educativo -->
+    <?php if ($esCreadorCurso): ?>
+        <div id="modal-proyecto" class="modal-overlay">
+            <div class="modal-box">
+                <h2>Subir proyecto educativo</h2>
+                <p style="margin-bottom: 12px; opacity: 0.85;">
+                    Publicá un proyecto realizado al finalizar este curso. Se mostrará en la sección de Proyectos educativos.
+                </p>
+                <form action="../PHP conexiones/subirProyecto.php" method="POST" enctype="multipart/form-data">
+                    <input type="hidden" name="ID_Curso" value="<?= $idCurso ?>">
+
+                    <label>Título del proyecto:</label>
+                    <input type="text" name="Titulo_Proyecto" required maxlength="200" placeholder="Ej: App de gestión escolar">
+
+                    <label>Descripción:</label>
+                    <textarea name="Descripcion" rows="4" placeholder="Breve descripción del proyecto, tecnologías usadas, objetivos..."></textarea>
+
+                    <label>Archivo del proyecto (PDF, ZIP, DOC, PPT o imagen):</label>
+                    <input type="file" name="archivo_proyecto" accept=".pdf,.zip,.rar,.doc,.docx,.ppt,.pptx,.png,.jpg,.jpeg,.gif,.webp">
+
+                    <label>Imagen de portada (opcional):</label>
+                    <input type="file" name="imagen_portada" accept="image/*">
+
+                    <div class="modal-acciones">
+                        <button type="submit" class="btn-confirmar">Publicar proyecto</button>
+                        <a href="#" class="btn-cancelar">Cancelar</a>
 
     <!-- Modal para crear tareas -->
     <?php if ($esDocente): ?>
