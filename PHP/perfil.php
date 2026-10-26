@@ -33,18 +33,7 @@ $usuario = $stmt->fetch(PDO::FETCH_ASSOC);// Variable con los datos del usuario
 </head>
 <body>
 
-<div class="contenedorPerfil">
-    <div class="logo">
-        <a class="logo" id="logoPerfil" href="main.php">
-            <img id="logoPerfilImg" src="../IMG/Logo.png" alt="Logo de Aprendomo">
-        </a>
-    </div>
-    <div class="profileBtns">
-        <a class="profileBtn" href="main.php" ><img class = "profileIcon" src="../IMG/volverIcon.png" alt="Volver"></a>
-        <a class="profileBtn" href="#"><img class = "profileIcon" src="../IMG/mensajesIcon.png" alt="Mensajes"></a>
-        <a class="profileBtn" href="#"><img class = "profileIcon" src="../IMG/notificacionesIcon.png" alt="Notificaciones"></a>
-    </div>
-</div>
+<?php include 'menu.php'; ?>
 
 <main class="perfilMain">
     <!-- Información principal y tareas pendientes -->

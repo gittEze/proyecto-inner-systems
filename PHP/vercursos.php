@@ -93,6 +93,8 @@ if ($idUsuarioSesion > 0) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($curso['Titulo_Curso']) ?> | LMS</title>
     <link rel="stylesheet" href="../CSS/estilo.css">
+    <link rel="stylesheet" href="../CSS/animaciones.css"> 
+    <link rel="stylesheet" href="../CSS/tareaEstilo.css">
 </head>
 <body>
 
@@ -158,7 +160,8 @@ if ($idUsuarioSesion > 0) {
                     <?php if ($esDocente): ?>
                         <div class="acciones-profesor">
                             <a href="#modal-archivo" class="btn-confirmar"> 📄 Subir Archivo</a>
-                             <a href="#modal-carpeta" class="btn-confirmar">📁 Crear Carpeta</a>
+                            <button type="button" class="btn-confirmar" id="btnAbrirModal">📝 Crear Tarea</button>
+                            <a href="#modal-carpeta" class="btn-confirmar">📁 Crear Carpeta</a>
                         </div>
                     <?php endif; ?>
 
@@ -460,6 +463,80 @@ if ($idUsuarioSesion > 0) {
         </div>
     <?php endif; ?>
 
+
+    <!-- Modal para crear tareas -->
+    <?php if ($esDocente): ?>
+        <div id="modalTarea" class="modal-tarea-overlay">
+            <div class="modal-tarea-container">
+                <div class="modal-header">
+                    <h2>Crear Nueva Tarea</h2>
+                    <button type="button" class="btn-cerrar" id="btnCerrarModal">X</button>
+                </div>
+                <form id="formCrearTarea"
+                    action="../PHP conexiones/guardar_tarea.php"
+                    method="POST"
+                    enctype="multipart/form-data">
+                    <div class="modal-body">
+                        <!-- ID del curso al que pertenece la tarea -->
+                        <input type="hidden" name="ID_Curso" value="<?= $idCurso ?>">
+                        <!-- Nombre -->
+                        <div class="form-group">
+                            <label for="nombreTarea">Nombre de la tarea *</label>
+                            <input type="text" id="nombreTarea" name="nombre_tarea" placeholder="Ej: Ejercicios de Álgebra" required>
+                        </div>
+                        <!-- Descripción -->
+                        <div class="form-group">
+                            <label for="descripcionTarea">Descripción / Instrucciones</label>
+                            <textarea id="descripcionTarea" name="descripcion_tarea" rows="4" placeholder="Escribe las instrucciones para los alumnos..."></textarea>
+                        </div>
+                        
+                        <!-- Seleccionar carpeta -->
+                        <div class="form-group">
+                            <label for="carpetaTarea">Asignar a carpeta:</label>
+                            <select id="carpetaTarea" name="ID_Carpeta">
+                                <option value="">-- Sin carpeta --</option>
+                            <?php foreach ($carpetas as $carpeta): ?>
+                                    <option value="<?= $carpeta['ID_Carpeta'] ?>">
+                                    <?= htmlspecialchars($carpeta['Nombre_Carpeta']) ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+
+                        <!-- Archivos adjuntos -->
+                        <div class="form-group">
+                            <label for="archivosTarea">Adjuntar archivos</label>
+                            <input type="file" id="archivosTarea" name="archivos_tarea[]"multiple>
+                        </div>
+                        <!-- Enlace externo -->
+                        <div class="form-group">
+                            <label for="enlaceTarea">Adjuntar enlace / URL externa</label>
+                            <input type="url" id="enlaceTarea" name="enlace_tarea" placeholder="https://ejemplo.com/recurso">
+                        </div>
+                        <!-- Fechas -->
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="fechaVencimiento">Fecha de vencimiento *</label>
+                                <input type="datetime-local" id="fechaVencimiento" name="fecha_vencimiento" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="fechaBloqueo">Fecha de bloqueo</label>
+                                <input type="datetime-local" id="fechaBloqueo" name="fecha_bloqueo">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Botones -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn-cancelar" id="btnCancelarModal"> Cancelar</button>
+                        <button type="submit" class="btn-publicar"> Publicar Tarea</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    <?php endif; ?>
+
     <?php include 'footer.php'; ?>
 
     <script>
@@ -520,7 +597,40 @@ if ($idUsuarioSesion > 0) {
                 });
             }
         })();
-        </script>
+    </script>
 
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+    const modal = document.getElementById('modalTarea');
+    const btnAbrir = document.getElementById('btnAbrirModal');
+    const btnCerrar = document.getElementById('btnCerrarModal');
+    const btnCancelar = document.getElementById('btnCancelarModal');
+    const formTarea = document.getElementById('formCrearTarea');
+
+    // Mostrar el modal
+    const abrirModal = () => {
+        modal.classList.add('active');
+    };
+
+    // Ocultar y limpiar el modal
+    const cerrarModal = () => {
+        modal.classList.remove('active');
+        formTarea.reset();
+    };
+
+    // Listeners
+    btnAbrir.addEventListener('click', abrirModal);
+    btnCerrar.addEventListener('click', cerrarModal);
+    btnCancelar.addEventListener('click', cerrarModal);
+
+    // Cerrar al hacer clic en el fondo
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+        cerrarModal();
+        }
+    });
+    });
+    </script>
 </body>
 </html>
