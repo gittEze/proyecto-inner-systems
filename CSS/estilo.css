@@ -1008,6 +1008,10 @@ select {
     gap: 12px;
 }
 
+.tarea-recurso {
+    cursor: pointer;
+}
+
 .item-recurso .icon {
     font-size: 1.3rem;
 }
