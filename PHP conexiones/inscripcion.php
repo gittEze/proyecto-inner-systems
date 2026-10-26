@@ -3,7 +3,7 @@
 // Se habre una sessión.
 session_start();
 
-// Se inclue la conexión a la Base de datos para la funcionalidad del archivo.
+// Se incluye la conexión a la Base de datos para la funcionalidad del archivo.
 require_once 'conexion.php';
 
 use PHPMailer\PHPMailer\PHPMailer;

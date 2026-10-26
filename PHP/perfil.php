@@ -57,7 +57,6 @@ $usuario = $stmt->fetch(PDO::FETCH_ASSOC);// Variable con los datos del usuario
     </form>
 
 </div>
-
         <div class="tareasPendientes">
             <h2>Tareas pendientes</h2>
             <div class="listaTareas">

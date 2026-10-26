@@ -85,6 +85,16 @@ if ($idUsuarioSesion > 0) {
     $miValoracion = $stmtMia->fetch(PDO::FETCH_ASSOC);
 }
 
+$stmtTareas = $pdo->prepare("SELECT ID_Tarea, Nombre_Tarea, Fecha_Vencimiento
+                             FROM tareas
+                             WHERE ID_Curso = :ID_Curso
+                             ORDER BY Fecha_Vencimiento ASC");
+
+$stmtTareas->bindParam(':ID_Curso', $idCurso, PDO::PARAM_INT);
+$stmtTareas->execute();
+
+$tareas = $stmtTareas->fetchAll(PDO::FETCH_ASSOC);
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -166,7 +176,7 @@ if ($idUsuarioSesion > 0) {
                     <?php endif; ?>
 
                     <div class="lista-recursos">
-                        
+
                         <!-- Lista de archivos sueltos -->
                         <?php foreach ($materialesSueltos as $mat): ?>
                             <div class="item-recurso material">
@@ -235,7 +245,25 @@ if ($idUsuarioSesion > 0) {
                                 </div>
                             </details>
                         <?php endforeach; ?>
+                        
+                        <!-- Tareas del curso -->
+                        <?php if (count($tareas) > 0): ?>
+                            <?php foreach ($tareas as $tarea): ?>
+                                <div class="item-recurso material tarea-recurso">
+                                    <span class="icon">📝</span>
+                                    <div class="tarea-info">
+                                        <strong>
+                                            <?= htmlspecialchars($tarea['Nombre_Tarea']) ?>
+                                        </strong>
 
+                                        <p class="tarea-fecha">
+                                            Fecha de vencimiento:
+                                            <?= date('d/m/Y H:i', strtotime($tarea['Fecha_Vencimiento'])) ?>
+                                        </p>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
                     </div>
                 </section>
             <?php endif; ?>
@@ -473,7 +501,7 @@ if ($idUsuarioSesion > 0) {
                     <button type="button" class="btn-cerrar" id="btnCerrarModal">X</button>
                 </div>
                 <form id="formCrearTarea"
-                    action="../PHP conexiones/guardar_tarea.php"
+                    action="../PHP conexiones/guardarTarea.php"
                     method="POST"
                     enctype="multipart/form-data">
                     <div class="modal-body">
