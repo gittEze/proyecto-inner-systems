@@ -38,10 +38,9 @@ if (!$esAdministrador) {
 </head>
 <body class="admin-active">
 
-    <!-- Menú superior (fuera de main) -->
-    <?php include '../menu.php'; ?>
 
-    <!-- Sidebar del administrador (fijo, fuera de main) -->
+<?php include __DIR__ . '/../menu.php'; ?>
+ 
 <div class="admin-sidebar">
     <div class="admin-title">Panel de Administrador</div>
 
