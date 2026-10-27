@@ -2,23 +2,58 @@
 session_start();
 require_once '../PHP conexiones/conexion.php';
 
-// Esta consulta que permite obtener los cursos de la base de datos ordenados por su id y de forma descendente. 
+// Cursos con promedio y cantidad de valoraciones
+// $sql = "SELECT c.*,
+//                ROUND(AVG(v.Puntuacion), 1) AS promedio_valoracion,
+//                COUNT(v.ID_Valoracion) AS total_valoraciones
+//         FROM cursos c
+//         LEFT JOIN valoraciones v ON v.ID_Curso = c.ID_Curso
+//         GROUP BY c.ID_Curso
+//         ORDER BY c.ID_Curso DESC";
+// $stmt = $pdo->prepare($sql);
+// $stmt->execute();
+// $cursos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Cursos con promedio y cantidad de valoraciones (LEFT JOIN para incluir cursos sin valoraciones)
+// Término de búsqueda recibido desde el buscador
+$busqueda = trim($_GET['buscar'] ?? '');
+
+// Consulta de cursos con promedio y cantidad de valoraciones
 $sql = "SELECT c.*,
                ROUND(AVG(v.Puntuacion), 1) AS promedio_valoracion,
                COUNT(v.ID_Valoracion) AS total_valoraciones
         FROM cursos c
-        LEFT JOIN valoraciones v ON v.ID_Curso = c.ID_Curso
-        GROUP BY c.ID_Curso
-        ORDER BY c.ID_Curso DESC";
+        LEFT JOIN valoraciones v ON v.ID_Curso = c.ID_Curso";
+
+$params = [];
+
+if ($busqueda !== '') {
+    $sql .= " WHERE (
+        c.Titulo_Curso LIKE :titulo
+        OR c.Descripcion_Curso LIKE :descripcion
+        OR c.Tipo_Curso LIKE :tipo
+        OR c.Nivel_Curso LIKE :nivel
+    )";
+
+    $termino = '%' . $busqueda . '%';
+
+    $params = [
+        ':titulo'      => $termino,
+        ':descripcion' => $termino,
+        ':tipo'        => $termino,
+        ':nivel'       => $termino
+    ];
+}
+
+$sql .= " GROUP BY c.ID_Curso
+          ORDER BY c.ID_Curso DESC";
+
 $stmt = $pdo->prepare($sql);
-$stmt->execute();
+$stmt->execute($params);
 $cursos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Evaluamos el rol del usuario mediante una sessión.
+// Evaluamos el rol del usuario (normalizado a minúsculas)
 $rolper = strtolower(trim($_SESSION['Rol'] ?? ''));
-$acesso = !empty($rolper) && $rolper !== 'estudiante' && ($rolper === 'docente' || $rolper === 'administrador');
+$acesso = !empty($rolper) && ($rolper === 'docente' || $rolper === 'administrador');
 ?>
 
 <!DOCTYPE html>
@@ -39,7 +74,6 @@ $acesso = !empty($rolper) && $rolper !== 'estudiante' && ($rolper === 'docente' 
     <main>
         <h1 class="h1cur"> Cursos </h1>
          
-        <!-- Solo se mostrar el boton en caso que lo que esta en acceso se cumpla -->
         <?php if ($acesso): ?>
         <div id="Crearbot">
             <a href="crear.php">
@@ -47,21 +81,20 @@ $acesso = !empty($rolper) && $rolper !== 'estudiante' && ($rolper === 'docente' 
             </a>
         </div>
         <?php endif; ?>
+
         <div class="buscadoreishon">
-            <input class="buscador2" type="search" placeholder="Buscar">
+            <form action="cursos.php" method="GET">
+                <input class="buscador2" type="search" name="buscar" placeholder="Buscar cursos por nombre o categoría..." value="<?php echo htmlspecialchars($busqueda, ENT_QUOTES, 'UTF-8'); ?>" aria-label="Buscar cursos">
+            </form>
         </div>
-    <!-- Contenedor que posee un condicional que en caso de que los datos traidos no esten vacios,
-        toma la variable $cursos y guarda en cada recorrido los datos en #curso.
-       -->
+
         <div class="contenedorCursos">
             <?php if (!empty($cursos)): ?>
                 <?php foreach ($cursos as $curso): ?>
-                    <!-- Al hacer clic en la tarjeta, se abre el modal asociado por el ID -->
                     <a href="#modal-<?= $curso['ID_Curso'] ?>" class="tarjeta-curso-link">
                         <div class="tarjeta-curso">
                             <h3 class="titulo-curso"><?php echo htmlspecialchars($curso['Titulo_Curso']); ?></h3>
 
-                            <!-- Estrcutura para mostrar la imagen de los cursos traidos -->
                             <div class="box-imagen">
                                 <?php if (!empty($curso['Dataso'])): ?>
                                     <img src="../PHP conexiones/Imagenes/<?php echo htmlspecialchars($curso['Dataso']); ?>" alt="Curso">
@@ -76,7 +109,6 @@ $acesso = !empty($rolper) && $rolper !== 'estudiante' && ($rolper === 'docente' 
 
                             <p class="desc-curso"><?php echo htmlspecialchars($curso['Descripcion_Curso']); ?></p>
 
-                            <!-- Valoración promedio del curso -->
                             <?php
                                 $promedioCard = isset($curso['promedio_valoracion']) ? (float)$curso['promedio_valoracion'] : 0;
                                 $totalCard    = isset($curso['total_valoraciones']) ? (int)$curso['total_valoraciones'] : 0;
@@ -101,7 +133,7 @@ $acesso = !empty($rolper) && $rolper !== 'estudiante' && ($rolper === 'docente' 
                             <div class="info-curso">
                                 <div class="dato-item">
                                     <span class="label">Nivel</span>
-                                    <span class="valor"><?php echo htmlspecialchars($curso['Nivel_Curso'] ?? $curso['Nivel_Curso'] ?? ''); ?></span>
+                                    <span class="valor"><?php echo htmlspecialchars($curso['Nivel_Curso'] ?? ''); ?></span>
                                 </div>
 
                                 <div class="dato-item">
@@ -117,22 +149,22 @@ $acesso = !empty($rolper) && $rolper !== 'estudiante' && ($rolper === 'docente' 
                         </div>
                     </a>
 
-                    <!-- Ventana emergente (Modal) con la información completa del curso -->
+                    <!-- Modal -->
                     <div id="modal-<?= $curso['ID_Curso'] ?>" class="modal-overlay">
                         <div class="modal-box">
                             <h2>Confirmar Inscripción</h2>
                             
-                            <!-- Modal dedicado a mostrar la información de la tarjeta del curso -->
                             <div class="modal-detalles">
                                 <h3><?php echo htmlspecialchars($curso['Titulo_Curso']); ?></h3>
                                 <p><strong>Categoría:</strong> <?php echo htmlspecialchars($curso['Tipo_Curso']); ?></p>
-                                <p><strong>Nivel:</strong> <?php echo htmlspecialchars($curso['Nivel_Curso'] ?? $curso['Nivel_Curso'] ?? ''); ?></p>
+                                <p><strong>Nivel:</strong> <?php echo htmlspecialchars($curso['Nivel_Curso'] ?? ''); ?></p>
                                 <p><strong>Duración:</strong> <?php echo htmlspecialchars($curso['Duracion_Estimada']); ?> hs</p>
                                 <p><strong>Precio:</strong> $<?php echo htmlspecialchars($curso['Precio']); ?></p>
                                 <p><strong>Valoración:</strong>
                                     <?php if ($totalCard > 0): ?>
                                         <?php for ($i = 1; $i <= 5; $i++): ?>
-                                            <span style="color: <?= $i <= $estrellasLlenas ? '#ffb400' : '#ccc' ?>; font-size: 22px;">★</span>                                          <?php endfor; ?>
+                                            <span style="color: <?= $i <= $estrellasLlenas ? '#ffb400' : '#ccc' ?>; font-size: 22px;">★</span>
+                                        <?php endfor; ?>
                                         <?= number_format($promedioCard, 1) ?>
                                         (<?= $totalCard ?> valoración<?= $totalCard !== 1 ? 'es' : '' ?>)
                                     <?php else: ?>
@@ -145,13 +177,11 @@ $acesso = !empty($rolper) && $rolper !== 'estudiante' && ($rolper === 'docente' 
 
                             <div class="modal-acciones">
                                 <?php if (isset($_SESSION['Sesion'])): ?>
-                                    <!-- Agregar al carrito -->
                                     <form action="../PHP conexiones/agregarCarrito.php" method="POST">
                                         <input type="hidden" name="ID_Curso" value="<?= $curso['ID_Curso'] ?>">
                                         <button type="submit" class="btn-confirmar">Agregar al carrito</button>
                                     </form>
 
-                                    <!-- Inscripción directa (un solo curso) -->
                                     <form action="../PHP conexiones/inscripcion.php" method="POST">
                                         <input type="hidden" name="ID_Curso" value="<?= $curso['ID_Curso'] ?>">
                                         <button type="submit" class="btn-confirmar" style="background:#0d47a1;">Inscribirme ahora</button>
@@ -160,8 +190,8 @@ $acesso = !empty($rolper) && $rolper !== 'estudiante' && ($rolper === 'docente' 
                                     <a href="login.php" class="btn-confirmar">Inicia sesión para inscribirte</a>
                                 <?php endif; ?>
                                 
-                                <!-- Condicional que evlua si el rol es de tipo administrador para permitirle al usuario eliminar cursos. -->
-                                <?php if (isset($_SESSION['Rol']) && $_SESSION['Rol'] === 'administrador'): ?>
+                                <!-- Solo administradores pueden eliminar (normalizado) -->
+                                <?php if (isset($_SESSION['Rol']) && strtolower(trim($_SESSION['Rol'])) === 'administrador'): ?>
                                     <form action="../PHP conexiones/eliminarcurso.php" method="POST" onsubmit="return confirm('¿Está seguro de eliminar este curso?');">
                                         <input type="hidden" name="ID_Curso" value="<?= $curso['ID_Curso'] ?>">
                                         <button type="submit" class="btn-elim">Eliminar Curso</button>
@@ -174,7 +204,15 @@ $acesso = !empty($rolper) && $rolper !== 'estudiante' && ($rolper === 'docente' 
                     </div>
                 <?php endforeach; ?>
             <?php else: ?>
-                <p class="no-cursos">No hay cursos registrados todavía.</p>
+                <p class="no-cursos">
+                    <?php if ($busqueda !== ''): ?>
+                        No se encontraron cursos para
+                        "<?php echo htmlspecialchars($busqueda, ENT_QUOTES, 'UTF-8'); ?>".
+                        Probá con otra palabra.
+                    <?php else: ?>
+                        No hay cursos registrados todavía.
+                    <?php endif; ?>
+                </p>
             <?php endif; ?>
         </div>
     </main>

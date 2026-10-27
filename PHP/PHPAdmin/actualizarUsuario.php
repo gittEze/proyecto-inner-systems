@@ -1,45 +1,64 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 require_once __DIR__ . '/../../PHP conexiones/conexion.php';
 
-// Verificar si el usuario es administrador (igual que en tus otros archivos)
-// ... (puedes agregar tu validación de seguridad aquí)
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Recogemos los datos enviados por el formulario de la tabla
-    $id = $_POST['ID_Usuario'] ?? '';
-    $nombre = $_POST['nombre'] ?? '';
-    $apellido = $_POST['apellido'] ?? '';
-    $correo = $_POST['correo'] ?? '';
-    $rol = $_POST['rol'] ?? '';
-
-    if (!empty($id)) {
-        try {
-            // Consulta SQL para actualizar los datos del usuario en la base de datos
-            $sql = "UPDATE usuarios SET Nombre = :nombre, Apellido = :apellido, Correo = :correo, Rol = :rol WHERE ID_Usuario = :ID_Usuario";
-            $stmt = $pdo->prepare($sql);
-            $stmt->execute([
-                ':nombre' => $nombre,
-                ':apellido' => $apellido,
-                ':correo' => $correo,
-                ':rol' => $rol,
-                ':ID_Usuario' => $id
-            ]);
-
-            // Redirección exitosa de regreso al gestor de usuarios
-            header("Location: usuarios.php?actualizado=success");
-            exit();
-
-        } catch (PDOException $e) {
-            echo "Error al actualizar: " . $e->getMessage();
-        }
-    } else {
-        echo "ID de usuario no válido.";
+$esAdministrador = false;
+if (isset($_SESSION['Sesion'])) {
+    $stmt = $pdo->prepare("SELECT Rol FROM usuarios WHERE Correo = :correo LIMIT 1");
+    $stmt->execute([':correo' => $_SESSION['Sesion']]);
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    if ($row && strtolower(trim($row['Rol'])) === 'administrador') {
+        $esAdministrador = true;
     }
 }
-else {
-    // Si intentan entrar por URL directamente sin enviar el formulario
-    header("Location: usuarios.php");
-    exit();
+
+if (!$esAdministrador) {
+    header('Location: ../main.php');
+    exit;
 }
-?>
+
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    header('Location: usuarios.php');
+    exit;
+}
+
+$id       = isset($_POST['ID_Usuario']) ? (int)$_POST['ID_Usuario'] : 0;
+$nombre   = trim($_POST['nombre'] ?? '');
+$apellido = trim($_POST['apellido'] ?? '');
+$correo   = trim($_POST['correo'] ?? '');
+$rol      = trim($_POST['rol'] ?? '');
+
+$rolesValidos = ['Administrador', 'Docente', 'Estudiante'];
+
+if ($id <= 0 || $nombre === '' || $apellido === '' || $correo === '' || !in_array($rol, $rolesValidos, true)) {
+    header('Location: usuarios.php?error=datos');
+    exit;
+}
+
+try {
+    $check = $pdo->prepare("SELECT ID_Usuario FROM usuarios WHERE Correo = :correo AND ID_Usuario != :id LIMIT 1");
+    $check->execute([':correo' => $correo, ':id' => $id]);
+    if ($check->fetch()) {
+        header('Location: usuarios.php?error=correo');
+        exit;
+    }
+
+    $sql = "UPDATE usuarios SET Nombre = :nombre, Apellido = :apellido, Correo = :correo, Rol = :rol WHERE ID_Usuario = :id";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([
+        ':nombre'   => $nombre,
+        ':apellido' => $apellido,
+        ':correo'   => $correo,
+        ':rol'      => $rol,
+        ':id'       => $id,
+    ]);
+
+    header('Location: usuarios.php?actualizado=success');
+    exit;
+} catch (PDOException $e) {
+    header('Location: usuarios.php?error=db');
+    exit;
+}

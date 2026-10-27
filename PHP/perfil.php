@@ -9,18 +9,20 @@ if (!isset($_SESSION['Sesion'])) {
 }
 
 // Consulta que permite traer los datos del usuario para el perfil
-
-$correo = $_SESSION['Sesion'];// Correo del usuario actual
+$correo = $_SESSION['Sesion'];
 $sql = "SELECT Nombre, Apellido, Rol, Foto_Perfil 
         FROM usuarios 
         WHERE Correo = :correo";
 
 $stmt = $pdo->prepare($sql);
-// Se ejecuta la consulta pasando el correo del usuario
 $stmt->execute([':correo' => $correo]);
-$usuario = $stmt->fetch(PDO::FETCH_ASSOC);// Variable con los datos del usuario
-?>
+$usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
+if (!$usuario) {
+    header("Location: login.php");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -36,7 +38,7 @@ $usuario = $stmt->fetch(PDO::FETCH_ASSOC);// Variable con los datos del usuario
 <?php include 'menu.php'; ?>
 
 <main class="perfilMain">
-    <!-- Información principal y tareas pendientes -->
+    <!-- Información principal -->
     <section class="perfilUsuario">
         <div class="fotoPerfil">
             <?php if (!empty($usuario['Foto_Perfil'])): ?>
@@ -45,18 +47,19 @@ $usuario = $stmt->fetch(PDO::FETCH_ASSOC);// Variable con los datos del usuario
                 <img src="../IMG/aprendomoUser.jpg" alt="Foto de perfil">
             <?php endif; ?>
         </div>
+
         <div class="nombreYApaellidoUsuario">
-            <h1><?php echo $usuario['Nombre'] . " " . $usuario['Apellido']; ?></h1>
-            <p class="rolUsuario"><?php echo $usuario['Rol']; ?></p>
+            <h1><?php echo htmlspecialchars($usuario['Nombre'] . " " . $usuario['Apellido']); ?></h1>
+            <p class="rolUsuario"><?php echo htmlspecialchars($usuario['Rol']); ?></p>
 
-    <form action="../PHP conexiones/guardarFoto.php" method="POST" enctype="multipart/form-data">
-        <label for="fotoPerfil" class="editarPerfil">
-            Cambiar foto de perfil
-        </label>
-        <input type="file" id="fotoPerfil" name="fotoPerfil" accept="image/*" hidden onchange="this.form.submit()">
-    </form>
+            <form action="../PHP conexiones/guardarFoto.php" method="POST" enctype="multipart/form-data">
+                <label for="fotoPerfil" class="editarPerfil">
+                    Cambiar foto de perfil
+                </label>
+                <input type="file" id="fotoPerfil" name="fotoPerfil" accept="image/*" hidden onchange="this.form.submit()">
+            </form>
+        </div>
 
-</div>
         <div class="tareasPendientes">
             <h2>Tareas pendientes</h2>
             <div class="listaTareas">
@@ -68,29 +71,11 @@ $usuario = $stmt->fetch(PDO::FETCH_ASSOC);// Variable con los datos del usuario
                         <small>Vence el: dd/mm/yyyy a las: hh:mm</small>
                     </div>
                 </div>
-
-                <div class="tareaPendiente">
-                    <span>✓</span>
-                    <div>
-                        <h3>Nombre del curso</h3>
-                        <p>Nombre de la tarea</p>
-                        <small>Vence el: dd/mm/yyyy a las: hh:mm</small>
-                    </div>
-                </div>
-
-                <div class="tareaPendiente">
-                    <span>✓</span>
-                    <div>
-                        <h3>Nombre del curso</h3>
-                        <p>Nombre de la tarea</p>
-                        <small>Vence el: dd/mm/yyyy a las: hh:mm</small>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
 
-    <!-- Cursos aprobados -->
+    <!-- Cursos aprobados (placeholder) -->
     <section class="cursosPerfil">
         <h2>Cursos aprobados</h2>
         <div class="listaCursosPerfil">
@@ -98,32 +83,15 @@ $usuario = $stmt->fetch(PDO::FETCH_ASSOC);// Variable con los datos del usuario
                 <h3>Curso de ejemplo</h3>
                 <p>Curso completado</p>
             </div>
-            <div class="cursoPerfil">
-                <h3>Curso de ejemplo 2</h3>
-                <p>Curso completado</p>
-            </div>
-            <div class="cursoPerfil">
-                <h3>Curso de ejemplo 3</h3>
-                <p>Curso completado</p>
-            </div>
         </div>
     </section>
 
-
-    <!-- Cursos en realización -->
+    <!-- Cursos en realización (placeholder) -->
     <section class="cursosPerfil">
         <h2>Cursos en realización</h2>
         <div class="listaCursosPerfil">
             <div class="cursoPerfil">
                 <h3>Curso de HTML & CSS</h3>
-                <span class="nivelCurso">En curso</span>
-            </div>
-            <div class="cursoPerfil">
-                <h3>JavaScript Básico</h3>
-                <span class="nivelCurso">En curso</span>
-            </div>
-            <div class="cursoPerfil">
-                <h3>Diseño Web Responsivo</h3>
                 <span class="nivelCurso">En curso</span>
             </div>
         </div>
@@ -134,5 +102,8 @@ $usuario = $stmt->fetch(PDO::FETCH_ASSOC);// Variable con los datos del usuario
         <a href="miscursos.php">Ver mis cursos</a>
     </section>
 </main>
+
+<?php include 'footer.php'; ?>
+
 </body>
 </html>

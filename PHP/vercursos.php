@@ -2,53 +2,60 @@
 session_start();
 require_once '../PHP conexiones/conexion.php';
 
-// Condicional con isset que evalua existe el idCurso o si esta vacio,en caso de ello, el usuario ira a miscursos.php 
+// Validar que venga el ID del curso
 if (!isset($_GET['ID_Curso']) || empty($_GET['ID_Curso'])) {
     header("Location: miscursos.php");
     exit();
 }
-// Variable que guarda el valor de un curso 
-$idCurso = intval($_GET['ID_Curso']);
 
-// Pestaña activa enviada por la URL (por defecto muestra 'materiales' si no encuentra un valor en 'tab')
+$idCurso = intval($_GET['ID_Curso']);
 $tabActiva = $_GET['tab'] ?? 'materiales';
 
-// Consulta que permite traer información del curso por medio de su id.
+// Datos del curso
 $stmtCurso = $pdo->prepare("SELECT * FROM cursos WHERE ID_Curso = :ID_Curso");
 $stmtCurso->bindParam(':ID_Curso', $idCurso, PDO::PARAM_INT);
 $stmtCurso->execute();
 $curso = $stmtCurso->fetch(PDO::FETCH_ASSOC);
 
-//Condicional que evalua si existe el curso.
 if (!$curso) {
     echo "El curso no existe.";
     exit();
 }
 
-//Estructura para verificar el rol del usuario.
+// Datos del docente creador del curso
+$stmtDocente = $pdo->prepare("
+    SELECT Nombre, Apellido, Telefono, Correo
+    FROM usuarios
+    WHERE ID_Usuario = :ID_Docente
+");
+$stmtDocente->execute([
+    ':ID_Docente' => $curso['ID_Docente']
+]);
+$docenteCurso = $stmtDocente->fetch(PDO::FETCH_ASSOC);
 
+// Roles
 $rolSesion = strtolower(trim($_SESSION['Rol'] ?? ''));
 $esDocente = ($rolSesion === 'docente' || $rolSesion === 'administrador');
-$idUsuarioSesionTmp = isset($_SESSION['ID_Usuario']) ? intval($_SESSION['ID_Usuario']) : 0;
+$idUsuarioSesion = isset($_SESSION['ID_Usuario']) ? intval($_SESSION['ID_Usuario']) : 0;
+
 $esCreadorCurso = $esDocente && (
     $rolSesion === 'administrador' ||
-    ($idUsuarioSesionTmp > 0 && $idUsuarioSesionTmp === intval($curso['ID_Docente']))
+    ($idUsuarioSesion > 0 && $idUsuarioSesion === intval($curso['ID_Docente']))
 );
 
-
-// En esta consulta se obtienen las carpetas que hay en el curso.
+// Carpetas del curso
 $stmtCarpetas = $pdo->prepare("SELECT * FROM carpetas WHERE ID_Curso = :ID_Curso ORDER BY Orden ASC");
 $stmtCarpetas->bindParam(':ID_Curso', $idCurso, PDO::PARAM_INT);
 $stmtCarpetas->execute();
 $carpetas = $stmtCarpetas->fetchAll(PDO::FETCH_ASSOC);
 
-// Esta consulta se encarga de obtener los materiales que no esten dentro de ninguna carpeta.
+// Materiales sueltos (sin carpeta)
 $stmtMatSueltos = $pdo->prepare("SELECT * FROM materiales WHERE ID_Curso = :ID_Curso AND ID_Carpeta IS NULL");
 $stmtMatSueltos->bindParam(':ID_Curso', $idCurso, PDO::PARAM_INT);
 $stmtMatSueltos->execute();
 $materialesSueltos = $stmtMatSueltos->fetchAll(PDO::FETCH_ASSOC);
 
-// Esta consulta se encarga de obtener los miembros que esten inscriptos en los cursos.
+// Miembros inscritos
 $stmtMiembros = $pdo->prepare("SELECT u.Nombre, u.Apellido, u.Correo 
                                FROM usuarios u 
                                INNER JOIN inscripciones i ON u.ID_Usuario = i.ID_Usuario 
@@ -57,21 +64,15 @@ $stmtMiembros->bindParam(':ID_Curso', $idCurso, PDO::PARAM_INT);
 $stmtMiembros->execute();
 $miembros = $stmtMiembros->fetchAll(PDO::FETCH_ASSOC);
 
-// VALORACIONES
-$idUsuarioSesion = isset($_SESSION['ID_Usuario']) ? intval($_SESSION['ID_Usuario']) : 0;
-
-// Promedio y total de valoraciones del curso
-$stmtStats = $pdo->prepare("SELECT 
-    ROUND(AVG(Puntuacion), 1) AS promedio, 
-    COUNT(*) AS total 
-    FROM valoraciones 
-    WHERE ID_Curso = :ID_Curso");
+// Valoraciones - estadísticas
+$stmtStats = $pdo->prepare("SELECT ROUND(AVG(Puntuacion), 1) AS promedio, COUNT(*) AS total 
+                            FROM valoraciones WHERE ID_Curso = :ID_Curso");
 $stmtStats->execute([':ID_Curso' => $idCurso]);
 $statsVal = $stmtStats->fetch(PDO::FETCH_ASSOC);
 $promedio = $statsVal['promedio'] ?? 0;
 $totalValoraciones = (int)($statsVal['total'] ?? 0);
 
-// Listado de valoraciones con nombre del autor (más recientes primero)
+// Listado de valoraciones
 $stmtVals = $pdo->prepare("SELECT v.Puntuacion, v.Comentario, v.Fecha,
                                    u.Nombre, u.Apellido, u.Correo, u.ID_Usuario
                             FROM valoraciones v
@@ -81,7 +82,7 @@ $stmtVals = $pdo->prepare("SELECT v.Puntuacion, v.Comentario, v.Fecha,
 $stmtVals->execute([':ID_Curso' => $idCurso]);
 $listaValoraciones = $stmtVals->fetchAll(PDO::FETCH_ASSOC);
 
-// Valoración propia del usuario logueado (si existe)
+// Valoración del usuario actual
 $miValoracion = null;
 if ($idUsuarioSesion > 0) {
     $stmtMia = $pdo->prepare("SELECT Puntuacion, Comentario FROM valoraciones 
@@ -90,26 +91,26 @@ if ($idUsuarioSesion > 0) {
     $miValoracion = $stmtMia->fetch(PDO::FETCH_ASSOC);
 }
 
+// Tareas del curso
 $stmtTareas = $pdo->prepare("SELECT ID_Tarea, Nombre_Tarea, Fecha_Vencimiento
                              FROM tareas
                              WHERE ID_Curso = :ID_Curso
                              ORDER BY Fecha_Vencimiento ASC");
-
 $stmtTareas->bindParam(':ID_Curso', $idCurso, PDO::PARAM_INT);
 $stmtTareas->execute();
-
 $tareas = $stmtTareas->fetchAll(PDO::FETCH_ASSOC);
-
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= htmlspecialchars($curso['Titulo_Curso']) ?> | LMS</title>
+    <title><?= htmlspecialchars($curso['Titulo_Curso']) ?> | Aprendomo</title>
     <link rel="stylesheet" href="../CSS/estilo.css">
     <link rel="stylesheet" href="../CSS/animaciones.css"> 
     <link rel="stylesheet" href="../CSS/tareaEstilo.css">
+    <link rel="icon" href="../IMG/Icono.ico">
 </head>
 <body>
 
@@ -120,28 +121,36 @@ $tareas = $stmtTareas->fetchAll(PDO::FETCH_ASSOC);
         <!-- Columna izquierda: Navegación -->
         <aside class="sidebar-left">
             <div class="curso-portada">
-                <img src="../PHP conexiones/Imagenes/<?= !empty($curso['Dataso']) ? htmlspecialchars($curso['Dataso']) : 'default.png' ?>" alt="Portada Curso">
+                <?php if (!empty($curso['Dataso'])): ?>
+                    <img src="../PHP conexiones/Imagenes/<?= htmlspecialchars($curso['Dataso']) ?>" alt="Portada Curso">
+                <?php else: ?>
+                    <img src="../IMG/Curso1.png" alt="Portada Curso">
+                <?php endif; ?>
             </div>
-            <!-- Nav con los elementos -->
+
             <nav class="course-nav">
                 <ul>
                     <li>
-                        <a href="vercursos.php?ID_Curso=<?= $idCurso ?>&tab=materiales" class="<?= $tabActiva === 'materiales' ? 'active' : '' ?>">
+                        <a href="vercursos.php?ID_Curso=<?= $idCurso ?>&tab=materiales" 
+                           class="<?= $tabActiva === 'materiales' ? 'active' : '' ?>">
                             📦 Materiales
                         </a>
                     </li>
                     <li>
-                        <a href="vercursos.php?ID_Curso=<?= $idCurso ?>&tab=calificaciones" class="<?= $tabActiva === 'calificaciones' ? 'active' : '' ?>">
+                        <a href="vercursos.php?ID_Curso=<?= $idCurso ?>&tab=calificaciones" 
+                           class="<?= $tabActiva === 'calificaciones' ? 'active' : '' ?>">
                             📊 Calificaciones
                         </a>
                     </li>
                     <li>
-                        <a href="vercursos.php?ID_Curso=<?= $idCurso ?>&tab=miembros" class="<?= $tabActiva === 'miembros' ? 'active' : '' ?>">
+                        <a href="vercursos.php?ID_Curso=<?= $idCurso ?>&tab=miembros" 
+                           class="<?= $tabActiva === 'miembros' ? 'active' : '' ?>">
                             👥 Miembros (<?= count($miembros) ?>)
                         </a>
                     </li>
                     <li>
-                        <a href="vercursos.php?ID_Curso=<?= $idCurso ?>&tab=valoraciones" class="<?= $tabActiva === 'valoraciones' ? 'active' : '' ?>">
+                        <a href="vercursos.php?ID_Curso=<?= $idCurso ?>&tab=valoraciones" 
+                           class="<?= $tabActiva === 'valoraciones' ? 'active' : '' ?>">
                             ⭐ Valoraciones
                             <?php if ($totalValoraciones > 0): ?>
                                 (<?= $totalValoraciones ?>)
@@ -150,8 +159,9 @@ $tareas = $stmtTareas->fetchAll(PDO::FETCH_ASSOC);
                     </li>
                 </ul>
             </nav>
-            <div class="info-curso">
-                <small><strong>Nivel:</strong> <?= htmlspecialchars($curso['Nivel_Curso'] ?? $curso['Nivel_Curso'] ?? '') ?></small><br>
+
+            <div class="info-curso-sidebar">
+                <small><strong>Nivel:</strong> <?= htmlspecialchars($curso['Nivel_Curso'] ?? '') ?></small><br>
                 <small><strong>Tipo:</strong> <?= htmlspecialchars($curso['Tipo_Curso'] ?? '') ?></small>
             </div>
         </aside>
@@ -160,23 +170,56 @@ $tareas = $stmtTareas->fetchAll(PDO::FETCH_ASSOC);
         <main class="content-center">
             <div class="curso-header">
                 <h2><?= htmlspecialchars($curso['Titulo_Curso']) ?></h2>
-                <p class="descripcion"><?= htmlspecialchars($curso['Descripcion_Curso']) ?></p>
+
+                <p class="descripcion">
+                    <?= htmlspecialchars($curso['Descripcion_Curso']) ?>
+                </p>
+
+                <?php if ($docenteCurso): ?>
+                    <div class="contacto-docente">
+                        <h3>Contacto del docente</h3>
+
+                        <p>
+                            <strong>Docente creador:</strong>
+                            <?= htmlspecialchars(
+                                ($docenteCurso['Nombre'] ?? '') . ' ' .
+                                ($docenteCurso['Apellido'] ?? '')
+                            ) ?>
+                        </p>
+
+                        <p>
+                            <strong>Correo electrónico:</strong>
+                            <?php if (!empty($docenteCurso['Correo'])): ?>
+                                <a href="mailto:<?= htmlspecialchars($docenteCurso['Correo']) ?>">
+                                    <?= htmlspecialchars($docenteCurso['Correo']) ?>
+                                </a>
+                            <?php else: ?>
+                                No disponible
+                            <?php endif; ?>
+                        </p>
+
+                        <p class="contacto-docente-ayuda">
+                            Si tienes dudas o dificultades con el curso,
+                            puedes comunicarte con el docente.
+                        </p>
+                    </div>
+                <?php endif; ?>
             </div>
 
             <hr>
-
-            <!-- PESTAÑA 1: MATERIALES -->
+            
+            <!-- ==================== PESTAÑA MATERIALES ==================== -->
             <?php if ($tabActiva === 'materiales'): ?>
                 <section class="seccion-tab">
                     <h3>Recursos del Curso</h3>
                     <br>
 
-                    <!-- Acciones exclusivas para docentes/admins -->
                     <?php if ($esDocente): ?>
                         <div class="acciones-profesor">
                             <?php if ($esCreadorCurso): ?>
-                                <a href="#modal-archivo" class="btn-confirmar"> 📄 Subir Archivo</a>
+                                <a href="#modal-archivo" class="btn-confirmar">📄 Subir Archivo</a>
                                 <a href="#modal-carpeta" class="btn-confirmar">📁 Crear Carpeta</a>
+                                <button type="button" id="btnAbrirModal" class="btn-confirmar">📝 Crear Tarea</button>
                                 <a href="#modal-proyecto" class="btn-confirmar">🎓 Subir proyecto educativo</a>
                             <?php endif; ?>
                         </div>
@@ -184,39 +227,20 @@ $tareas = $stmtTareas->fetchAll(PDO::FETCH_ASSOC);
 
                     <?php if (isset($_GET['proyecto']) && $_GET['proyecto'] === 'ok'): ?>
                         <div class="logrado" style="margin-bottom: 15px;">
-                            Proyecto educativo publicado correctamente. Ya se puede ver en <a href="proyectos.php">Proyectos educativos</a>.
+                            Proyecto educativo publicado correctamente. Ya se puede ver en 
+                            <a href="proyectos.php">Proyectos educativos</a>.
                         </div>
                     <?php endif; ?>
 
                     <div class="lista-recursos">
-
-                        <!-- Lista de archivos sueltos -->
+                        <!-- Materiales sueltos -->
                         <?php foreach ($materialesSueltos as $mat): ?>
                             <div class="item-recurso material">
                                 <?php if ($mat['Tipo_Material'] == 'enlace'): ?>
                                     <span class="icon">🔗</span>
                                     <a href="<?= htmlspecialchars($mat['Contenido_URL']) ?>" target="_blank">
-                                        <?= htmlspecialchars($mat['Titulo_Material']) ?> (abrir en otra pestaña)
+                                        <?= htmlspecialchars($mat['Titulo_Material']) ?>
                                     </a>
-
-                                <?php elseif ($mat['Tipo_Material'] == 'video'): ?>
-                                    <span class="icon">🎬</span>
-                                    <div class="media-container">
-                                        <strong><?= htmlspecialchars($mat['Titulo_Material']) ?></strong><br>
-                                        <video controls width="100%">
-                                            <source src="Subidas/videos/<?= htmlspecialchars($mat['Contenido_URL']) ?>" type="video/mp4">
-                                        </video>
-                                    </div>
-
-                                <?php elseif ($mat['Tipo_Material'] == 'audio'): ?>
-                                    <span class="icon">🎧</span>
-                                    <div class="media-container">
-                                        <strong><?= htmlspecialchars($mat['Titulo_Material']) ?></strong><br>
-                                        <audio controls style="width: 100%;">
-                                            <source src="Subidas/audios/<?= htmlspecialchars($mat['Contenido_URL']) ?>" type="audio/mpeg">
-                                        </audio>
-                                    </div>
-
                                 <?php else: ?>
                                     <span class="icon">📄</span>
                                     <a href="Subidas/archivos/<?= htmlspecialchars($mat['Contenido_URL']) ?>" download>
@@ -233,148 +257,168 @@ $tareas = $stmtTareas->fetchAll(PDO::FETCH_ASSOC);
                                     <span class="icon">📁</span>
                                     <strong><?= htmlspecialchars($carpeta['Nombre_Carpeta']) ?></strong>
                                 </summary>
-       
-                                <!-- Estructura con una consulta que permite traer el id carpeta de los materials -->
                                 <div class="contenido-carpeta">
                                     <?php
-                                    $stmtMatFolder = $pdo->prepare("SELECT * FROM materiales WHERE ID_Carpeta = :ID_Carpeta");
-                                    $stmtMatFolder->bindParam(':ID_Carpeta', $carpeta['ID_Carpeta'], PDO::PARAM_INT);
-                                    $stmtMatFolder->execute();
-                                    $materialesCarpeta = $stmtMatFolder->fetchAll(PDO::FETCH_ASSOC);
+                                    $stmtMatCarpeta = $pdo->prepare("SELECT * FROM materiales WHERE ID_Carpeta = :ID_Carpeta");
+                                    $stmtMatCarpeta->execute([':ID_Carpeta' => $carpeta['ID_Carpeta']]);
+                                    $matsCarpeta = $stmtMatCarpeta->fetchAll(PDO::FETCH_ASSOC);
 
-                                    if (count($materialesCarpeta) > 0):
-                                        foreach ($materialesCarpeta as $matFolder):
-                                    ?>
-                                        <div class="item-recurso sub-item">
-                                            <span class="icon">📄</span>
-                                            <span><?= htmlspecialchars($matFolder['Titulo_Material']) ?></span>
+                                    if (empty($matsCarpeta)): ?>
+                                        <p style="padding:10px; color:#888;">Carpeta vacía</p>
+                                    <?php else:
+                                        foreach ($matsCarpeta as $mat): ?>
+                                            <div class="item-recurso material" style="margin-left:20px;">
+                                            <?php if ($mat['Tipo_Material'] === 'enlace'): ?>
+                                                <span class="icon">🔗</span>
+                                                <a href="<?= htmlspecialchars($mat['Contenido_URL'], ENT_QUOTES, 'UTF-8') ?>" target="_blank" rel="noopener noreferrer" >
+                                                    <?= htmlspecialchars($mat['Titulo_Material'], ENT_QUOTES, 'UTF-8') ?>
+                                                </a>
+                                            <?php else: ?>
+                                                <span class="icon">📄</span>
+                                                <a href="Subidas/archivos/<?= rawurlencode($mat['Contenido_URL']) ?>" download >
+                                                    <?= htmlspecialchars($mat['Titulo_Material'], ENT_QUOTES, 'UTF-8') ?>
+                                                </a>
+                                            <?php endif; ?>
                                         </div>
-                                    <?php 
-                                        endforeach;
-                                    else:
-                                    ?>
-                                        <small class="text-muted">Carpeta vacía.</small>
-                                    <?php endif; ?>
+                                        <?php endforeach;
+                                        
+                                    endif; ?>
+
+                                    <?php
+                                    // Tareas de esta carpeta
+                                    $stmtTareasCarpeta = $pdo->prepare(
+                                        "SELECT ID_Tarea, Nombre_Tarea, Fecha_Vencimiento 
+                                         FROM tareas 
+                                         WHERE ID_Carpeta = :ID_Carpeta 
+                                         ORDER BY Fecha_Vencimiento ASC"
+                                    );
+                                    $stmtTareasCarpeta->execute([':ID_Carpeta' => $carpeta['ID_Carpeta']]);
+                                    $tareasCarpeta = $stmtTareasCarpeta->fetchAll(PDO::FETCH_ASSOC);
+
+                                    foreach ($tareasCarpeta as $tarea): ?>
+                                        <div class="item-recurso material" style="margin-left:20px;">
+                                        <?php if ($mat['Tipo_Material'] === 'enlace'): ?>
+                                            <span class="icon">🔗</span>
+                                            <a href="<?= htmlspecialchars($mat['Contenido_URL'], ENT_QUOTES, 'UTF-8') ?>" target="_blank" rel="noopener noreferrer">
+                                                <?= htmlspecialchars($mat['Titulo_Material']) ?>
+                                            </a>
+                                        <?php else: ?>
+                                            <span class="icon">📄</span>
+                                            <a href="Subidas/archivos/<?= rawurlencode($mat['Contenido_URL']) ?>" download >
+                                                <?= htmlspecialchars($mat['Titulo_Material']) ?>
+                                            </a>
+                                        <?php endif; ?>
+                                    </div>
+                                    <?php endforeach; ?>
+
                                 </div>
                             </details>
                         <?php endforeach; ?>
-                        
-                        <!-- Tareas del curso -->
-                        <?php if (count($tareas) > 0): ?>
-                            <?php foreach ($tareas as $tarea): ?>
-                                <div class="item-recurso material tarea-recurso">
-                                    <span class="icon">📝</span>
-                                    <div class="tarea-info">
-                                        <strong>
-                                            <?= htmlspecialchars($tarea['Nombre_Tarea']) ?>
-                                        </strong>
 
-                                        <p class="tarea-fecha">
-                                            Fecha de vencimiento:
-                                            <?= date('d/m/Y H:i', strtotime($tarea['Fecha_Vencimiento'])) ?>
-                                        </p>
-                                    </div>
+                        <?php
+                        // Tareas sin carpeta
+                        $stmtTareasSueltas = $pdo->prepare(
+                            "SELECT ID_Tarea, Nombre_Tarea, Fecha_Vencimiento 
+                             FROM tareas 
+                             WHERE ID_Curso = :ID_Curso AND ID_Carpeta IS NULL 
+                             ORDER BY Fecha_Vencimiento ASC"
+                        );
+                        $stmtTareasSueltas->execute([':ID_Curso' => $idCurso]);
+                        $tareasSueltas = $stmtTareasSueltas->fetchAll(PDO::FETCH_ASSOC);
+
+                        foreach ($tareasSueltas as $tarea): ?>
+                            <div class="item-recurso">
+                                <span class="icon">📝</span>
+                                <strong><?= htmlspecialchars($tarea['Nombre_Tarea']) ?></strong>
+                                <small> — Vence: <?= date('d/m/Y H:i', strtotime($tarea['Fecha_Vencimiento'])) ?></small>
+                            </div>
+                        <?php endforeach; ?>
+
+                        <?php if (empty($materialesSueltos) && empty($carpetas)): ?>
+                            <p>Todavía no hay materiales en este curso.</p>
+                        <?php endif; ?>
+                    </div>
+                </section>
+
+            <!-- ==================== PESTAÑA CALIFICACIONES ==================== -->
+            <?php elseif ($tabActiva === 'calificaciones'): ?>
+                <section class="seccion-tab">
+                    <h3>Calificaciones / Tareas</h3>
+                    <br>
+
+                    <?php if (isset($_GET['tarea']) && $_GET['tarea'] === 'ok'): ?>
+                        <div class="logrado" style="margin-bottom: 15px;">
+                            Tarea publicada correctamente.
+                        </div>
+                    <?php endif; ?>
+                    <?php if (!empty($tareas)): ?>
+                        <div class="lista-tareas">
+                            <?php foreach ($tareas as $tarea): ?>
+                                <div class="item-recurso">
+                                    <span class="icon">📝</span>
+                                    <strong><?= htmlspecialchars($tarea['Nombre_Tarea']) ?></strong>
+                                    <small> — Vence: <?= date('d/m/Y H:i', strtotime($tarea['Fecha_Vencimiento'])) ?></small>
                                 </div>
                             <?php endforeach; ?>
-                        <?php endif; ?>
-                    </div>
+                        </div>
+                    <?php else: ?>
+                        <p>No hay tareas publicadas todavía.</p>
+                    <?php endif; ?>
                 </section>
-            <?php endif; ?>
 
-            <!-- PESTAÑA 2: CALIFICACIONES -->
-            <?php if ($tabActiva === 'calificaciones'): ?>
+            <!-- ==================== PESTAÑA MIEMBROS ==================== -->
+            <?php elseif ($tabActiva === 'miembros'): ?>
                 <section class="seccion-tab">
-                    <h3>Calificaciones</h3>
+                    <h3>Miembros del curso (<?= count($miembros) ?>)</h3>
                     <br>
-                    <div class="item-recurso">
-                        <span class="icon">📊</span>
-                        <p>No hay libreta de calificaciones disponible por el momento.</p>
-                    </div>
+                    <?php if (!empty($miembros)): ?>
+                        <div class="lista-miembros">
+                            <?php foreach ($miembros as $m): ?>
+                                <div class="item-recurso">
+                                    <span class="icon">👤</span>
+                                    <?= htmlspecialchars($m['Nombre'] . ' ' . $m['Apellido']) ?>
+                                    <small>(<?= htmlspecialchars($m['Correo']) ?>)</small>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php else: ?>
+                        <p>Todavía no hay alumnos inscritos.</p>
+                    <?php endif; ?>
                 </section>
-            <?php endif; ?>
 
-            <!-- PESTAÑA 3: MIEMBROS -->
-            <?php if ($tabActiva === 'miembros'): ?>
-                <section class="seccion-tab">
-                    <h3>Integrantes del Curso</h3>
-
-                    <details class="desplegable-miembros" open>
-                        <summary>👥 Alumnos inscriptos (<?= count($miembros) ?>)</summary>
-                        
-                        <!-- Estructura para contar los miembros y traerlos -->
-                        <?php if (count($miembros) > 0): ?>
-                            <ul class="lista-miembros">
-                                <?php foreach ($miembros as $m): ?>
-                                    <?php 
-                                        $nombreCompleto = trim(($m['Nombre'] ?? '') . ' ' . ($m['Apellido'] ?? ''));
-                                        if (empty($nombreCompleto)) {
-                                            $nombreCompleto = explode('@', $m['Correo'])[0];
-                                        }
-                                    ?>
-                                    <li class="item-miembro">
-                                        <span class="icon">👤</span>
-                                        <div>
-                                            <strong><?= htmlspecialchars($nombreCompleto) ?></strong>
-                                        </div>
-                                    </li>
-                                <?php endforeach; ?>
-                            </ul>
-                        <?php else: ?>
-                            <p class="text-muted" style="margin-top: 10px;">Aún no hay alumnos inscritos en este curso.</p>
-                        <?php endif; ?>
-                    </details>
-                </section>
-            <?php endif; ?>
-
-            <!-- PESTAÑA 4: VALORACIONES Y COMENTARIOS -->
-            <?php if ($tabActiva === 'valoraciones'): ?>
+            <!-- ==================== PESTAÑA VALORACIONES ==================== -->
+            <?php elseif ($tabActiva === 'valoraciones'): ?>
                 <section class="seccion-tab">
                     <h3>Valoraciones del curso</h3>
                     <br>
 
-                    <!-- Resumen de promedio -->
-                    <div class="resumen-valoraciones">
+                    <div class="resumen-valoracion">
                         <?php if ($totalValoraciones > 0): ?>
-                            <div class="promedio-box">
-                                <span class="promedio-numero"><?= number_format((float)$promedio, 1) ?></span>
-                                <div class="estrellas-static">
-                                    <?php
-                                    $promedioRedondeado = round((float)$promedio);
-                                    for ($i = 1; $i <= 5; $i++):
-                                        $clase = ($i <= $promedioRedondeado) ? 'estrella-llena' : 'estrella-vacia';
-                                    ?>
-                                        <span class="<?= $clase ?>">★</span>
-                                    <?php endfor; ?>
-                                </div>
-                                <p class="total-valoraciones"><?= $totalValoraciones ?> valoración<?= $totalValoraciones !== 1 ? 'es' : '' ?></p>
-                            </div>
+                            <p>
+                                <strong>Promedio:</strong> 
+                                <?= number_format($promedio, 1) ?> / 5 
+                                (<?= $totalValoraciones ?> valoración<?= $totalValoraciones !== 1 ? 'es' : '' ?>)
+                            </p>
                         <?php else: ?>
-                            <p class="text-muted">Aún no hay valoraciones para este curso. ¡Sé el primero en opinar!</p>
+                            <p>Todavía no hay valoraciones.</p>
                         <?php endif; ?>
                     </div>
 
-                    <hr>
-
-                    <!-- Formulario para valorar (solo usuarios logueados) -->
-                    <?php if (isset($_SESSION['Sesion']) && $idUsuarioSesion > 0): ?>
-                        <div class="form-valoracion card-widget">
-                            <h4><?= $miValoracion ? 'Actualizar mi valoración' : 'Deja tu valoración' ?></h4>
-
-                            <?php if (isset($_GET['ok'])): ?>
-                                <p class="mensaje-ok">✅ Valoración guardada correctamente.</p>
-                            <?php endif; ?>
-
+                    <!-- Formulario de valoración -->
+                    <?php if ($idUsuarioSesion > 0): ?>
+                        <div class="form-valoracion" style="margin: 25px 0; padding: 20px; border: 1px solid #ddd; border-radius: 8px;">
+                            <h4><?= $miValoracion ? 'Editar tu valoración' : 'Deja tu valoración' ?></h4>
                             <form action="../PHP conexiones/guardarValoracion.php" method="POST" id="formValoracion">
                                 <input type="hidden" name="ID_Curso" value="<?= $idCurso ?>">
-                                <input type="hidden" name="Puntuacion" id="inputPuntuacion" value="<?= $miValoracion['Puntuacion'] ?? 0 ?>" required>
+                                <input type="hidden" name="Puntuacion" id="inputPuntuacion" 
+                                       value="<?= $miValoracion['Puntuacion'] ?? 0 ?>" required>
 
                                 <label>Puntuación (1 a 5 estrellas):</label>
-                                <div class="estrellas-selector" id="estrellasSelector" role="radiogroup" aria-label="Seleccionar puntuación">
+                                <div class="estrellas-selector" id="estrellasSelector">
                                     <?php for ($i = 1; $i <= 5; $i++): ?>
                                         <button type="button"
                                                 class="estrella-btn <?= (isset($miValoracion['Puntuacion']) && $i <= $miValoracion['Puntuacion']) ? 'seleccionada' : '' ?>"
-                                                data-valor="<?= $i ?>"
-                                                aria-label="<?= $i ?> estrella<?= $i > 1 ? 's' : '' ?>">★</button>
+                                                data-valor="<?= $i ?>">★</button>
                                     <?php endfor; ?>
                                 </div>
                                 <p class="texto-puntuacion" id="textoPuntuacion">
@@ -386,8 +430,8 @@ $tareas = $stmtTareas->fetchAll(PDO::FETCH_ASSOC);
                                           placeholder="Escribe tu opinión sobre el curso..."
                                           maxlength="2000"><?= htmlspecialchars($miValoracion['Comentario'] ?? '') ?></textarea>
 
-                                <div class="modal-acciones" style="margin-top: 15px;">
-                                    <button type="submit" class="btn-confirmar" id="btnEnviarValoracion">
+                                <div style="margin-top: 15px;">
+                                    <button type="submit" class="btn-confirmar">
                                         <?= $miValoracion ? 'Actualizar valoración' : 'Publicar valoración' ?>
                                     </button>
                                 </div>
@@ -399,101 +443,68 @@ $tareas = $stmtTareas->fetchAll(PDO::FETCH_ASSOC);
                         </div>
                     <?php endif; ?>
 
-                    <hr>
-
-                    <!-- Listado de comentarios -->
-                    <h4>Opiniones de los alumnos</h4>
-                    <div class="lista-comentarios">
-                        <?php if (count($listaValoraciones) > 0): ?>
-                            <?php foreach ($listaValoraciones as $val): ?>
-                                <?php
-                                    $nombreAutor = trim(($val['Nombre'] ?? '') . ' ' . ($val['Apellido'] ?? ''));
-                                    if ($nombreAutor === '') {
-                                        $nombreAutor = explode('@', $val['Correo'])[0];
-                                    }
-                                    $fechaFormateada = date('d/m/Y H:i', strtotime($val['Fecha']));
-                                ?>
-                                <article class="comentario-item item-recurso">
-                                    <div class="comentario-cabecera">
-                                        <span class="icon">👤</span>
-                                        <strong><?= htmlspecialchars($nombreAutor) ?></strong>
-                                        <span class="estrellas-static-small">
-                                            <?php for ($i = 1; $i <= 5; $i++): ?>
-                                                <span class="<?= $i <= $val['Puntuacion'] ? 'estrella-llena' : 'estrella-vacia' ?>">★</span>
-                                            <?php endfor; ?>
-                                        </span>
-                                        <time class="fecha-comentario" datetime="<?= htmlspecialchars($val['Fecha']) ?>">
-                                            <?= $fechaFormateada ?>
-                                        </time>
-                                    </div>
-                                    <?php if (!empty($val['Comentario'])): ?>
-                                        <p class="texto-comentario"><?= nl2br(htmlspecialchars($val['Comentario'])) ?></p>
-                                    <?php else: ?>
-                                        <p class="texto-comentario text-muted"><em>Sin comentario escrito.</em></p>
-                                    <?php endif; ?>
-                                </article>
-                            <?php endforeach; ?>
-                        <?php else: ?>
-                            <p class="text-muted">Todavía no hay opiniones publicadas.</p>
-                        <?php endif; ?>
+                    <!-- Lista de valoraciones -->
+                    <div class="lista-valoraciones" style="margin-top: 30px;">
+                        <?php foreach ($listaValoraciones as $val): ?>
+                            <div class="item-recurso" style="margin-bottom: 15px;">
+                                <strong><?= htmlspecialchars($val['Nombre'] . ' ' . $val['Apellido']) ?></strong>
+                                <span style="color: #ffb400;">
+                                    <?php for ($i = 1; $i <= 5; $i++): ?>
+                                        <?= $i <= $val['Puntuacion'] ? '★' : '☆' ?>
+                                    <?php endfor; ?>
+                                </span>
+                                <small><?= date('d/m/Y', strtotime($val['Fecha'])) ?></small>
+                                <?php if (!empty($val['Comentario'])): ?>
+                                    <p><?= nl2br(htmlspecialchars($val['Comentario'])) ?></p>
+                                <?php endif; ?>
+                            </div>
+                        <?php endforeach; ?>
                     </div>
                 </section>
             <?php endif; ?>
 
         </main>
-
-        <!-- Columna derecha -->
-        <aside class="sidebar-right">
-            <div class="card-widget">
-                <h3>Información 📅</h3>
-                <p class="text-muted">No hay eventos agendados para esta semana.</p>
-            </div>
-        </aside>
-
     </div>
-    <!-- Estructura de codigo especeilizada en la creación de carpetas para los cursos -->
-    <?php if ($esDocente): ?>
-        <div id="modal-carpeta" class="modal-overlay">
-            <div class="modal-box">
-                <h2>Nueva Carpeta</h2>
-                <form action="../PHP conexiones/crearcarpeta.php" method="POST">
-                    <input type="hidden" name="ID_Curso" value="<?= $idCurso ?>">
 
-                    <label>Nombre de la carpeta:</label>
-                    <input type="text" name="Nombre_Carpeta" required placeholder="Ej: Unidad 1 - Introducción">
-
-                    <div class="modal-acciones">
-                        <button type="submit" class="btn-confirmar">Crear</button>
-                        <a href="#" class="btn-cancelar">Cancelar</a>
-                    </div>
-                </form>
-            </div>
-        </div>
-    <?php endif; ?>
-
-
-    <!-- Modal de subida de archivos -->
-    <?php if ($esDocente): ?>
+    <!-- ==================== MODALES (solo si es creador) ==================== -->
+    <?php if ($esCreadorCurso): ?>
+        <!-- Modal Subir Archivo -->
         <div id="modal-archivo" class="modal-overlay">
             <div class="modal-box">
-                <h2>Subir Archivo</h2>
+                <h2>Subir archivo / material</h2>
                 <form action="../PHP conexiones/subirmaterial.php" method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="ID_Curso" value="<?= $idCurso ?>">
+                    
+                    <label>Título del material:</label>
+                    <input type="text" name="Titulo_Material" required>
 
-                    <label>Título del archivo:</label>
-                    <input type="text" name="Titulo_Material" required placeholder="Ej: Unidad 1 - Presentación.pdf">
+                    <label>Tipo de material:</label>
+                    <select name="Tipo_Material" id="tipoMaterial" required>
+                        <option value="archivo">Archivo</option>
+                        <option value="enlace">Enlace</option>
+                    </select>
 
-                    <!-- Estructura para asignar un archivo dentro  de una carpeta.  -->
-                    <label>Asignar a carpeta (opcional):</label>
-                        <select name="ID_Carpeta">
-                            <option value="">-- Sin carpeta (Archivo suelto) --</option>
-                            <?php foreach ($carpetas as $c): ?>
-                                <option value="<?= $c['ID_Carpeta'] ?>"><?= htmlspecialchars($c ['Nombre_Carpeta']) ?></option>
-                            <?php endforeach; ?>
-                        </select>
+                    <div id="grupo-archivo">
+                        <label for="archivoAdjunto">Seleccionar archivo:</label>
+                        <input type="file" id="archivoAdjunto" name="archivo_adjunto" required>
+                        <small>
+                            Puedes subir documentos, PDF, imágenes, videos, audios,
+                            archivos comprimidos y otros formatos.
+                        </small>
+                    </div>
 
-                    <label>Seleccionar Archivo:</label>
-                    <input type="file" name="archivo_adjunto" required>
+                    <div id="grupo-enlace" style="display: none;">
+                        <label for="contenidoURL">URL / Enlace:</label>
+                        <input type="url" id="contenidoURL" name="Contenido_URL" placeholder="https://ejemplo.com/recurso" disabled>
+                    </div>
+
+                    <label>Carpeta (opcional):</label>
+                    <select name="ID_Carpeta">
+                        <option value="">Sin carpeta</option>
+                        <?php foreach ($carpetas as $c): ?>
+                            <option value="<?= $c['ID_Carpeta'] ?>"><?= htmlspecialchars($c['Nombre_Carpeta']) ?></option>
+                        <?php endforeach; ?>
+                    </select>
 
                     <div class="modal-acciones">
                         <button type="submit" class="btn-confirmar">Subir</button>
@@ -502,203 +513,220 @@ $tareas = $stmtTareas->fetchAll(PDO::FETCH_ASSOC);
                 </form>
             </div>
         </div>
-    <?php endif; ?>
 
-    
-    <!-- Modal: Subir proyecto educativo -->
-    <?php if ($esCreadorCurso): ?>
+        <!-- Modal Crear Carpeta -->
+        <div id="modal-carpeta" class="modal-overlay">
+            <div class="modal-box">
+                <h2>Crear carpeta</h2>
+                <form action="../PHP conexiones/crearcarpeta.php" method="POST">
+                    <input type="hidden" name="ID_Curso" value="<?= $idCurso ?>">
+                    <label>Nombre de la carpeta:</label>
+                    <input type="text" name="Nombre_Carpeta" required>
+                    <div class="modal-acciones">
+                        <button type="submit" class="btn-confirmar">Crear</button>
+                        <a href="#" class="btn-cancelar">Cancelar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
         <div id="modal-proyecto" class="modal-overlay">
             <div class="modal-box">
-                <h2>Subir proyecto educativo</h2>
-                <p style="margin-bottom: 12px; opacity: 0.85;">
-                    Publicá un proyecto realizado al finalizar este curso. Se mostrará en la sección de Proyectos educativos.
-                </p>
-                <form action="../PHP conexiones/subirProyecto.php" method="POST" enctype="multipart/form-data">
+                <h2>Publicar proyecto educativo</h2>
+                <p>Comparte el trabajo final realizado durante el curso.</p>
+
+                <form action="../PHP%20conexiones/subirProyecto.php" method="POST" enctype="multipart/form-data" >
                     <input type="hidden" name="ID_Curso" value="<?= $idCurso ?>">
 
-                    <label>Título del proyecto:</label>
-                    <input type="text" name="Titulo_Proyecto" required maxlength="200" placeholder="Ej: App de gestión escolar">
+                    <label for="tituloProyecto">Título del proyecto:</label>
+                    <input type="text" id="tituloProyecto" name="Titulo_Proyecto" maxlength="200" required >
 
-                    <label>Descripción:</label>
-                    <textarea name="Descripcion" rows="4" placeholder="Breve descripción del proyecto, tecnologías usadas, objetivos..."></textarea>
+                    <label for="descripcionProyecto">Descripción del proyecto:</label>
+                    <textarea id="descripcionProyecto" name="Descripcion" rows="5" placeholder="Explica qué se realizó, qué herramientas se utilizaron y qué se aprendió."
+                    ></textarea>
 
-                    <label>Archivo del proyecto (PDF, ZIP, DOC, PPT o imagen):</label>
-                    <input type="file" name="archivo_proyecto" accept=".pdf,.zip,.rar,.doc,.docx,.ppt,.pptx,.png,.jpg,.jpeg,.gif,.webp">
+                    <label for="archivoProyecto">Archivo del proyecto:</label>
+                    <input type="file" id="archivoProyecto" name="archivo_proyecto" accept=".pdf,.zip,.rar,.doc,.docx,.ppt,.pptx,.png,.jpg,.jpeg,.gif,.webp">
 
-                    <label>Imagen de portada (opcional):</label>
-                    <input type="file" name="imagen_portada" accept="image/*">
+                    <label for="portadaProyecto">Imagen de portada (opcional):</label>
+                    <input type="file" id="portadaProyecto" name="imagen_portada" accept="image/png,image/jpeg,image/gif,image/webp" >
 
                     <div class="modal-acciones">
-                        <button type="submit" class="btn-confirmar">Publicar proyecto</button>
+                        <button type="submit" class="btn-confirmar">
+                            Publicar proyecto
+                        </button>
                         <a href="#" class="btn-cancelar">Cancelar</a>
-
-    <!-- Modal para crear tareas -->
-    <?php if ($esDocente): ?>
-        <div id="modalTarea" class="modal-tarea-overlay">
-            <div class="modal-tarea-container">
-                <div class="modal-header">
-                    <h2>Crear Nueva Tarea</h2>
-                    <button type="button" class="btn-cerrar" id="btnCerrarModal">X</button>
-                </div>
-                <form id="formCrearTarea"
-                    action="../PHP conexiones/guardarTarea.php"
-                    method="POST"
-                    enctype="multipart/form-data">
-                    <div class="modal-body">
-                        <!-- ID del curso al que pertenece la tarea -->
-                        <input type="hidden" name="ID_Curso" value="<?= $idCurso ?>">
-                        <!-- Nombre -->
-                        <div class="form-group">
-                            <label for="nombreTarea">Nombre de la tarea *</label>
-                            <input type="text" id="nombreTarea" name="nombre_tarea" placeholder="Ej: Ejercicios de Álgebra" required>
-                        </div>
-                        <!-- Descripción -->
-                        <div class="form-group">
-                            <label for="descripcionTarea">Descripción / Instrucciones</label>
-                            <textarea id="descripcionTarea" name="descripcion_tarea" rows="4" placeholder="Escribe las instrucciones para los alumnos..."></textarea>
-                        </div>
-                        
-                        <!-- Seleccionar carpeta -->
-                        <div class="form-group">
-                            <label for="carpetaTarea">Asignar a carpeta:</label>
-                            <select id="carpetaTarea" name="ID_Carpeta">
-                                <option value="">-- Sin carpeta --</option>
-                            <?php foreach ($carpetas as $carpeta): ?>
-                                    <option value="<?= $carpeta['ID_Carpeta'] ?>">
-                                    <?= htmlspecialchars($carpeta['Nombre_Carpeta']) ?>
-                                    </option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
-
-                        <!-- Archivos adjuntos -->
-                        <div class="form-group">
-                            <label for="archivosTarea">Adjuntar archivos</label>
-                            <input type="file" id="archivosTarea" name="archivos_tarea[]"multiple>
-                        </div>
-                        <!-- Enlace externo -->
-                        <div class="form-group">
-                            <label for="enlaceTarea">Adjuntar enlace / URL externa</label>
-                            <input type="url" id="enlaceTarea" name="enlace_tarea" placeholder="https://ejemplo.com/recurso">
-                        </div>
-                        <!-- Fechas -->
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="fechaVencimiento">Fecha de vencimiento *</label>
-                                <input type="datetime-local" id="fechaVencimiento" name="fecha_vencimiento" required>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="fechaBloqueo">Fecha de bloqueo</label>
-                                <input type="datetime-local" id="fechaBloqueo" name="fecha_bloqueo">
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Botones -->
-                    <div class="modal-footer">
-                        <button type="button" class="btn-cancelar" id="btnCancelarModal"> Cancelar</button>
-                        <button type="submit" class="btn-publicar"> Publicar Tarea</button>
                     </div>
                 </form>
             </div>
         </div>
     <?php endif; ?>
 
+    <!-- ==================== MODAL CREAR TAREA ==================== -->
+    <?php if ($esDocente && $esCreadorCurso): ?>
+    <div id="modalTarea" class="modal-tarea-overlay">
+        <div class="modal-tarea-container">
+            <div class="modal-header">
+                <h2>Crear Nueva Tarea</h2>
+                <button type="button" class="btn-cerrar" id="btnCerrarModal">X</button>
+            </div>
+
+            <form id="formCrearTarea"
+                action="../PHP%20conexiones/guardarTarea.php"
+                method="POST"
+                enctype="multipart/form-data">
+
+                <input type="hidden" name="ID_Curso" value="<?= $idCurso ?>">
+
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="nombreTarea">Nombre de la tarea *</label>
+                        <input type="text" id="nombreTarea" name="nombre_tarea" 
+                            placeholder="Ej: Ejercicios de Álgebra" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="descripcionTarea">Descripción / Instrucciones</label>
+                        <textarea id="descripcionTarea" name="descripcion_tarea" rows="4"
+                                placeholder="Escribe las instrucciones para los alumnos..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="carpetaTarea">Asignar a carpeta (opcional):</label>
+                        <select id="carpetaTarea" name="ID_Carpeta">
+                            <option value="">Sin carpeta</option>
+                            <?php foreach ($carpetas as $c): ?>
+                                <option value="<?= $c['ID_Carpeta'] ?>">
+                                    <?= htmlspecialchars($c['Nombre_Carpeta']) ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="archivosTarea">Adjuntar archivos</label>
+                        <input type="file" id="archivosTarea" name="archivos_tarea[]" multiple>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="enlaceTarea">Adjuntar enlace / URL externa</label>
+                        <input type="url" id="enlaceTarea" name="enlace_tarea" 
+                            placeholder="https://ejemplo.com/recurso">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="fechaVencimiento">Fecha de vencimiento *</label>
+                            <input type="datetime-local" id="fechaVencimiento" 
+                                name="fecha_vencimiento" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="fechaBloqueo">Fecha de bloqueo</label>
+                            <input type="datetime-local" id="fechaBloqueo" name="fecha_bloqueo">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn-cancelar" id="btnCancelarModal">Cancelar</button>
+                    <button type="submit" class="btn-publicar">Publicar Tarea</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <?php endif; ?>
+
     <?php include 'footer.php'; ?>
 
     <script>
-        (function () {
-            const selector = document.getElementById('estrellasSelector');
-            const inputPunt = document.getElementById('inputPuntuacion');
-            const textoPunt = document.getElementById('textoPuntuacion');
-            const form = document.getElementById('formValoracion');
+        // Selector de estrellas
+        const estrellas = document.querySelectorAll('.estrella-btn');
+        const inputPuntuacion = document.getElementById('inputPuntuacion');
+        const textoPuntuacion = document.getElementById('textoPuntuacion');
 
-            if (!selector || !inputPunt) return;
+        if (estrellas.length > 0) {
+            estrellas.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const valor = parseInt(btn.dataset.valor);
+                    inputPuntuacion.value = valor;
+                    textoPuntuacion.textContent = valor + ' estrella(s)';
 
-            const botones = selector.querySelectorAll('.estrella-btn');
-
-            function pintar(valor) {
-                botones.forEach(function (btn) {
-                    const v = parseInt(btn.getAttribute('data-valor'), 10);
-                    if (v <= valor) {
-                        btn.classList.add('seleccionada');
-                    } else {
-                        btn.classList.remove('seleccionada');
-                    }
-                });
-                inputPunt.value = valor;
-                if (textoPunt) {
-                    textoPunt.textContent = valor > 0 ? valor + ' estrella' + (valor > 1 ? 's' : '') : 'Selecciona una puntuación';
-                }
-            }
-
-            botones.forEach(function (btn) {
-                btn.addEventListener('click', function () {
-                    const valor = parseInt(this.getAttribute('data-valor'), 10);
-                    pintar(valor);
-                });
-
-                btn.addEventListener('mouseenter', function () {
-                    const valor = parseInt(this.getAttribute('data-valor'), 10);
-                    botones.forEach(function (b) {
-                        const v = parseInt(b.getAttribute('data-valor'), 10);
-                        b.classList.toggle('hover-temp', v <= valor);
+                    estrellas.forEach(b => {
+                        b.classList.toggle('seleccionada', parseInt(b.dataset.valor) <= valor);
                     });
                 });
             });
-
-            selector.addEventListener('mouseleave', function () {
-                botones.forEach(function (b) {
-                    b.classList.remove('hover-temp');
-                });
-            });
-
-            if (form) {
-                form.addEventListener('submit', function (e) {
-                    const p = parseInt(inputPunt.value, 10);
-                    if (isNaN(p) || p < 1 || p > 5) {
-                        e.preventDefault();
-                        alert('Debes seleccionar una puntuación entre 1 y 5 estrellas.');
-                        return false;
-                    }
-                });
-            }
-        })();
-    </script>
-
-
-    <script>
-    document.addEventListener('DOMContentLoaded', () => {
-    const modal = document.getElementById('modalTarea');
-    const btnAbrir = document.getElementById('btnAbrirModal');
-    const btnCerrar = document.getElementById('btnCerrarModal');
-    const btnCancelar = document.getElementById('btnCancelarModal');
-    const formTarea = document.getElementById('formCrearTarea');
-
-    // Mostrar el modal
-    const abrirModal = () => {
-        modal.classList.add('active');
-    };
-
-    // Ocultar y limpiar el modal
-    const cerrarModal = () => {
-        modal.classList.remove('active');
-        formTarea.reset();
-    };
-
-    // Listeners
-    btnAbrir.addEventListener('click', abrirModal);
-    btnCerrar.addEventListener('click', cerrarModal);
-    btnCancelar.addEventListener('click', cerrarModal);
-
-    // Cerrar al hacer clic en el fondo
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
-        cerrarModal();
         }
-    });
-    });
+
+        // Cerrar modales al hacer clic en Cancelar
+        document.querySelectorAll('.btn-cancelar').forEach(btn => {
+            btn.addEventListener('click', e => {
+                e.preventDefault();
+                window.location.hash = '';
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const modal = document.getElementById('modalTarea');
+            const btnAbrir = document.getElementById('btnAbrirModal');
+            const btnCerrar = document.getElementById('btnCerrarModal');
+            const btnCancelar = document.getElementById('btnCancelarModal');
+            const formTarea = document.getElementById('formCrearTarea');
+
+            if (!modal || !btnAbrir) return;
+
+            const abrirModal = () => {
+                modal.classList.add('active');
+            };
+
+            const cerrarModal = () => {
+                modal.classList.remove('active');
+                if (formTarea) formTarea.reset();
+            };
+
+            btnAbrir.addEventListener('click', abrirModal);
+            
+            if (btnCerrar) btnCerrar.addEventListener('click', cerrarModal);
+            if (btnCancelar) btnCancelar.addEventListener('click', cerrarModal);
+
+            // Cerrar al hacer clic fuera del modal
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) cerrarModal();
+            });
+        });
+
+        // Mostrar archivo o enlace según el tipo elegido
+        const tipoMaterial = document.getElementById('tipoMaterial');
+        const grupoArchivo = document.getElementById('grupo-archivo');
+        const grupoEnlace = document.getElementById('grupo-enlace');
+        const archivoAdjunto = document.getElementById('archivoAdjunto');
+        const contenidoURL = document.getElementById('contenidoURL');
+
+        function actualizarTipoMaterial() {
+            const esEnlace = tipoMaterial.value === 'enlace';
+
+            grupoArchivo.style.display = esEnlace ? 'none' : 'block';
+            grupoEnlace.style.display = esEnlace ? 'block' : 'none';
+
+            archivoAdjunto.disabled = esEnlace;
+            archivoAdjunto.required = !esEnlace;
+
+            contenidoURL.disabled = !esEnlace;
+            contenidoURL.required = esEnlace;
+
+            if (esEnlace) {
+                archivoAdjunto.value = '';
+            } else {
+                contenidoURL.value = '';
+            }
+        }
+
+        if (tipoMaterial && grupoArchivo && grupoEnlace &&
+            archivoAdjunto && contenidoURL) {
+            tipoMaterial.addEventListener('change', actualizarTipoMaterial);
+            actualizarTipoMaterial();
+        }
     </script>
 </body>
 </html>

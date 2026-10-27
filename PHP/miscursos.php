@@ -1,20 +1,17 @@
 <?php
-// Inicia la sesión 
 session_start();
 require_once '../PHP conexiones/conexion.php';
 
-// Validar que exista la sesión del usuario, en cada de que exista la sesión, el usuario es enviado a login si la sesion existe. 
+// Validar que exista la sesión
 if (!isset($_SESSION['Sesion'])) {
     header("Location: login.php");
     exit();
 }
 
-//Variables que toman la sessión y el id del usaurio.
-$correo = $_SESSION['Sesion'];
+$correo     = $_SESSION['Sesion'];
 $ID_Usuario = $_SESSION['ID_Usuario'] ?? 0;
 
-// Consulta con UNION que pemite juntar los cursos inscriptos mas los cursos creados por el docente,
-// De esta forma el usaurio puede ver lo que creo o esta inscripto sin importar el rol.
+// Cursos en los que está inscrito + cursos que creó como docente
 $sql = "SELECT c.* 
         FROM cursos c
         INNER JOIN inscripciones i ON c.ID_Curso = i.ID_Curso
@@ -30,44 +27,42 @@ $sql = "SELECT c.*
         ORDER BY ID_Curso DESC";
     
 $stmt = $pdo->prepare($sql);
-
 $stmt->execute([
-    ':Correo' => $correo,
-    ':ID_Usuario'  => $ID_Usuario
+    ':Correo'     => $correo,
+    ':ID_Usuario' => $ID_Usuario
 ]);
 
 $cursos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mis Cursos | LMS</title>
+    <title>Mis Cursos | Aprendomo</title>
     <link rel="stylesheet" href="../CSS/estilo.css">
     <link rel="stylesheet" href="../CSS/animaciones.css">
-
+    <link rel="icon" href="../IMG/Icono.ico">
 </head>
 <body>
 
     <?php include 'menu.php'; ?>
 
-
     <div style="max-width: 1200px; margin: 30px auto; padding: 0 20px;">
         <h2>Mis Cursos</h2>
         
-        <!-- Estructura para mostrar los cursos -->
         <div class="grid-cursos">
             <?php if (count($cursos) > 0): ?>
                 <?php foreach ($cursos as $c): ?>
-                    <!-- Enlace conectado directamente a vercursos.php pasándole el idCurso -->
                     <a href="vercursos.php?ID_Curso=<?= $c['ID_Curso'] ?>" class="card-curso">
-                        <!-- En caso de no contar con una imágen asignda en la carpeta de imágenes para el curso se pone un default.png. -->
-                        <img src="../PHP conexiones/Imagenes/<?= !empty($c['Dataso']) ? htmlspecialchars($c['Dataso']) : 'default.png' ?>" alt="Portada">
+                        <?php if (!empty($c['Dataso'])): ?>
+                            <img src="../PHP conexiones/Imagenes/<?= htmlspecialchars($c['Dataso']) ?>" alt="Portada">
+                        <?php else: ?>
+                            <img src="../IMG/Curso1.png" alt="Portada">
+                        <?php endif; ?>
                         <div class="card-curso-body">
                             <h3><?= htmlspecialchars($c['Titulo_Curso']) ?></h3>
-                            <small class="text-muted"><?= htmlspecialchars($c['Nivel_Curso'] ?? $c['Nivel_curso'] ?? '') ?></small>
+                            <small class="text-muted"><?= htmlspecialchars($c['Nivel_Curso'] ?? '') ?></small>
                         </div>
                     </a>
                 <?php endforeach; ?>

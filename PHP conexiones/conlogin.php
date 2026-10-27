@@ -17,9 +17,13 @@ if(isset($_POST['Correo']) && isset($_POST['Contrasenia'])){
 
         $_SESSION['Sesion'] = $datosUsuario['Correo'];
         $_SESSION['ID_Usuario'] = $datosUsuario['ID_Usuario'];
-        $_SESSION['Rol'] = strtolower($datosUsuario['Rol']);
+        $_SESSION['Rol'] = strtolower(trim($datosUsuario['Rol']));
 
-        header("Location: ../PHP/main.php");
+        if ($_SESSION['Rol'] === 'administrador') {
+            header("Location: ../PHP/PHPAdmin/menuAdmin.php");
+        } else {
+            header("Location: ../PHP/main.php");
+        }
         exit();
 
     } else {
