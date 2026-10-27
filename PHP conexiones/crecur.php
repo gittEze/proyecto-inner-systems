@@ -22,7 +22,7 @@ $duracion     = (int)($_POST['Duracion_Estimada'] ?? 0);
 $precio       = (int)($_POST['Precio'] ?? 0);
 $idDocente    = (int)$_SESSION['ID_Usuario'];
 
-if (empty($titulo) || empty($descripcion) || empty($tipo) || empty($nivel) || $duracion <= 0 || $precio <= 0) {
+if (empty($titulo) || empty($descripcion) || empty($tipo) || empty($nivel) || $duracion <= 0 || $precio < 0) {
     header('Location: ../PHP/crear.php?error=campos');
     exit();
 }
