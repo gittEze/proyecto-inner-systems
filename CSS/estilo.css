@@ -404,7 +404,7 @@ select {
 
 .cursosPopulares {
     margin: 0 80px;
-    padding: 0 20px 50px;
+    padding: 0 20px 0px;
     display: flex;
     gap: 35px;
 }
@@ -1441,6 +1441,7 @@ details.desplegable-miembros summary {
     align-items: center;
 }
 
+
 .acciones-profesor .btn-confirmar {
     display: inline-flex;
     align-items: center;
@@ -1448,7 +1449,7 @@ details.desplegable-miembros summary {
     padding: 10px 18px;
     background-color: #2563eb;
     color: #ffffff;
-    text-decoration: none;
+    text-decoration: none; 
     border-radius: 8px;
     font-weight: 600;
     font-size: 0.95rem;
@@ -1525,6 +1526,7 @@ details.desplegable-miembros summary {
     border-radius: 6px;
     font-weight: bold;
     cursor: pointer;
+    text-decoration: none; 
 }
 
 .btn-confirmar:hover {
@@ -2283,131 +2285,6 @@ details.desplegable-miembros summary {
     font-style: italic;
 }
 
-/* ========== CARRITO ========== */
-
-.carrito-main {
-    max-width: 900px;
-    margin: 30px auto 60px;
-    padding: 0 20px;
-}
-
-.carrito-vacio {
-    text-align: center;
-    padding: 40px 20px;
-}
-
-.carrito-vacio .btn-confirmar {
-    display: inline-block;
-    margin-top: 16px;
-    text-decoration: none;
-}
-
-.carrito-resumen-top {
-    margin-bottom: 20px;
-    color: #555;
-}
-
-.carrito-lista {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    margin-bottom: 24px;
-}
-
-.carrito-item {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 16px;
-    background: #fff;
-    border: 2px solid #dceaf5;
-    border-radius: 12px;
-    padding: 14px 16px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-}
-
-.carrito-item-img {
-    width: 90px;
-    height: 70px;
-    border-radius: 8px;
-    overflow: hidden;
-    background: #0d47a1;
-    flex-shrink: 0;
-}
-
-.carrito-item-img img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-}
-
-.carrito-item-info {
-    flex: 1;
-    min-width: 180px;
-}
-
-.carrito-item-info h3 {
-    margin: 0 0 4px;
-    color: #0d47a1;
-    font-size: 1.1rem;
-}
-
-.carrito-item-info .text-muted {
-    font-size: 0.85rem;
-    margin: 0 0 4px;
-    color: #666;
-}
-
-.carrito-valoracion {
-    margin: 4px 0;
-    font-size: 0.9rem;
-}
-
-.carrito-precio {
-    margin: 4px 0 0;
-    font-weight: 700;
-    color: #1e88e5;
-    font-size: 1.05rem;
-}
-
-.carrito-item-acciones {
-    flex-shrink: 0;
-}
-
-.carrito-footer {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 16px;
-    padding: 20px;
-    margin-top: 10px;
-}
-
-.carrito-total {
-    flex: 1;
-    font-size: 1.15rem;
-    color: #0d47a1;
-}
-
-.carrito-total strong {
-    font-size: 1.4rem;
-    margin-left: 8px;
-}
-
-.btn-inscribir-todos {
-    min-width: 200px;
-}
-
-.img-carrito-vacio {
-    display: block;
-    max-width: 180px;   
-    width: 40%;
-    height: auto;
-    margin: 0 auto 16px; 
-    opacity: 0.4;
-}
-
 /* ==========================================================================
 13. PANEL DE ADMINISTRACIÓN Y GESTOR DE USUARIOS
 ========================================================================== */
@@ -2755,26 +2632,7 @@ body.admin-active .footerMain {
         max-width: 280px;
         justify-content: center;
     }
-
-/* ==========================================
-Estilos para la integración de PayPal en el Carrito
-========================================== */
-
-/* Contenedor del botón de PayPal */
-#paypal-button-container {
-width: 100%;
-max-width: 100%;
-margin-top: 15px;
 }
-
-/* Estilo responsivo opcional para centrar o ajustar la apariencia en tarjetas */
-.carrito-footer .btn-cancelar {
-text-align: center;
-text-decoration: none;
-box-sizing: border-box;
-}
-}
-
 
 /* ========== Proyectos educativos ========== */
 .main-proyectos {
@@ -2877,6 +2735,7 @@ box-sizing: border-box;
 
 .btn-ir-curso {
     background: linear-gradient(135deg, #0d47a1, #1565c0) !important;
+    text-decoration: none;
 }
 
 .btn-ir-curso:hover {
@@ -2927,7 +2786,7 @@ box-sizing: border-box;
 }
 
 .proyecto-acciones .btn-confirmar {
-    text-decoration: none;
+    text-decoration: none; 
     display: inline-block;
 }
 
@@ -2939,5 +2798,2214 @@ box-sizing: border-box;
     .proyecto-acciones,
     .proyecto-acciones-card {
         flex-direction: column;
+    }
+}
+
+/* ========== CARRITO ========== */
+
+.carrito-main {
+    max-width: 920px;
+    margin: 40px auto 80px;
+    padding: 0 20px;
+}
+
+/* Estado vacío */
+.carrito-vacio {
+    text-align: center;
+    padding: 50px 25px;
+    background: #fff;
+    border-radius: 16px;
+    border: 2px dashed #c5d8eb;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
+}
+
+.carrito-vacio p {
+    font-size: 1.15rem;
+    color: #555;
+    margin: 12px 0 20px;
+}
+
+.img-carrito-vacio {
+    display: block;
+    max-width: 160px;
+    width: 40%;
+    height: auto;
+    margin: 0 auto 18px;
+    opacity: 0.35;
+}
+
+/* Resumen superior */
+.carrito-resumen-top {
+    margin-bottom: 22px;
+    font-size: 1.05rem;
+    color: #444;
+}
+
+/* Lista de cursos */
+.carrito-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin-bottom: 30px;
+}
+
+/* Cada ítem del carrito */
+.carrito-item {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 18px;
+    background: #ffffff;
+    border: 2px solid #dceaf5;
+    border-radius: 14px;
+    padding: 16px 18px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+    transition: box-shadow 0.2s ease;
+}
+
+.carrito-item:hover {
+    box-shadow: 0 6px 20px rgba(13, 71, 161, 0.12);
+}
+
+/* Imagen del curso */
+.carrito-item-img {
+    width: 100px;
+    height: 75px;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #0d47a1;
+    flex-shrink: 0;
+}
+
+.carrito-item-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Información del curso */
+.carrito-item-info {
+    flex: 1;
+    min-width: 200px;
+}
+
+.carrito-item-info h3 {
+    margin: 0 0 6px;
+    color: #0d47a1;
+    font-size: 1.15rem;
+    font-weight: 700;
+}
+
+.carrito-item-info p {
+    margin: 0 0 8px;
+    font-size: 0.9rem;
+    color: #555;
+    line-height: 1.4;
+}
+
+.carrito-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 18px;
+    font-size: 0.88rem;
+    color: #666;
+}
+
+.carrito-meta .precio {
+    font-weight: 700;
+    color: #1e88e5;
+    font-size: 1.05rem;
+}
+
+/* Botón quitar */
+.form-quitar {
+    flex-shrink: 0;
+}
+
+.btn-quitar {
+    background: #fff;
+    color: #c62828;
+    border: 2px solid #ef9a9a;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-quitar:hover {
+    background: #c62828;
+    color: #fff;
+    border-color: #c62828;
+}
+
+/* Resumen / Total */
+.carrito-resumen {
+    background: #f5f9ff;
+    border: 2px solid #bbdefb;
+    border-radius: 14px;
+    padding: 24px 28px;
+    margin-top: 10px;
+}
+
+.carrito-resumen h2 {
+    margin: 0 0 12px;
+    color: #0d47a1;
+    font-size: 1.3rem;
+}
+
+.carrito-resumen p {
+    font-size: 1.15rem;
+    margin: 0 0 20px;
+    color: #333;
+}
+
+.carrito-resumen strong {
+    font-size: 1.45rem;
+    color: #0d47a1;
+}
+
+/* Contenedor de PayPal */
+#paypal-button-container {
+    width: 100%;
+    max-width: 100%;
+    margin-top: 10px;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+    .carrito-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .carrito-item-img {
+        width: 100%;
+        height: 140px;
+    }
+
+    .form-quitar {
+        width: 100%;
+    }
+
+    .btn-quitar {
+        width: 100%;
+    }
+}
+
+/* Acciones del carrito: Finalizar + Seguir explorando */
+.carrito-acciones {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 14px;
+    margin-top: 18px;
+}
+
+.carrito-acciones .form-finalizar {
+    margin: 0;
+}
+
+.carrito-acciones .btn-confirmar {
+    padding: 12px 24px;
+    font-size: 1rem;
+    border-radius: 8px;
+    white-space: nowrap;
+}
+
+.btn-seguir-explorando {
+    display: inline-flex;
+    align-items: center;
+    padding: 12px 22px;
+    background: #ffffff;
+    color: #0d47a1;
+    border: 2px solid #90caf9;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    white-space: nowrap;
+}
+
+.btn-seguir-explorando:hover {
+    background: #e3f2fd;
+    border-color: #42a5f5;
+    color: #1565c0;
+}
+
+@media (max-width: 480px) {
+    .carrito-acciones {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .carrito-acciones .btn-confirmar,
+    .btn-seguir-explorando {
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+    }
+}
+
+/* ===== Menú usuario (forzado / corregido) ===== */
+.userIconBtn {
+    border: none;
+    background: transparent;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    border-radius: 50%;
+    line-height: 0;
+    display: inline-flex;
+}
+.userIconBtn:focus {
+    outline: 2px solid #1e88e5;
+    outline-offset: 3px;
+}
+.usuario {
+    position: relative !important;
+    z-index: 5000 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+}
+.usuario .userIcon {
+    width: 55px !important;
+    height: 55px !important;
+    object-fit: cover !important;
+    border-radius: 50% !important;
+    cursor: pointer !important;
+    display: block !important;
+}
+.usuario .userMenu {
+    position: absolute !important;
+    top: calc(100% + 8px) !important;
+    right: 0 !important;
+    width: 320px !important;
+    max-width: 92vw !important;
+    z-index: 5001 !important;
+    background: #ffffff !important;
+    border-radius: 12px !important;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.18) !important;
+    max-height: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    overflow: visible !important;
+    pointer-events: auto !important;
+    animation: none !important;
+}
+.usuario .userMenu[hidden] {
+    display: none !important;
+}
+.usuario .userMenu.open-menu,
+.usuario .userMenu:not([hidden]) {
+    display: block !important;
+}
+
+body.admin-active .contenedorMain {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 300;
+    background: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+body.admin-active {
+    padding-top: 90px;
+}
+
+/* ===== Proyectos educativos: ajustes visuales ===== */
+
+.main-proyectos {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 35px 24px 60px;
+    box-sizing: border-box;
+}
+
+.main-proyectos > h1 {
+    text-align: center;
+    margin-bottom: 12px;
+}
+
+.grid-proyectos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 24px;
+    margin-top: 30px;
+}
+
+.card-proyecto {
+    min-width: 0;
+    color: #1e293b;
+    text-decoration: none;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    background: #ffffff;
+    box-shadow: 0 5px 18px rgba(15, 23, 42, 0.07);
+    overflow: hidden;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.card-proyecto:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.13);
+}
+
+.proyecto-portada {
+    width: 100%;
+    height: 210px;
+    overflow: hidden;
+    background: #eaf0f8;
+}
+
+.proyecto-portada img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.proyecto-body {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px;
+}
+
+.proyecto-body h3,
+.proyecto-body h2 {
+    margin: 0;
+    color: #172554;
+    line-height: 1.4;
+}
+
+.proyecto-body h3 {
+    font-size: 1.15rem;
+}
+
+.proyecto-body p {
+    margin: 0;
+    line-height: 1.6;
+}
+
+.proyecto-curso {
+    color: #2563eb;
+    font-weight: 600;
+}
+
+.proyecto-body small {
+    color: #64748b;
+    font-size: 0.9rem;
+}
+
+.proyecto-detalle {
+    max-width: 850px;
+    margin: 30px auto;
+}
+
+.card-proyecto-detalle .proyecto-portada {
+    height: auto;
+    max-height: 440px;
+    aspect-ratio: 16 / 9;
+}
+
+.card-proyecto-detalle .proyecto-portada img {
+    object-fit: contain;
+}
+
+.card-proyecto-detalle .proyecto-body {
+    padding: 28px;
+}
+
+.proyecto-meta {
+    color: #64748b;
+    line-height: 1.8;
+}
+
+.proyecto-descripcion {
+    margin: 20px 0;
+    padding: 20px;
+    background: #f8fafc;
+    border-radius: 12px;
+    line-height: 1.8;
+    overflow-wrap: anywhere;
+}
+
+.badge-tipo {
+    display: inline-block;
+    width: fit-content;
+    padding: 6px 10px;
+    border-radius: 20px;
+    background: #dbeafe;
+    color: #1d4ed8;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.contacto-docente {
+    margin-top: 22px;
+    padding: 18px 20px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-left: 4px solid #38bdf8;
+    border-radius: 10px;
+}
+
+.contacto-docente h3 {
+    margin: 0 0 14px;
+    color: #1e293b;
+    font-size: 1.1rem;
+}
+
+.contacto-docente p {
+    margin: 9px 0;
+    color: #475569;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+.contacto-docente strong {
+    color: #1e293b;
+}
+
+.contacto-docente a {
+    color: #0284c7;
+    text-decoration: none;
+}
+
+.contacto-docente a:hover {
+    text-decoration: underline;
+}
+
+.contacto-docente .contacto-docente-ayuda {
+    margin-top: 15px;
+    padding-top: 12px;
+    border-top: 1px solid #e2e8f0;
+    color: #64748b;
+    font-size: 0.9rem;
+}
+
+/* ==========================================
+   APRENDOMO | MINI CHAT FAQ
+   Paleta: azul, azul oscuro y blanco
+========================================== */
+
+#faq-widget {
+    --faq-blue: #1e88e5;
+    --faq-dark: #120063;
+    --faq-white: #ffffff;
+    --faq-light-blue: #eaf4ff;
+    --faq-border: #dce7f5;
+    --faq-muted: #64748b;
+
+    position: fixed;
+    right: 24px;
+    bottom: 22px;
+    z-index: 9999;
+
+    color: var(--faq-dark);
+    font-family: inherit;
+}
+
+/* ==========================================
+   BOTÓN FLOTANTE COMPACTO
+========================================== */
+
+#faq-toggle {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+
+    min-height: 44px;
+    padding: 0 17px;
+
+    color: var(--faq-white);
+    background: var(--faq-blue);
+
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+
+    font: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+
+    cursor: pointer;
+
+    box-shadow: 0 6px 20px rgba(18, 0, 99, 0.2);
+
+    transition:
+        background 0.25s ease,
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+#faq-toggle:hover {
+    background: var(--faq-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 9px 24px rgba(30, 136, 229, 0.3);
+}
+
+.faq-toggle-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 25px;
+    height: 25px;
+    flex-shrink: 0;
+
+    color: var(--faq-white);
+    background: var(--faq-blue);
+
+    /* Hexágono */
+    clip-path: polygon(
+        25% 0%,
+        75% 0%,
+        100% 50%,
+        75% 100%,
+        25% 100%,
+        0% 50%
+    );
+
+    font-size: 15px;
+    font-weight: 800;
+}
+
+.faq-toggle-text {
+    white-space: nowrap;
+}
+
+/* ==========================================
+   VENTANA DEL CHAT
+========================================== */
+
+#faq-panel {
+    position: absolute;
+    right: 0;
+    bottom: 57px;
+
+    display: flex;
+    flex-direction: column;
+
+    width: 365px;
+    max-width: calc(100vw - 32px);
+    height: 500px;
+    max-height: min(620px, calc(100dvh - 100px));
+
+    color: var(--faq-dark);
+    background: var(--faq-white);
+
+    border: 1px solid var(--faq-border);
+    border-radius: 16px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 20px 60px rgba(18, 0, 99, 0.16),
+        0 3px 12px rgba(18, 0, 99, 0.06);
+
+    animation: faqOpen 0.22s ease-out;
+}
+
+#faq-panel[hidden] {
+    display: none !important;
+}
+
+@keyframes faqOpen {
+    from {
+        opacity: 0;
+        transform: translateY(9px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ==========================================
+   CABECERA CON DETALLE HEXAGONAL
+========================================== */
+
+.faq-header {
+    position: relative;
+    isolation: isolate;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+
+    min-height: 91px;
+    padding: 17px 18px;
+
+    color: var(--faq-white);
+    background: var(--faq-dark);
+
+    overflow: hidden;
+}
+
+/* Hexágonos decorativos de fondo */
+
+.faq-header::before,
+.faq-header::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+
+    width: 76px;
+    height: 86px;
+
+    border: 1px solid rgba(255, 255, 255, 0.13);
+
+    clip-path: polygon(
+        25% 0%,
+        75% 0%,
+        100% 50%,
+        75% 100%,
+        25% 100%,
+        0% 50%
+    );
+
+    pointer-events: none;
+}
+
+.faq-header::before {
+    top: -29px;
+    right: 32px;
+    background: rgba(30, 136, 229, 0.18);
+    transform: rotate(18deg);
+}
+
+.faq-header::after {
+    right: -18px;
+    bottom: -48px;
+    width: 100px;
+    height: 110px;
+    background: rgba(255, 255, 255, 0.035);
+    transform: rotate(-12deg);
+}
+
+.faq-header-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+}
+
+.faq-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 43px;
+    height: 48px;
+    flex-shrink: 0;
+
+    color: var(--faq-white);
+    background: var(--faq-blue);
+
+    clip-path: polygon(
+        25% 0%,
+        75% 0%,
+        100% 50%,
+        75% 100%,
+        25% 100%,
+        0% 50%
+    );
+
+    font-size: 19px;
+    font-weight: 800;
+}
+
+.faq-header h2 {
+    margin: 0 0 5px;
+
+    color: var(--faq-white);
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+.faq-header p {
+    margin: 0;
+
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+#faq-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 31px;
+    height: 31px;
+    flex-shrink: 0;
+
+    color: var(--faq-white);
+    background: rgba(255, 255, 255, 0.1);
+
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 9px;
+
+    font-size: 24px;
+    line-height: 1;
+
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+#faq-close:hover {
+    background: var(--faq-blue);
+}
+
+/* ==========================================
+   CUERPO BLANCO
+========================================== */
+
+.faq-body {
+    flex: 1;
+    min-height: 0;
+
+    padding: 18px;
+
+    background: var(--faq-white);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+}
+
+.faq-welcome {
+    margin-bottom: 20px;
+}
+
+.faq-message {
+    position: relative;
+
+    margin: 0;
+    padding: 13px 14px;
+
+    color: var(--faq-dark);
+    background: var(--faq-light-blue);
+
+    border: 1px solid #d7eaff;
+    border-radius: 4px 12px 12px 12px;
+
+    font-size: 12px;
+    line-height: 1.75;
+}
+
+/* Título de la lista */
+
+.faq-section-title {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    margin: 0 0 12px;
+
+    color: var(--faq-dark);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+}
+
+.faq-section-title::before {
+    content: "";
+
+    width: 4px;
+    height: 15px;
+
+    background: var(--faq-blue);
+    border-radius: 4px;
+}
+
+/* ==========================================
+   PREGUNTAS
+========================================== */
+
+#faq-questions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.faq-question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+
+    width: 100%;
+    padding: 12px 13px;
+
+    color: var(--faq-dark);
+    background: var(--faq-white);
+
+    border: 1px solid var(--faq-border);
+    border-radius: 9px;
+
+    font: inherit;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.55;
+    text-align: left;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.faq-question span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 23px;
+    height: 23px;
+    flex-shrink: 0;
+
+    color: var(--faq-blue);
+    background: var(--faq-light-blue);
+
+    border-radius: 7px;
+
+    font-size: 20px;
+    line-height: 1;
+
+    transition:
+        color 0.2s ease,
+        background 0.2s ease;
+}
+
+.faq-question:hover {
+    background: #f7fbff;
+    border-color: var(--faq-blue);
+    transform: translateX(2px);
+}
+
+.faq-question:hover span {
+    color: var(--faq-white);
+    background: var(--faq-blue);
+}
+
+/* ==========================================
+   RESPUESTAS
+========================================== */
+
+#faq-answer-view[hidden],
+#faq-questions[hidden],
+#faq-welcome[hidden] {
+    display: none !important;
+}
+
+#faq-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    margin: 0 0 17px;
+    padding: 5px 0;
+
+    color: var(--faq-blue);
+    background: transparent;
+
+    border: none;
+
+    font: inherit;
+    font-size: 12px;
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+#faq-back span {
+    font-size: 17px;
+    transition: transform 0.2s ease;
+}
+
+#faq-back:hover {
+    color: var(--faq-dark);
+}
+
+#faq-back:hover span {
+    transform: translateX(-3px);
+}
+
+.faq-answer-card {
+    padding: 17px;
+
+    color: var(--faq-dark);
+    background: var(--faq-white);
+
+    border: 1px solid var(--faq-border);
+    border-top: 3px solid var(--faq-blue);
+    border-radius: 10px;
+
+    overflow-wrap: anywhere;
+}
+
+.faq-answer-label {
+    margin: 0 0 8px;
+
+    color: var(--faq-blue);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+#faq-answer-question {
+    margin: 0;
+
+    color: var(--faq-dark);
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.65;
+}
+
+.faq-answer-divider {
+    height: 1px;
+    margin: 17px 0;
+
+    background: var(--faq-border);
+}
+
+#faq-answer-text {
+    margin: 0;
+
+    color: #334155;
+    font-size: 12px;
+    line-height: 1.9;
+    white-space: pre-line;
+}
+
+/* ==========================================
+   PIE DEL CHAT
+========================================== */
+
+.faq-footer {
+    padding: 11px 14px;
+
+    color: var(--faq-muted);
+    background: var(--faq-white);
+
+    border-top: 1px solid var(--faq-border);
+
+    font-size: 10px;
+    text-align: center;
+}
+
+.faq-footer::before {
+    content: "⬡";
+    margin-right: 5px;
+
+    color: var(--faq-blue);
+    font-size: 14px;
+    vertical-align: -1px;
+}
+
+/* ==========================================
+   ACCESIBILIDAD Y TECLADO
+========================================== */
+
+#faq-toggle:focus-visible,
+#faq-close:focus-visible,
+.faq-question:focus-visible,
+#faq-back:focus-visible {
+    outline: 3px solid var(--faq-blue);
+    outline-offset: 3px;
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width: 480px) {
+    #faq-widget {
+        right: 14px;
+        bottom: 14px;
+    }
+
+    #faq-toggle {
+        min-height: 42px;
+        padding: 0 13px;
+        gap: 8px;
+        font-size: 12px;
+        border-radius: 10px;
+    }
+
+    .faq-toggle-icon {
+        width: 23px;
+        height: 23px;
+    }
+
+    #faq-panel {
+        position: fixed;
+
+        right: 8px;
+        bottom: 68px;
+        left: 8px;
+
+        width: auto;
+        max-width: none;
+
+        height: min(560px, calc(100dvh - 90px));
+        max-height: calc(100dvh - 90px);
+
+        border-radius: 14px;
+    }
+
+    .faq-header {
+        min-height: 82px;
+        padding: 14px 15px;
+    }
+
+    .faq-body {
+        padding: 15px;
+    }
+
+    .faq-question {
+        padding: 12px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #faq-panel {
+        animation: none;
+    }
+
+    #faq-toggle,
+    .faq-question,
+    .faq-question span,
+    #faq-back span {
+        transition: none;
+    }
+}
+
+/* Formularios de búsqueda */
+#formBuscador {
+    margin: 0;
+}
+
+.buscadoreishon form {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0;
+}
+
+.buscadoreishon .buscador2 {
+    width: 100%;
+}
+
+/* =========================================================
+   INICIO: CONTENIDO AMPLIO Y RESPONSIVO
+========================================================= */
+
+body.bodyMain main {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Presentación principal */
+body.bodyMain .contenedorInicio {
+    width: 100%;
+    box-sizing: border-box;
+    padding: clamp(45px, 6vw, 100px) clamp(24px, 6vw, 110px);
+    gap: clamp(30px, 5vw, 90px);
+}
+
+body.bodyMain .textoPrincipal {
+    flex: 1;
+    min-width: 0;
+    margin-left: 0;
+}
+
+body.bodyMain .textoPrincipal p {
+    max-width: 650px;
+}
+
+body.bodyMain .imagenPrincipal {
+    flex: 1;
+    min-width: 0;
+    margin-right: 0;
+}
+
+body.bodyMain .imagenPrincipal img {
+    width: 100%;
+    max-width: 850px;
+    height: auto;
+    object-fit: contain;
+}
+
+/* Título de cursos populares */
+body.bodyMain .cursosPopularesTitulo {
+    max-width: 1800px;
+    margin: 50px auto 28px;
+    padding: 0 clamp(24px, 5vw, 80px);
+    box-sizing: border-box;
+}
+
+/* Cuadrícula de cursos */
+body.bodyMain .cursosPopulares {
+    width: 100%;
+    max-width: 1800px;
+    box-sizing: border-box;
+    margin: 0 auto;
+    padding: 0 clamp(24px, 5vw, 80px) 60px;
+
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 25px;
+}
+
+/* Tarjetas */
+body.bodyMain .tarjetaCurso {
+    min-width: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+body.bodyMain .imagenCurso {
+    flex-shrink: 0;
+    height: 200px;
+}
+
+body.bodyMain .informacionCurso {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    flex: 1;
+    min-width: 0;
+}
+
+body.bodyMain .informacionCurso h3 {
+    overflow-wrap: anywhere;
+}
+
+body.bodyMain .informacionCurso p {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+    overflow-wrap: anywhere;
+}
+
+/* Promedio y estrellas */
+body.bodyMain .popular-valoracion {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    margin: 0 0 15px;
+}
+
+body.bodyMain .popular-estrellas {
+    display: inline-flex;
+    gap: 1px;
+    font-size: 20px;
+    line-height: 1;
+}
+
+body.bodyMain .estrella-activa {
+    color: #f5a623;
+}
+
+body.bodyMain .estrella-inactiva {
+    color: #cbd5e1;
+}
+
+body.bodyMain .popular-promedio {
+    color: #0d47a1;
+    font-weight: 700;
+    font-size: 0.95rem;
+}
+
+body.bodyMain .popular-cantidad {
+    color: #64748b;
+    font-size: 0.8rem;
+}
+
+body.bodyMain .nivelCurso {
+    margin-top: auto;
+}
+
+body.bodyMain .sin-cursos-populares {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 35px 20px;
+    color: #64748b;
+    background: #f8fafc;
+    border-radius: 14px;
+}
+
+/* Pantallas medianas */
+@media (max-width: 1100px) {
+    body.bodyMain .contenedorInicio {
+        padding: 50px 35px;
+        gap: 30px;
+    }
+
+    body.bodyMain .textoPrincipal h2,
+    body.bodyMain .textoPrincipal span {
+        font-size: clamp(2.3rem, 5vw, 3.5rem);
+    }
+
+    body.bodyMain .cursosPopulares {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+/* Celulares */
+@media (max-width: 650px) {
+    body.bodyMain .contenedorInicio {
+        flex-direction: column;
+        padding: 40px 22px;
+        gap: 30px;
+    }
+
+    body.bodyMain .textoPrincipal,
+    body.bodyMain .imagenPrincipal {
+        width: 100%;
+        flex: auto;
+    }
+
+    body.bodyMain .textoPrincipal h2,
+    body.bodyMain .textoPrincipal span {
+        font-size: clamp(2.2rem, 10vw, 3.2rem);
+    }
+
+    body.bodyMain .textoPrincipal p {
+        font-size: 1rem;
+    }
+
+    body.bodyMain .imagenPrincipal img {
+        max-width: 100%;
+    }
+
+    body.bodyMain .cursosPopularesTitulo {
+        margin: 35px auto 20px;
+        padding: 0 20px;
+        gap: 15px;
+    }
+
+    body.bodyMain .cursosPopularesTitulo h2 {
+        font-size: 24px;
+    }
+
+    body.bodyMain .cursosPopulares {
+        grid-template-columns: minmax(0, 1fr);
+        padding: 0 20px 40px;
+        gap: 20px;
+    }
+
+    body.bodyMain .imagenCurso {
+        height: 190px;
+    }
+}
+
+/* =========================================================
+   COMENTARIOS DE ESTUDIANTES - CARRUSEL CONTINUO
+========================================================= */
+
+body.bodyMain .seccionComentarios {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 15px clamp(24px, 5vw, 80px) 15px;
+    overflow: hidden;
+    /* background: #f7f9fd; */
+}
+
+body.bodyMain .comentariosTitulo {
+    max-width: 1800px;
+    margin: 0 auto 30px;
+}
+
+body.bodyMain .comentariosEtiqueta {
+    display: inline-block;
+    margin-bottom: 10px;
+    color: #1e88e5;
+    font-size: 0.76rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+
+body.bodyMain .comentariosTitulo h2 {
+    margin: 0 0 10px;
+    color: #0d47a1;
+    font-size: clamp(1.7rem, 3vw, 2.4rem);
+    line-height: 1.2;
+}
+
+body.bodyMain .comentariosTitulo p {
+    margin: 0;
+    color: #64748b;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+/* Ventana que oculta las tarjetas fuera de pantalla */
+body.bodyMain .carruselComentarios {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+
+    -webkit-mask-image: linear-gradient(
+        to right,
+        transparent,
+        #000 3%,
+        #000 97%,
+        transparent
+    );
+
+    mask-image: linear-gradient(
+        to right,
+        transparent,
+        #000 3%,
+        #000 97%,
+        transparent
+    );
+}
+
+/* Pista animada */
+body.bodyMain .pistaComentarios {
+    display: flex;
+    align-items: stretch;
+    gap: 22px;
+    width: max-content;
+    padding: 12px 0 24px;
+
+    animation: desplazamientoComentarios 55s linear infinite;
+    will-change: transform;
+}
+
+/* Pausar cuando el cursor entra en el carrusel */
+body.bodyMain .carruselComentarios:hover .pistaComentarios,
+body.bodyMain .carruselComentarios:focus-within .pistaComentarios {
+    animation-play-state: paused;
+}
+
+@keyframes desplazamientoComentarios {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-100%);
+    }
+}
+
+/* Tarjeta individual */
+body.bodyMain .tarjetaComentario {
+    flex: 0 0 340px;
+    width: 340px;
+    min-width: 0;
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+
+    padding: 24px;
+    border: 1px solid #e2e8f0;
+    border-radius: 18px;
+
+    background: #ffffff;
+    box-shadow: 0 8px 25px rgba(18, 0, 99, 0.06);
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease;
+}
+
+body.bodyMain .tarjetaComentario:hover {
+    transform: translateY(-5px);
+    border-color: #1e88e5;
+    box-shadow: 0 15px 35px rgba(18, 0, 99, 0.12);
+}
+
+/* Autor */
+body.bodyMain .comentarioCabecera {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    margin-bottom: 18px;
+}
+
+body.bodyMain .comentarioAvatar {
+    width: 46px;
+    height: 46px;
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 14px;
+    background: #eaf4ff;
+    color: #0d47a1;
+    font-size: 1.2rem;
+    font-weight: 800;
+}
+
+body.bodyMain .comentarioAutor {
+    min-width: 0;
+}
+
+body.bodyMain .comentarioAutor h3 {
+    margin: 0 0 4px;
+    color: #0d47a1;
+    font-size: 0.98rem;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+
+body.bodyMain .comentarioAutor span {
+    color: #64748b;
+    font-size: 0.78rem;
+}
+
+/* Estrellas */
+body.bodyMain .comentarioEstrellas {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    margin-bottom: 16px;
+}
+
+body.bodyMain .comentarioEstrellas span {
+    font-size: 19px;
+    line-height: 1;
+}
+
+body.bodyMain .comentarioEstrellas .estrellaLlena {
+    color: #f5a623;
+}
+
+body.bodyMain .comentarioEstrellas .estrellaVacia {
+    color: #d6deea;
+}
+
+body.bodyMain .comentarioEstrellas strong {
+    margin-left: 7px;
+    color: #0d47a1;
+    font-size: 0.85rem;
+}
+
+/* Texto del comentario */
+body.bodyMain .comentarioTexto {
+    flex: 1;
+    margin: 0 0 22px;
+
+    color: #334155;
+    font-size: 0.94rem;
+    line-height: 1.7;
+
+    overflow-wrap: anywhere;
+    white-space: normal;
+}
+
+/* Curso al que corresponde */
+body.bodyMain .comentarioCurso {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+
+    margin-top: auto;
+    padding: 13px;
+
+    border-radius: 12px;
+    background: #f2f7ff;
+    text-decoration: none;
+
+    transition: background 0.2s ease;
+}
+
+body.bodyMain .comentarioCurso:hover {
+    background: #e1efff;
+}
+
+body.bodyMain .comentarioCursoIcono {
+    width: 35px;
+    height: 35px;
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+    background: #0d47a1;
+    color: #ffffff;
+    font-size: 1.1rem;
+}
+
+body.bodyMain .comentarioCurso > span:last-child {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+body.bodyMain .comentarioCurso small {
+    color: #64748b;
+    font-size: 0.72rem;
+}
+
+body.bodyMain .comentarioCurso strong {
+    color: #0d47a1;
+    font-size: 0.86rem;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+}
+
+/* Estado sin comentarios */
+body.bodyMain .comentariosVacios {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 40px 24px;
+
+    text-align: center;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 18px;
+}
+
+body.bodyMain .comentariosVacios > span {
+    font-size: 2rem;
+}
+
+body.bodyMain .comentariosVacios h3 {
+    color: #0d47a1;
+}
+
+body.bodyMain .comentariosVacios p {
+    color: #64748b;
+    line-height: 1.6;
+}
+
+body.bodyMain .comentariosVacios a {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 12px 20px;
+
+    border-radius: 10px;
+    background: #0d47a1;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+/* Adaptación a celulares */
+@media (max-width: 650px) {
+    body.bodyMain .seccionComentarios {
+        padding: 40px 20px 50px;
+    }
+
+    body.bodyMain .tarjetaComentario {
+        flex-basis: 290px;
+        width: 290px;
+        padding: 20px;
+    }
+
+    body.bodyMain .pistaComentarios {
+        gap: 16px;
+        animation-duration: 45s;
+    }
+}
+
+/* Respetar la preferencia de movimiento reducido */
+@media (prefers-reduced-motion: reduce) {
+    body.bodyMain .pistaComentarios {
+        animation: none;
+        transform: none;
+    }
+
+    body.bodyMain .carruselComentarios {
+        overflow-x: auto;
+        -webkit-mask-image: none;
+        mask-image: none;
+    }
+}
+
+body.bodyMain .comentarioAvatar {
+    width: 46px;
+    height: 46px;
+    flex-shrink: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #eaf4ff;
+}
+
+body.bodyMain .comentarioAvatar img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+/* ========================================
+   SECCIÓN: CÓMO FUNCIONA APRENDOMO
+======================================== */
+
+.comoFunciona {
+    overflow: hidden; 
+}
+
+/* Encabezado */
+
+.comoFuncionaEncabezado {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 15px clamp(24px, 5vw, 80px) 15px;
+    overflow: hidden;
+    /* background: #f7f9fd; */
+}
+
+.comoFuncionaEtiqueta {
+    display: inline-block;
+    margin-bottom: 14px;
+    padding: 8px 15px;
+    border-radius: 30px;
+    background-color: #e8f3ff;
+    color: #1e88e5;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+}
+
+.comoFuncionaEncabezado h2 {
+    margin: 0 0 16px;
+    color: #0d47a1;
+    font-size: 34px;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+.comoFuncionaEncabezado p {
+    margin: 0;
+    color: #687386;
+    font-size: 16px;
+    line-height: 1.7;
+}
+
+/* Contenedor de los tres pasos */
+
+.comoFuncionaPasos {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 28px;
+    max-width: 1150px;
+    margin: 0 auto;
+}
+
+/* Tarjetas */
+
+.pasoAprendizaje {
+    position: relative;
+    padding: 35px 25px;
+    background-color: #ffffff;
+    border: 1px solid #e5edf7;
+    border-radius: 18px;
+    box-shadow: 0 5px 20px rgba(30, 136, 229, 0.05);
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease;
+}
+
+/* Emojis */
+
+.pasoIcono {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 66px;
+    height: 66px;
+    margin: 0 auto 22px;
+    border-radius: 18px;
+    background-color: #e8f3ff;
+    font-size: 30px;
+}
+
+/* Número de cada paso */
+
+.pasoNumero {
+    display: inline-block;
+    margin-bottom: 12px;
+    color: #1e88e5;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+/* Títulos y descripciones */
+
+.pasoAprendizaje h3 {
+    margin: 0 0 12px;
+    color: #202b3c;
+    font-size: 21px;
+    font-weight: 700;
+}
+
+.pasoAprendizaje p {
+    margin: 0;
+    color: #687386;
+    font-size: 15px;
+    line-height: 1.8;
+}
+
+/* Botón */
+
+.comoFuncionaAccion {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.btnComoFunciona {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 14px 25px;
+    border: 2px solid #1e88e5;
+    border-radius: 10px;
+    background-color: #1e88e5;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.btnComoFunciona:hover {
+    background-color: #1565c0;
+    border-color: #1565c0;
+    color: #ffffff;
+    transform: translateY(-2px);
+}
+
+.btnComoFunciona span {
+    font-size: 20px;
+    line-height: 1;
+}
+
+/* ========================================
+   DISEÑO RESPONSIVE
+======================================== */
+
+/* Tablets */
+
+@media (max-width: 900px) {
+    .comoFunciona {
+        padding: 65px 5%;
+    }
+
+    .comoFuncionaPasos {
+        gap: 18px;
+    }
+
+    .pasoAprendizaje {
+        padding: 30px 18px;
+    }
+
+    .comoFuncionaEncabezado h2 {
+        font-size: 30px;
+    }
+
+    .pasoAprendizaje h3 {
+        font-size: 19px;
+    }
+}
+
+/* Celulares */
+
+@media (max-width: 650px) {
+    .comoFunciona {
+        padding: 50px 20px;
+    }
+
+    .comoFuncionaEncabezado {
+        margin-bottom: 35px;
+    }
+
+    .comoFuncionaEncabezado h2 {
+        font-size: 26px;
+    }
+
+    .comoFuncionaEncabezado p {
+        font-size: 14px;
+    }
+
+    .comoFuncionaPasos {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        max-width: 420px;
+    }
+
+    .pasoAprendizaje {
+        padding: 28px 22px;
+    }
+
+    .pasoIcono {
+        width: 58px;
+        height: 58px;
+        margin-bottom: 16px;
+        font-size: 27px;
+    }
+
+    .pasoAprendizaje h3 {
+        font-size: 20px;
+    }
+
+    .pasoAprendizaje p {
+        font-size: 14px;
+    }
+
+    .comoFuncionaAccion {
+        margin-top: 30px;
+    }
+
+    .btnComoFunciona {
+        padding: 13px 22px;
+    }
+}
+
+/* Accesibilidad: reducir animaciones */
+
+@media (prefers-reduced-motion: reduce) {
+    .pasoAprendizaje,
+    .btnComoFunciona {
+        transition: none;
+    }
+
+    .pasoAprendizaje:hover,
+    .btnComoFunciona:hover {
+        transform: none;
+    }
+}
+
+/* ========================================
+   DOCENTES DESTACADOS
+======================================== */
+
+.docentesDestacados {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 75px 6%;
+    /* background-color: #ffffff; */
+}
+
+/* Encabezado */
+
+.docentesEncabezado {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 25px;
+    max-width: 1150px;
+    margin: 0 auto 35px;
+}
+
+.docentesEtiqueta {
+    display: inline-block;
+    margin-bottom: 12px;
+    color: #1e88e5;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 1.4px;
+}
+
+.docentesEncabezado h2 {
+    margin: 0 0 12px;
+    color: #202b3c;
+    font-size: 32px;
+    line-height: 1.3;
+}
+
+.docentesEncabezado p {
+    max-width: 600px;
+    margin: 0;
+    color: #687386;
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+.docentesVerTodos {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+    padding-bottom: 5px;
+    color: #1e88e5;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.docentesVerTodos:hover {
+    color: #1565c0;
+}
+
+.docentesVerTodos span {
+    font-size: 20px;
+}
+
+/* Contenedor de tarjetas */
+
+.docentesLista {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+    max-width: 1150px;
+    margin: 0 auto;
+}
+
+/* Tarjeta individual */
+
+.tarjetaDocente {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+    min-width: 0;
+    padding: 30px 24px;
+    border: 1px solid #e5edf7;
+    border-radius: 18px;
+    background-color: #ffffff;
+    text-align: center;
+    box-shadow: 0 5px 20px rgba(30, 136, 229, 0.05);
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease;
+}
+
+/* Foto de perfil */
+
+.docenteFoto {
+    width: 112px;
+    height: 112px;
+    flex: 0 0 112px;
+    margin-bottom: 18px;
+    overflow: hidden;
+    border: 4px solid #e8f3ff;
+    border-radius: 50%;
+    background-color: #f0f6fd;
+    box-sizing: border-box;
+}
+
+.docenteFoto img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* Rol */
+
+.docenteRol {
+    display: inline-block;
+    margin-bottom: 10px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    background-color: #e8f3ff;
+    color: #1e88e5;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+/* Nombre y descripción */
+
+.tarjetaDocente h3 {
+    margin: 0 0 12px;
+    color: #202b3c;
+    font-size: 20px;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+
+/* Cantidad de cursos */
+
+.docenteCursos {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: auto;
+    margin-bottom: 22px;
+    color: #526176;
+    font-size: 13px;
+}
+
+.docenteCursos span {
+    font-size: 17px;
+}
+
+/* Botón */
+
+.docenteBoton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px 18px;
+    border: 1px solid #1e88e5;
+    border-radius: 9px;
+    background-color: #1e88e5;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.docenteBoton:hover {
+    border-color: #1565c0;
+    background-color: #1565c0;
+    color: #ffffff;
+}
+
+.docenteBoton span {
+    font-size: 18px;
+}
+
+/* Estado sin docentes */
+
+.docentesVacio {
+    max-width: 650px;
+    margin: 0 auto;
+    padding: 45px 20px;
+    border: 1px dashed #cbdff3;
+    border-radius: 16px;
+    background-color: #f7faff;
+    text-align: center;
+}
+
+.docentesVacio > span {
+    font-size: 40px;
+}
+
+.docentesVacio h3 {
+    margin: 15px 0 10px;
+    color: #202b3c;
+    font-size: 20px;
+}
+
+.docentesVacio p {
+    margin: 0;
+    color: #687386;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+/* ========================================
+   DISEÑO RESPONSIVE
+======================================== */
+
+@media (max-width: 900px) {
+    .docentesDestacados {
+        padding: 60px 5%;
+    }
+
+    .docentesLista {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+    }
+
+    .docentesEncabezado h2 {
+        font-size: 29px;
+    }
+
+    .tarjetaDocente {
+        padding: 26px 20px;
+    }
+}
+
+@media (max-width: 600px) {
+    .docentesDestacados {
+        padding: 45px 20px;
+    }
+
+    .docentesEncabezado {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 18px;
+        margin-bottom: 28px;
+    }
+
+    .docentesEncabezado h2 {
+        font-size: 26px;
+    }
+
+    .docentesEncabezado p {
+        font-size: 14px;
+    }
+
+    .docentesLista {
+        grid-template-columns: 1fr;
+        gap: 18px;
+        max-width: 400px;
+    }
+
+    .tarjetaDocente {
+        padding: 28px 22px;
+    }
+
+    .docenteFoto {
+        width: 100px;
+        height: 100px;
+        flex-basis: 100px;
+    }
+
+    .docentesVerTodos {
+        padding-bottom: 0;
+    }
+}
+
+/* Accesibilidad */
+
+@media (prefers-reduced-motion: reduce) {
+    .tarjetaDocente,
+    .docentesVerTodos,
+    .docenteBoton {
+        transition: none;
+    }
+
+    .tarjetaDocente:hover {
+        transform: none;
     }
 }

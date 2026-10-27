@@ -108,6 +108,13 @@ KEY fk_tarea_curso (ID_Curso),
 CONSTRAINT fk_tarea_curso FOREIGN KEY (ID_Curso) REFERENCES cursos (ID_Curso) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+ALTER TABLE tareas
+ADD COLUMN ID_Carpeta INT(11) DEFAULT NULL AFTER ID_Curso,
+ADD KEY fk_tarea_carpeta (ID_Carpeta),
+ADD CONSTRAINT fk_tarea_carpeta
+  FOREIGN KEY (ID_Carpeta) REFERENCES carpetas (ID_Carpeta)
+  ON DELETE SET NULL ON UPDATE CASCADE;
+
 -- 7. Tabla: archivos_tarea
 
 DROP TABLE IF EXISTS archivos_tarea;

@@ -1,35 +1,53 @@
 <?php
-
-// Condicional para iniciar la sesion en caso no este activa.
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// Conexión a la base de datos
 require_once __DIR__ . '/../../PHP conexiones/conexion.php';
 
 $esAdministrador = false;
 $usuario = null;
 
-// Isset encargado de verificar la sessión
 if (isset($_SESSION['Sesion'])) {
     $correo = $_SESSION['Sesion'];
-
     $sql = "SELECT Nombre, Apellido, Rol FROM usuarios WHERE Correo = :correo LIMIT 1";
     $stmt = $pdo->prepare($sql);
     $stmt->execute([':correo' => $correo]);
     $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if ($usuario && $usuario['Rol'] === 'Administrador') {
+    if ($usuario && strtolower(trim($usuario['Rol'])) === 'administrador') {
         $esAdministrador = true;
     }
 }
 
-// Solo administradores pueden acceder
 if (!$esAdministrador) {
     header("Location: ../main.php");
     exit;
 }
+
+$mensaje = '';
+$tipoMsg = '';
+if (isset($_GET['actualizado']) && $_GET['actualizado'] === 'success') {
+    $mensaje = 'Usuario actualizado correctamente.';
+    $tipoMsg = 'ok';
+} elseif (isset($_GET['eliminado']) && $_GET['eliminado'] === 'success') {
+    $mensaje = 'Usuario eliminado correctamente.';
+    $tipoMsg = 'ok';
+} elseif (isset($_GET['error'])) {
+    $errores = [
+        'self'   => 'No puedes eliminarte a ti mismo.',
+        'correo' => 'El correo ya está en uso por otro usuario.',
+        'datos'  => 'Datos incompletos o rol no válido.',
+        'db'     => 'Error en la base de datos.',
+        'id'     => 'ID de usuario no válido.',
+    ];
+    $mensaje = $errores[$_GET['error']] ?? 'Ocurrió un error.';
+    $tipoMsg = 'error';
+}
+
+$stmt = $pdo->query("SELECT ID_Usuario, Nombre, Apellido, Correo, Rol FROM usuarios ORDER BY ID_Usuario ASC");
+$listaUsuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$rolesValidos = ['Administrador', 'Docente', 'Estudiante'];
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -38,139 +56,168 @@ if (!$esAdministrador) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestor de Usuarios - Panel Administrador</title>
     <link rel="stylesheet" href="../../CSS/estilo.css">
+    <link rel="icon" href="../../IMG/Icono.ico">
     <style>
-        /* Estilos críticos integrados para evitar superposiciones por caché */
-        .admin-sidebar {
-            position: fixed !important;
-            top: 90px !important;
-            left: 0 !important;
-            width: 260px !important;
-            height: calc(100vh - 90px) !important;
-            background-color: #ffffff !important;
-            border-right: 1px solid #e2e8f0 !important;
-            z-index: 200 !important;
-            box-shadow: 4px 0 18px rgba(0, 0, 0, 0.06) !important;
-            overflow-y: auto !important;
-            box-sizing: border-box !important;
-            padding: 0 0 20px 0 !important;
-        }
-        .admin-main-content {
-            margin-left: 280px !important; /* Espacio obligatorio para que no se superponga */
-            padding: 40px 30px !important;
-            box-sizing: border-box !important;
-            min-height: 80vh !important;
-        }
-        @media (max-width: 900px) {
-            .admin-sidebar {
-                position: relative !important;
-                top: 0 !important;
-                width: 100% !important;
-                height: auto !important;
-                box-shadow: none !important;
-            }
-            .admin-main-content {
-                margin-left: 0 !important;
-                padding: 20px 15px !important;
-            }
-        }
+        .admin-msg { padding: 12px 16px; border-radius: 8px; margin-bottom: 18px; font-weight: 500; }
+        .admin-msg.ok { background: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7; }
+        .admin-msg.error { background: #ffebee; color: #c62828; border: 1px solid #ef9a9a; }
+        .tabla-usuarios { width: 100%; border-collapse: collapse; background: #fff; box-shadow: 0 4px 12px rgba(0,0,0,.05); border-radius: 12px; overflow: hidden; }
+        .tabla-usuarios th { background: #0d47a1; color: #fff; padding: 12px 14px; text-align: left; font-size: .9rem; }
+        .tabla-usuarios td { padding: 10px 12px; border-bottom: 1px solid #e2e8f0; vertical-align: middle; }
+        .tabla-usuarios tr:hover td { background: #f5f9ff; }
+        .input-editable, .select-rol { width: 100%; padding: 8px 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: .9rem; background: #f8fafc; box-sizing: border-box; }
+        .input-editable:not([readonly]), .select-rol:not([disabled]) { background: #fff; border-color: #1e88e5; outline: none; }
+        .btn-accion { display: inline-block; padding: 7px 14px; border-radius: 6px; font-size: .85rem; font-weight: 600; cursor: pointer; border: none; text-decoration: none; margin: 2px; }
+        .btn-editar { background: #e3f2fd; color: #1565c0; }
+        .btn-editar:hover { background: #bbdefb; }
+        .btn-guardar { background: #2e7d32; color: #fff; }
+        .btn-guardar:hover { background: #1b5e20; }
+        .btn-cancelar-edit { background: #f1f5f9; color: #475569; }
+        .btn-eliminar { background: #ffebee; color: #c62828; }
+        .btn-eliminar:hover { background: #ffcdd2; }
     </style>
 </head>
 <body class="admin-active">
 
-    <!-- Menú superior -->
-    <?php include __DIR__ . '/../menu.php'; ?>
+<?php include __DIR__ . '/../menu.php'; ?>
 
-    <!-- Sidebar fijo del administrador -->
-    <div class="admin-sidebar">
-        <div class="admin-title" style="font-weight:bold; font-size:1.1rem; color:#0d47a1; padding: 22px 16px 18px; text-align:center; border-bottom: 1px solid #e2e8f0; background: linear-gradient(to right, #e3f2fd, #f0f7ff); margin-bottom: 12px;">Panel de Administrador</div>
-        <a class="admin-link" href="estadisticas.php" style="display: flex; align-items: center; width: calc(100% - 24px); margin: 0 12px; padding: 14px 18px; text-decoration: none; color: #334155; font-weight: 500; font-size: 15px; border-radius: 10px;">Estadísticas</a>
-        <a class="admin-link" href="usuarios.php" style="display: flex; align-items: center; width: calc(100% - 24px); margin: 0 12px; padding: 14px 18px; text-decoration: none; color: #ffffff; font-weight: 500; font-size: 15px; border-radius: 10px; background: #1e88e5;">Gestor de usuarios</a>
+<div class="admin-sidebar">
+    <div class="admin-title">Panel de Administrador</div>
+    <a class="admin-link" href="menuAdmin.php">Inicio panel</a>
+    <a class="admin-link" href="estadisticas.php">Estadísticas</a>
+    <a class="admin-link active" href="usuarios.php">Gestor de usuarios</a>
+</div>
+
+<div class="admin-main-content">
+    <h1 style="color:#0d47a1; font-size:26px; margin-bottom:5px;">Gestión de usuarios</h1>
+    <p style="color:#64748b; margin-bottom:20px;">Visualiza, edita o elimina usuarios registrados en el sistema.</p>
+
+    <?php if ($mensaje): ?>
+        <div class="admin-msg <?php echo $tipoMsg; ?>"><?php echo htmlspecialchars($mensaje); ?></div>
+    <?php endif; ?>
+
+    <div style="overflow-x:auto;">
+        <table class="tabla-usuarios">
+            <thead>
+                <tr>
+                    <th style="width:50px;">ID</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Correo</th>
+                    <th style="width:140px;">Rol</th>
+                    <th style="width:160px; text-align:center;">Acciones</th>
+                    <th style="width:90px; text-align:center;">Eliminar</th>
+                </tr>
+            </thead>
+            <tbody>
+            <?php foreach ($listaUsuarios as $u):
+                $id = (int)$u['ID_Usuario'];
+                $nombre = $u['Nombre'] ?? '';
+                $apellido = $u['Apellido'] ?? '';
+                $correoUser = $u['Correo'] ?? '';
+                $rol = $u['Rol'] ?? '';
+            ?>
+                <tr data-id="<?php echo $id; ?>">
+                    <td><?php echo $id; ?></td>
+                    <td>
+                        <form action="actualizarUsuario.php" method="POST" class="form-usuario" id="form-<?php echo $id; ?>">
+                            <input type="hidden" name="ID_Usuario" value="<?php echo $id; ?>">
+                            <input type="text" class="input-editable" name="nombre" value="<?php echo htmlspecialchars($nombre); ?>" readonly required>
+                    </td>
+                    <td>
+                            <input type="text" class="input-editable" name="apellido" value="<?php echo htmlspecialchars($apellido); ?>" readonly required>
+                    </td>
+                    <td>
+                            <input type="email" class="input-editable" name="correo" value="<?php echo htmlspecialchars($correoUser); ?>" readonly required>
+                    </td>
+                    <td>
+                            <select class="select-rol" name="rol" disabled>
+                                <?php foreach ($rolesValidos as $r): ?>
+                                    <option value="<?php echo $r; ?>" <?php echo (strcasecmp($rol, $r) === 0) ? 'selected' : ''; ?>>
+                                        <?php echo $r; ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                    </td>
+                    <td style="text-align:center;">
+                            <button type="button" class="btn-accion btn-editar" onclick="habilitarEdicion(<?php echo $id; ?>)">Editar</button>
+                            <button type="submit" class="btn-accion btn-guardar" style="display:none;">Guardar</button>
+                            <button type="button" class="btn-accion btn-cancelar-edit" style="display:none;" onclick="cancelarEdicion(<?php echo $id; ?>)">Cancelar</button>
+                        </form>
+                    </td>
+                    <td style="text-align:center;">
+                        <a href="eliminarUsuario.php?id=<?php echo $id; ?>"
+                           class="btn-accion btn-eliminar"
+                           onclick="return confirm('¿Eliminar al usuario <?php echo htmlspecialchars(addslashes($nombre . ' ' . $apellido)); ?>? Esta acción no se puede deshacer.');">
+                           Eliminar
+                        </a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
     </div>
+</div>
 
-    <!-- Contenido principal -->
-    <div class="admin-main-content">
-        <h1 style="color: #0d47a1; font-size: 26px; margin-bottom: 5px;">GESTIÓN DE USUARIOS</h1>
-        <p style="color: #64748b; margin-bottom: 20px;">Visualiza, edita los datos o elimina usuarios registrados en el sistema.</p>
-<!-- Estructura en formato de tabla para los usuarios -->
-        <div style="overflow-x: auto;">
-            <table class="tabla-usuarios">
-                <thead>
-                    <tr>
-                        <th style="width: 50px;">Id</th>
-                        <th>Nombre</th>
-                        <th>Apellido</th>
-                        <th>Correo</th>
-                        <th>Rol</th>
-                        <th style="width: 90px; text-align:center;">Editar</th>
-                        <th style="width: 90px; text-align:center;">Eliminar</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    // Consulta para obtener todos los usuarios de la base de datos.
-                    $sql = "SELECT * FROM usuarios";
-                    $stmt = $pdo->query($sql);
-                    $numeroCorrelativo = 1;
+<script>
+const valoresOriginales = {};
 
-                    // while encargado de recorrer los resultados de la consulta y mostrar los datos en la tabla..
+function habilitarEdicion(id) {
+    const tr = document.querySelector('tr[data-id="' + id + '"]');
+    const inputs = tr.querySelectorAll('.input-editable');
+    const select = tr.querySelector('.select-rol');
+    const btnEditar = tr.querySelector('.btn-editar');
+    const btnGuardar = tr.querySelector('.btn-guardar');
+    const btnCancelar = tr.querySelector('.btn-cancelar-edit');
 
-                    while ($mostrar = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                        $id = $mostrar['id'] ?? $mostrar['ID'] ?? $mostrar['ID_Usuario'] ?? '';
-                        $nombre = $mostrar['Nombre'] ?? $mostrar['nombre'] ?? '';
-                        $apellido = $mostrar['Apellido'] ?? $mostrar['apellido'] ?? '';
-                        $correoUser = $mostrar['Correo'] ?? $mostrar['correo'] ?? '';
-                        
-                        // Variable encargada de obtene el rol desde la bd.
-                        $rol = $mostrar['Rol'] ?? $mostrar['rol'] ?? '';
-                        ?>
-                        <form action="actualizarUsuario.php" method="POST">
-                            <tr>
-                                <td><?php echo $numeroCorrelativo; ?></td>
-                                <input type="hidden" name="ID_Usuario" value="<?php echo htmlspecialchars($id); ?>">
-                                
-                                <td><input type="text" class="input-editable" name="nombre" value="<?php echo htmlspecialchars($nombre); ?>" readonly required></td>
-                                <td><input type="text" class="input-editable" name="apellido" value="<?php echo htmlspecialchars($apellido); ?>" readonly required></td>
-                                <td><input type="email" class="input-editable" name="correo" value="<?php echo htmlspecialchars($correoUser); ?>" readonly required></td>
-                                
-                                <!-- Campo de texto que muestra el rol real de la BD -->
-                                <td><input type="text" class="input-editable" name="rol" value="<?php echo htmlspecialchars($rol); ?>" readonly required></td>
+    valoresOriginales[id] = {
+        nombre: inputs[0].value,
+        apellido: inputs[1].value,
+        correo: inputs[2].value,
+        rol: select.value
+    };
 
-                                <td style="text-align: center;">
-                                    <button type="button" class="btn-accion btn-editar" onclick="habilitarEdicion(this)">Editar</button>
-                                    <button type="submit" class="btn-accion btn-guardar" style="display: none;">Guardar</button>
-                                </td>
-                                
-                                <td style="text-align: center;">
-                                    <a href="eliminar_usuario.php?id=<?php echo $id; ?>" class="btn-accion btn-eliminar" onclick="return confirm('¿Estás seguro de eliminar este usuario?');">Eliminar</a>
-                                </td>
-                            </tr>
-                        </form>   
-                    <?php
-                        $numeroCorrelativo++;
-                    }
-                    ?>
-                </tbody>
-            </table>
-        </div>
+    inputs.forEach(i => i.removeAttribute('readonly'));
+    select.removeAttribute('disabled');
 
-    </div>
+    btnEditar.style.display = 'none';
+    btnGuardar.style.display = 'inline-block';
+    btnCancelar.style.display = 'inline-block';
+}
 
-  <!-- Estructura con Jvascript que permite editar los campos por meddio de un boton -->
-   <script>
-   function habilitarEdicion(button) {
-       const tr = button.closest('tr');
-       const inputs = tr.querySelectorAll('.input-editable');
-       const btnGuardar = tr.querySelector('.btn-guardar');
-       
-       inputs.forEach(input => input.removeAttribute('readonly'));
-       
-       button.style.display = 'none';
-       btnGuardar.style.display = 'inline-block';
-   }
-   </script>
+function cancelarEdicion(id) {
+    const tr = document.querySelector('tr[data-id="' + id + '"]');
+    const inputs = tr.querySelectorAll('.input-editable');
+    const select = tr.querySelector('.select-rol');
+    const btnEditar = tr.querySelector('.btn-editar');
+    const btnGuardar = tr.querySelector('.btn-guardar');
+    const btnCancelar = tr.querySelector('.btn-cancelar-edit');
+    const orig = valoresOriginales[id];
 
-    <!-- Footer -->
-    <?php include __DIR__ . '/../footer.php'; ?>
+    if (orig) {
+        inputs[0].value = orig.nombre;
+        inputs[1].value = orig.apellido;
+        inputs[2].value = orig.correo;
+        select.value = orig.rol;
+    }
+
+    inputs.forEach(i => i.setAttribute('readonly', true));
+    select.setAttribute('disabled', true);
+
+    btnEditar.style.display = 'inline-block';
+    btnGuardar.style.display = 'none';
+    btnCancelar.style.display = 'none';
+}
+
+document.querySelectorAll('.form-usuario').forEach(form => {
+    form.addEventListener('submit', function () {
+        const select = this.querySelector('.select-rol');
+        if (select) select.removeAttribute('disabled');
+    });
+});
+</script>
+
+<?php include __DIR__ . '/../footer.php'; ?>
 
 </body>
 </html>

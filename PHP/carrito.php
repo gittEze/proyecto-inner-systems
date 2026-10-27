@@ -15,7 +15,6 @@ $cursosCarrito = [];
 $totalPrecio   = 0;
 
 if (!empty($carritoIds)) {
-    // Placeholders seguros para IN (...)
     $placeholders = implode(',', array_fill(0, count($carritoIds), '?'));
     $sql = "SELECT c.*,
                    ROUND(AVG(v.Puntuacion), 1) AS promedio_valoracion,
@@ -79,78 +78,47 @@ $cantidad = count($cursosCarrito);
                             <img src="../IMG/Curso1.png" alt="">
                         <?php endif; ?>
                     </div>
+
                     <div class="carrito-item-info">
                         <h3><?= htmlspecialchars($curso['Titulo_Curso']) ?></h3>
-                        <p class="text-muted">
-                            <?= htmlspecialchars($curso['Tipo_Curso'] ?? '') ?>
-                            · <?= htmlspecialchars($curso['Nivel_Curso'] ?? '') ?>
-                            · <?= htmlspecialchars($curso['Duracion_Estimada'] ?? '') ?>h
-                        </p>
-                        <?php if ($totalVal > 0): ?>
-                            <p class="carrito-valoracion">
-                                <?php for ($i = 1; $i <= 5; $i++): ?>
-                                    <span class="<?= $i <= $estrellas ? 'estrella-llena' : 'estrella-vacia' ?>">★</span>
-                                <?php endfor; ?>
-                                <?= number_format($promedio, 1) ?> (<?= $totalVal ?>)
-                            </p>
-                        <?php endif; ?>
-                        <p class="carrito-precio">$<?= htmlspecialchars($curso['Precio']) ?></p>
+                        <p><?= htmlspecialchars(mb_strimwidth($curso['Descripcion_Curso'], 0, 120, '...')) ?></p>
+                        
+                        <div class="carrito-meta">
+                            <span>Nivel: <?= htmlspecialchars($curso['Nivel_Curso'] ?? '') ?></span>
+                            <span><?= htmlspecialchars($curso['Duracion_Estimada']) ?> hs</span>
+                            <span class="precio">$<?= number_format($curso['Precio'], 0, ',', '.') ?></span>
+                        </div>
                     </div>
-                    <div class="carrito-item-acciones">
-                        <form action="../PHP conexiones/quitarCarrito.php" method="POST">
-                            <input type="hidden" name="ID_Curso" value="<?= (int)$curso['ID_Curso'] ?>">
-                            <button type="submit" class="btn-elim">Quitar</button>
-                        </form>
-                    </div>
+
+                    <form action="../PHP conexiones/quitarCarrito.php" method="POST" class="form-quitar">
+                        <input type="hidden" name="ID_Curso" value="<?= $curso['ID_Curso'] ?>">
+                        <button type="submit" class="btn-quitar">Quitar</button>
+                    </form>
                 </article>
             <?php endforeach; ?>
         </div>
 
-        <div class="carrito-footer card-widget">
-            <div class="carrito-total">
-                <span>Total estimado:</span>
-                <strong>$<?= number_format($totalPrecio, 0, ',', '.') ?></strong>
-            </div>
-
+        <div class="carrito-resumen">
+            <h2>Resumen</h2>
+            <p>Total a pagar: <strong>$<?= number_format($totalPrecio, 0, ',', '.') ?></strong></p>
+            
+            <!-- Botón de pago (PayPal u otro) -->
             <div id="paypal-button-container"></div>
 
-            <a href="cursos.php" class="btn-cancelar">Seguir explorando</a>
+            <!-- Botones: Finalizar compra + Seguir explorando -->
+            <div class="carrito-acciones">
+                <form action="../PHP conexiones/inscribirCarrito.php" method="POST" class="form-finalizar">
+                    <button type="submit" class="btn-confirmar">Finalizar compra</button>
+                </form>
+                <a href="cursos.php" class="btn-seguir-explorando">
+                    Seguir explorando cursos →
+                </a>
+            </div>
         </div>
     <?php endif; ?>
 </main>
 
 <?php include 'footer.php'; ?>
-
-<script src="https://www.paypal.com/sdk/js?client-id=AeYzyWAkXpGUqHvAmSxNOfK66DfK3fJ-JIGDGsVLFXnpt-8WuhV9-YBGZnRvN_HP_HGrQ7zdXRszlorK&currency=USD"></script>
-
-
-<!-- Estructura del SDK para la funcionalidad de Paypal -->
-<script>
-    paypal.Buttons({
-        createOrder: function(data, actions) {
-            return actions.order.create({
-                purchase_units: [{
-                    amount: {
-                        value: '<?php echo number_format($totalPrecio, 2, '.', ''); ?>'
-                    }
-                }]
-            });
-        },
-        onApprove: function(data, actions) {
-            return actions.order.capture().then(function(details) {
-                // Redirige al backend pasando el ID de la orden de pago
-                window.location.href = '../PHP conexiones/inscribirCarrito.php?paymentID=' + data.orderID;
-            });
-        },
-        onCancel: function (data) {
-            alert('El pago fue cancelado.');
-        },
-        onError: function (err) {
-            console.error(err);
-            alert('Hubo un error al conectar con PayPal.');
-        }
-    }).render('#paypal-button-container');
-</script>
 
 </body>
 </html>
