@@ -67,7 +67,7 @@ if (!isset($_SESSION['Sesion']) || ($rol !== 'docente' && $rol !== 'administrado
 
                 <h2>Precio:</h2> 
                 <div id="Plata">  
-                    <input type="number" id="curplata" name="Precio" min="1000" max="100000" placeholder="Ej: 10000" required> 
+                    <input type="number" id="curplata" name="Precio" min="0" max="100000" placeholder="Ej: 10000" required> 
                     <h2 id="pesos">Pesos</h2>
                 </div> 
 
