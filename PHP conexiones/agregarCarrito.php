@@ -35,10 +35,11 @@ if (!in_array($idCurso, $_SESSION['carrito'], true)) {
     $_SESSION['carrito'][] = $idCurso;
 }
 
-// Redirigir al carrito o de vuelta a cursos
+// Redirigir
 $destino = isset($_POST['redirigir']) && $_POST['redirigir'] === 'cursos'
     ? '../PHP/cursos.php'
     : '../PHP/carrito.php';
 
 header("Location: {$destino}");
 exit();
+?>

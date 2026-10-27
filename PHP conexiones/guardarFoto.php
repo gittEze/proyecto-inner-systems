@@ -1,7 +1,6 @@
 <?php
-
 session_start();
-require ('conexion.php');
+require_once 'conexion.php';
 
 // Verifica que exista una sesión iniciada
 if (!isset($_SESSION['Sesion'])) {
@@ -11,43 +10,51 @@ if (!isset($_SESSION['Sesion'])) {
 
 $correo = $_SESSION['Sesion'];
 
-// Consulta que permite obtener el ID del usuario actual
-$sql = "SELECT ID_Usuario FROM usuario WHERE Correo = :correo";
-
+// Obtener el ID del usuario actual (tabla correcta: usuarios)
+$sql = "SELECT ID_Usuario FROM usuarios WHERE Correo = :correo";
 $consulta = $pdo->prepare($sql);
 $consulta->execute([':correo' => $correo]);
-
 $usuario = $consulta->fetch(PDO::FETCH_ASSOC);
 
-
-if (isset($_FILES['fotoPerfil']) && $_FILES['fotoPerfil']['error'] === 0) {
-
-    // Nombre de la imagen
-    $nombre_imagen = time() . "-" . $_FILES['fotoPerfil']['name'];
-
-    // Ubicación temporal de la imagen
-    $tmp = $_FILES['fotoPerfil']['tmp_name'];
-
-    // Ruta donde se guardará la imagen
-    $ruta_destino = __DIR__ . "/../IMG/perfiles/" . $nombre_imagen;
-
-    // Guarda la imagen en la carpeta
-    move_uploaded_file($tmp, $ruta_destino);
-
-
-    // Guarda el nombre de la imagen en la base de datos
-    $sql = "UPDATE usuarios SET Foto_Perfil = :Foto_Perfil WHERE ID_Usuario = :ID_Usuario";
-
-    $consulta = $pdo->prepare($sql);
-
-    $consulta->bindParam(':Foto_Perfil', $nombre_imagen, PDO::PARAM_STR);
-    $consulta->bindParam(':ID_Usuario', $usuario['ID_Usuario'], PDO::PARAM_INT);
-
-    $consulta->execute();
+if (!$usuario) {
+    header("Location: ../PHP/login.php");
+    exit();
 }
 
-// Luego de cambiar la foto, vuelve al perfil
+if (isset($_FILES['fotoPerfil']) && $_FILES['fotoPerfil']['error'] === UPLOAD_ERR_OK) {
+
+    $archivo = $_FILES['fotoPerfil'];
+    $extension = strtolower(pathinfo($archivo['name'], PATHINFO_EXTENSION));
+    $permitidas = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
+
+    if (!in_array($extension, $permitidas)) {
+        header("Location: ../PHP/perfil.php?error=formato");
+        exit();
+    }
+
+    // Nombre único
+    $nombre_imagen = time() . "-" . bin2hex(random_bytes(4)) . "." . $extension;
+
+    // Ruta de destino
+    $carpeta = __DIR__ . "/../IMG/perfiles/";
+    if (!is_dir($carpeta)) {
+        mkdir($carpeta, 0755, true);
+    }
+
+    $ruta_destino = $carpeta . $nombre_imagen;
+
+    if (move_uploaded_file($archivo['tmp_name'], $ruta_destino)) {
+        // Actualizar en la base de datos
+        $sql = "UPDATE usuarios SET Foto_Perfil = :Foto_Perfil WHERE ID_Usuario = :ID_Usuario";
+        $consulta = $pdo->prepare($sql);
+        $consulta->execute([
+            ':Foto_Perfil' => $nombre_imagen,
+            ':ID_Usuario'  => $usuario['ID_Usuario']
+        ]);
+    }
+}
+
+// Volver al perfil
 header("Location: ../PHP/perfil.php");
 exit();
-
 ?>

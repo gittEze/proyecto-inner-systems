@@ -23,3 +23,4 @@ if (isset($_SESSION['carrito']) && is_array($_SESSION['carrito'])) {
 
 header('Location: ../PHP/carrito.php');
 exit();
+?>
