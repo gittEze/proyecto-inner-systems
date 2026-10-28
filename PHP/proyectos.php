@@ -68,7 +68,7 @@ if ($idProyectoVer > 0) {
         <?php if ($proyectoDetalle): ?>
             <!-- Vista detalle -->
             <section class="proyecto-detalle">
-                <a href="proyectos.php" class="btn-cancelar" style="display: inline-block; margin-bottom: 15px;">← Volver al listado</a>
+                <a href="proyectos.php" class="btn-volver-listado">← Volver al listado</a>
 
                 <article class="card-proyecto card-proyecto-detalle">
                     <div class="proyecto-portada">
@@ -97,15 +97,21 @@ if ($idProyectoVer > 0) {
                             <?= nl2br(htmlspecialchars($proyectoDetalle['Descripcion'] ?? 'Sin descripción.')) ?>
                         </div>
 
-                        <?php if (!empty($proyectoDetalle['Archivo_URL'])): ?>
-                            <a href="../PHP/Subidas/proyectos/<?= rawurlencode(basename($proyectoDetalle['Archivo_URL'])) ?>" class="btn-confirmar" target="_blank" rel="noopener noreferrer" style="display:inline-block; margin-top:15px;" >
-                                📂 Ver proyecto
-                            </a>
-                        <?php endif; ?>
+                        <div class="proyecto-acciones">
+                            <?php if (!empty($proyectoDetalle['Archivo_URL'])): ?>
+                                <a href="../PHP/Subidas/proyectos/<?= rawurlencode(basename($proyectoDetalle['Archivo_URL'])) ?>"
+                                class="btn-confirmar"
+                                target="_blank"
+                                rel="noopener noreferrer">
+                                    📂 Ver proyecto
+                                </a>
+                            <?php endif; ?>
 
-                        <a href="cursos.php#modal-<?= (int)$proyectoDetalle['ID_Curso'] ?>" class="btn-confirmar" style="display:inline-block; margin-top:15px;" >
-                            🎓 Ir al curso del proyecto
-                        </a>
+                            <a href="cursos.php#modal-<?= (int)$proyectoDetalle['ID_Curso'] ?>"
+                            class="btn-confirmar">
+                                🎓 Ir al curso del proyecto
+                            </a>
+                        </div>
                     </div>
                 </article>
             </section>

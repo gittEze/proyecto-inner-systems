@@ -2,6 +2,8 @@
 session_start();
 require_once '../PHP conexiones/conexion.php';
 
+$tieneSesion = isset($_SESSION['Sesion']) && isset($_SESSION['ID_Usuario']);
+
 // Obtener los 4 cursos mejor valorados
 $sqlPopulares = "
     SELECT
@@ -279,8 +281,14 @@ $docentesDestacados = $stmtDocentes->fetchAll(PDO::FETCH_ASSOC);
 
                                     <a
                                         class="comentarioCurso"
-                                        href="vercursos.php?ID_Curso=<?= (int) $comentario['ID_Curso'] ?>&tab=valoraciones"
-                                        title="Ver las valoraciones de este curso"
+                                        href="<?= $tieneSesion
+                                            ? 'vercursos.php?ID_Curso=' . (int) $comentario['ID_Curso'] . '&tab=valoraciones'
+                                            : 'login.php'
+                                        ?>"
+                                        title="<?= $tieneSesion
+                                            ? 'Ver las valoraciones de este curso'
+                                            : 'Iniciá sesión para ver el curso'
+                                        ?>"
                                     >
                                         <span class="comentarioCursoIcono">↗</span>
 
