@@ -1,6 +1,30 @@
 <?php
 
 require ('conexion.php');
+function validarCedula($cedula) {
+    // Quitar puntos y guiones
+    $cedula = trim($cedula);
+
+    // Comprobar que tenga entre 7 y 8 números
+    if (!ctype_digit($cedula) || strlen($cedula) < 7 || strlen($cedula) > 8) {
+        return false;
+    }
+
+    // Completar con ceros a la izquierda
+    $cedula = str_pad($cedula, 8, '0', STR_PAD_LEFT);
+
+    $pesos = [2, 9, 8, 7, 6, 3, 4];
+    $suma = 0;
+
+    for ($i = 0; $i < 7; $i++) {
+        $suma += (int)$cedula[$i] * $pesos[$i];
+    }
+
+    $digito = (10 - ($suma % 10)) % 10;
+
+    return $digito == (int)$cedula[7];
+}
+
 
 // Validación para espacios de los datos insertados por medio de trim.
 $nombre = trim($_POST['Nombre'] ?? '');
@@ -24,6 +48,12 @@ if(!is_numeric($cedula) || !is_numeric($telefono)){
     header("Location: ../PHP/login.php?pagina=register&error=formato_invalido");
     exit();
 }
+
+if (!validarCedula($cedula)) {
+    header("Location: ../PHP/login.php?pagina=register&error=cedula_invalida");
+    exit();
+}
+
 
 // Saneamiento de correo
 $correo_saneado = filter_var($correo, FILTER_SANITIZE_EMAIL);

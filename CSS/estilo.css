@@ -5499,3 +5499,35 @@ body.bodyMain .comentarioAvatar img {
 .encabezado-entrega h3 {
     margin: 0;
 }
+
+.campoContrasena {
+    position: relative;
+}
+
+.campoContrasena input {
+    padding-right: 45px;
+}
+
+.btnVerContrasena {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    width: 28px;
+    height: 28px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btnVerContrasena img {
+    width: 22px;
+    height: 22px;
+}
+
+.btnVerContrasena:hover {
+    transform: translateY(-50%) scale(1.1);
+}
