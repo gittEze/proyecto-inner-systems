@@ -14,7 +14,7 @@ if (!isset($_SESSION['Sesion']) || ($rol !== 'docente' && $rol !== 'administrado
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crear Curso - Aprendomo</title>
+    <title>Crear Curso | Aprendomo</title>
     <link rel="stylesheet" href="../CSS/animaciones.css">
     <link rel="stylesheet" href="../CSS/estilo.css">
     <link rel="icon" href="../IMG/Icono.ico">
