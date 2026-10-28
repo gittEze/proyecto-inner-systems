@@ -25,7 +25,7 @@
 
                 <?php if ($envio == "login") { ?>
 
-                    <title>Iniciar sesión - Aprendomo</title>
+                    <title>Iniciar sesión | Aprendomo</title>
 
                 <!-- Condicional que evalua si existe el parámetro exito en el método GET y si concuerda con lo dado en "conslogin" -->
                 <?php  if (isset($_GET['exito']) && $_GET['exito'] == 1) { ?>
@@ -66,7 +66,7 @@
 
                 <?php } elseif ($envio == "register") { ?>
 
-                    <title>Registro - Aprendomo</title>
+                    <title>Registro | Aprendomo</title>
                     <h2>Formulario de Registro</h2>
 
                     <!-- Cartel/Mensaje flotante si el correo ya existe o faltan campos -->

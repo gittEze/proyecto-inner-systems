@@ -102,13 +102,16 @@ $cantidad = count($cursosCarrito);
             <h2>Resumen</h2>
             <p>Total a pagar: <strong>$<?= number_format($totalPrecio, 0, ',', '.') ?></strong></p>
             
-            <!-- Botón de pago (PayPal u otro) -->
-            <div id="paypal-button-container"></div>
+            <?php if ($totalPrecio > 0): ?>
+                <!-- Botón de pago de PayPal si hay costo -->
+                <div id="paypal-button-container"></div>
+            <?php endif; ?>
 
-            <!-- Botones: Finalizar compra + Seguir explorando -->
             <div class="carrito-acciones">
                 <form action="../PHP conexiones/inscribirCarrito.php" method="POST" class="form-finalizar">
-                    <button type="submit" class="btn-confirmar">Finalizar compra</button>
+                    <button type="submit" class="btn-confirmar" style="background:#444;">
+                        <?= $totalPrecio > 0 ? 'Finalizar compra (Inscripción directa)' : 'Inscribirse gratis al carrito' ?>
+                    </button>
                 </form>
                 <a href="cursos.php" class="btn-seguir-explorando">
                     Seguir explorando cursos →
@@ -119,6 +122,31 @@ $cantidad = count($cursosCarrito);
 </main>
 
 <?php include 'footer.php'; ?>
+
+<?php if ($totalPrecio > 0): ?>
+    <!-- SDK de JavaScript de PayPal con tu Client ID -->
+    <script src="https://www.paypal.com/sdk/js?client-id=BAAqOpzuTQECH3Aw2j_Q0MM9gNQIkhNZ93folDgVlvFmwlZonAz1gj_NK7-x15H8vNX5Pt71Pqmhf_VSx8&currency=USD"></script>
+    <script>
+        if (document.getElementById('paypal-button-container')) {
+            paypal.Buttons({
+                createOrder: function(data, actions) {
+                    return actions.order.create({
+                        purchase_units: [{
+                            amount: {
+                                value: '<?= $totalPrecio ?>'
+                            }
+                        }]
+                    });
+                },
+                onApprove: function(data, actions) {
+                    return actions.order.capture().then(function(details) {
+                        window.location.href = '../PHP conexiones/inscribirCarrito.php?paymentID=' + data.orderID;
+                    });
+                }
+            }).render('#paypal-button-container');
+        }
+    </script>
+<?php endif; ?>
 
 </body>
 </html>

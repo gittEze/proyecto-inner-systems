@@ -880,6 +880,19 @@ select {
     font-size: 1.1rem;
 }
 
+.precio-gratis-badge {
+    color: #008531;
+    font-weight: bold;
+}
+
+.btn-inscribir-gratis {
+    background-color: #009436 !important;
+}
+
+.btn-inscribir-gratis:hover {
+    background-color: #005a21 !important;
+}
+
 .grid-cursos {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -5008,4 +5021,31 @@ body.bodyMain .comentarioAvatar img {
     .tarjetaDocente:hover {
         transform: none;
     }
+}
+
+
+.no-cursos {
+    max-width: 1080px;
+    margin: 25px auto;
+    padding: 18px 22px;
+    border: 1px solid #d5e8fa;
+    border-left: 4px solid #2189e8;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.92);
+    color: #24466b;
+    font-family: 'Poppins', Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.8;
+    box-shadow: 0 3px 10px rgba(18, 75, 165, 0.07);
+}
+
+.no-cursos::before {
+    content: "ⓘ";
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+    color: #2189e8;
+    font-size: 17px;
+    font-weight: bold;
 }

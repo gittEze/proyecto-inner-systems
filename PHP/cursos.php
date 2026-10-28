@@ -2,18 +2,6 @@
 session_start();
 require_once '../PHP conexiones/conexion.php';
 
-// Cursos con promedio y cantidad de valoraciones
-// $sql = "SELECT c.*,
-//                ROUND(AVG(v.Puntuacion), 1) AS promedio_valoracion,
-//                COUNT(v.ID_Valoracion) AS total_valoraciones
-//         FROM cursos c
-//         LEFT JOIN valoraciones v ON v.ID_Curso = c.ID_Curso
-//         GROUP BY c.ID_Curso
-//         ORDER BY c.ID_Curso DESC";
-// $stmt = $pdo->prepare($sql);
-// $stmt->execute();
-// $cursos = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
 // Término de búsqueda recibido desde el buscador
 $busqueda = trim($_GET['buscar'] ?? '');
 
@@ -61,7 +49,7 @@ $acesso = !empty($rolper) && ($rolper === 'docente' || $rolper === 'administrado
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aprendomo - Cursos</title>
+    <title>Cursos | Aprendomo</title>
     
     <link rel="stylesheet" href="../CSS/animaciones.css">
     <link rel="stylesheet" href="../CSS/estilo.css">
@@ -71,21 +59,23 @@ $acesso = !empty($rolper) && ($rolper === 'docente' || $rolper === 'administrado
 
     <?php include 'menu.php'; ?>
 
-    <main>
-        <h1 class="h1cur"> Cursos </h1>
-         
-        <?php if ($acesso): ?>
-        <div id="Crearbot">
-            <a href="crear.php">
-                <button id="envcur" type="button"> Crear Curso</button>
-            </a>
-        </div>
-        <?php endif; ?>
+    <main class="main-cursos">
+        <div class="cabecera-cursos">
+            <h1 class="h1cur">Cursos</h1>
+             
+            <?php if ($acesso): ?>
+            <div id="Crearbot">
+                <a href="crear.php">
+                    <button id="envcur" type="button">Crear Curso</button>
+                </a>
+            </div>
+            <?php endif; ?>
 
-        <div class="buscadoreishon">
-            <form action="cursos.php" method="GET">
-                <input class="buscador2" type="search" name="buscar" placeholder="Buscar cursos por nombre o categoría..." value="<?php echo htmlspecialchars($busqueda, ENT_QUOTES, 'UTF-8'); ?>" aria-label="Buscar cursos">
-            </form>
+            <div class="buscadoreishon">
+                <form action="cursos.php" method="GET">
+                    <input class="buscador2" type="search" name="buscar" placeholder="Buscar cursos por nombre o categoría..." value="<?php echo htmlspecialchars($busqueda, ENT_QUOTES, 'UTF-8'); ?>" aria-label="Buscar cursos">
+                </form>
+            </div>
         </div>
 
         <div class="contenedorCursos">
@@ -143,15 +133,17 @@ $acesso = !empty($rolper) && ($rolper === 'docente' || $rolper === 'administrado
                                     
                                 <div class="dato-item precio-box">
                                     <span class="label">Precio</span>
-                                    <span class="valor-precio">$<?php echo htmlspecialchars($curso['Precio']); ?></span>
+                                    <span class="valor-precio">
+                                        <?= $curso['Precio'] == 0 ? 'GRATIS' : '$' . htmlspecialchars($curso['Precio']) ?>
+                                    </span>
                                 </div>
                             </div>
                         </div>
                     </a>
 
-                    <!-- Modal -->
+                    <!-- Modal del Curso -->
                     <div id="modal-<?= $curso['ID_Curso'] ?>" class="modal-overlay">
-                        <div class="modal-box">
+                        <div class="modal-box <?= $curso['Precio'] == 0 ? 'modal-box-gratis' : 'modal-box-pago' ?>">
                             <h2>Confirmar Inscripción</h2>
                             
                             <div class="modal-detalles">
@@ -159,7 +151,11 @@ $acesso = !empty($rolper) && ($rolper === 'docente' || $rolper === 'administrado
                                 <p><strong>Categoría:</strong> <?php echo htmlspecialchars($curso['Tipo_Curso']); ?></p>
                                 <p><strong>Nivel:</strong> <?php echo htmlspecialchars($curso['Nivel_Curso'] ?? ''); ?></p>
                                 <p><strong>Duración:</strong> <?php echo htmlspecialchars($curso['Duracion_Estimada']); ?> hs</p>
-                                <p><strong>Precio:</strong> $<?php echo htmlspecialchars($curso['Precio']); ?></p>
+                                <p><strong>Precio:</strong> 
+                                    <span class="<?= $curso['Precio'] == 0 ? 'precio-gratis-badge' : 'precio-pago-badge' ?>">
+                                        <?= $curso['Precio'] == 0 ? '¡GRATIS!' : '$' . htmlspecialchars($curso['Precio']) ?>
+                                    </span>
+                                </p>
                                 <p><strong>Valoración:</strong>
                                     <?php if ($totalCard > 0): ?>
                                         <?php for ($i = 1; $i <= 5; $i++): ?>
@@ -177,20 +173,28 @@ $acesso = !empty($rolper) && ($rolper === 'docente' || $rolper === 'administrado
 
                             <div class="modal-acciones">
                                 <?php if (isset($_SESSION['Sesion'])): ?>
-                                    <form action="../PHP conexiones/agregarCarrito.php" method="POST">
-                                        <input type="hidden" name="ID_Curso" value="<?= $curso['ID_Curso'] ?>">
-                                        <button type="submit" class="btn-confirmar">Agregar al carrito</button>
-                                    </form>
+                                    
+                                    <?php if ($curso['Precio'] > 0): ?>
+                                        <!-- Si el curso tiene costo -->
+                                        <form action="../PHP conexiones/agregarCarrito.php" method="POST">
+                                            <input type="hidden" name="ID_Curso" value="<?= $curso['ID_Curso'] ?>">
+                                            <button type="submit" class="btn-confirmar">Agregar al carrito</button>
+                                        </form>
 
-                                    <form action="../PHP conexiones/inscripcion.php" method="POST">
-                                        <input type="hidden" name="ID_Curso" value="<?= $curso['ID_Curso'] ?>">
-                                        <button type="submit" class="btn-confirmar" style="background:#0d47a1;">Inscribirme ahora</button>
-                                    </form>
+                                        <!-- Botón de PayPal para compra individual -->
+                                        <div id="paypal-button-curso-<?= $curso['ID_Curso'] ?>" style="margin-top: 10px; width: 100%;"></div>
+                                    <?php else: ?>
+                                        <!-- Si el curso es gratuito -->
+                                        <form action="../PHP conexiones/inscripcion.php" method="POST">
+                                            <input type="hidden" name="ID_Curso" value="<?= $curso['ID_Curso'] ?>">
+                                            <button type="submit" class="btn-confirmar btn-inscribir-gratis">Inscribirme</button>
+                                        </form>
+                                    <?php endif; ?>
+
                                 <?php else: ?>
                                     <a href="login.php" class="btn-confirmar">Inicia sesión para inscribirte</a>
                                 <?php endif; ?>
                                 
-                                <!-- Solo administradores pueden eliminar (normalizado) -->
                                 <?php if (isset($_SESSION['Rol']) && strtolower(trim($_SESSION['Rol'])) === 'administrador'): ?>
                                     <form action="../PHP conexiones/eliminarcurso.php" method="POST" onsubmit="return confirm('¿Está seguro de eliminar este curso?');">
                                         <input type="hidden" name="ID_Curso" value="<?= $curso['ID_Curso'] ?>">
@@ -219,6 +223,35 @@ $acesso = !empty($rolper) && ($rolper === 'docente' || $rolper === 'administrado
 
     <?php include 'footer.php'; ?>
 
+    <!-- SDK de JavaScript de PayPal con tu Client ID -->
+    <script src="https://www.paypal.com/sdk/js?client-id=BAAqOpzuTQECH3Aw2j_Q0MM9gNQIkhNZ93folDgVlvFmwlZonAz1gj_NK7-x15H8vNX5Pt71Pqmhf_VSx8&currency=USD"></script>
+    <script src="../JS/Botones.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            <?php foreach ($cursos as $curso): ?>
+                <?php if ($curso['Precio'] > 0): ?>
+                    if (document.getElementById("paypal-button-curso-<?= $curso['ID_Curso'] ?>")) {
+                        paypal.Buttons({
+                            createOrder: function(data, actions) {
+                                return actions.order.create({
+                                    purchase_units: [{
+                                        amount: {
+                                            value: '<?= $curso['Precio'] ?>'
+                                        }
+                                    }]
+                                });
+                            },
+                            onApprove: function(data, actions) {
+                                return actions.order.capture().then(function(details) {
+                                    window.location.href = '../PHP conexiones/inscribirCursoIndividual.php?ID_Curso=<?= $curso['ID_Curso'] ?>&paymentID=' + data.orderID;
+                                });
+                            }
+                        }).render('#paypal-button-curso-<?= $curso['ID_Curso'] ?>');
+                    }
+                <?php endif; ?>
+            <?php endforeach; ?>
+        });
+    </script>
 </body>
-<script src="../JS/Botones.js"></script>
 </html>
