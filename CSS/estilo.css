@@ -1,7 +1,3 @@
-/* ==========================================================================
-1. REGISTRO Y REGLAS GENERALES / RESET
-========================================================================== */
-
 * {
     font-family: Ubuntu, sans-serif;
     font-size: 15px;
@@ -43,10 +39,6 @@ select {
     box-sizing: border-box;
 }
 
-/* ==========================================================================
-2. COMPONENTES GLOBALES (Botones y Animaciones)
-========================================================================== */
-
 .logo:hover {
     animation: pulse 1s ease-in-out infinite;
 }
@@ -81,10 +73,6 @@ select {
     background-color: #1e88e5;
     color: white;
 }
-
-/* ==========================================================================
-3. NAVEGACIÓN PRINCIPAL / HEADER / MENÚ DE USUARIO
-========================================================================== */
 
 .top-nav {
     background-color: #1e293b;
@@ -300,14 +288,10 @@ select {
     animation: levitateUpAndDown 2.5s ease-in-out infinite;
 }
 
-/* ==========================================================================
-4. SECCIÓN INICIO / LANDING PAGE
-========================================================================== */
-
 .contenedorInicio {
     width: 100%;
     padding: 80px 0;
-    background: linear-gradient(to left, #1e88e5, #0d47a1);
+    background-color: #1e88e5;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -364,7 +348,7 @@ select {
     color: white;
     border: 2px solid white;
     border-radius: 8px;
-    background: linear-gradient(to right, #1e88e5, #115ccc);
+    background-color: #1e88e5;
     padding: 10px 15px;
     text-decoration: none;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
@@ -453,10 +437,6 @@ select {
     line-height: 1.5;
     margin-bottom: 15px;
 }
-
-/* ==========================================================================
-5. SECCIÓN PERFIL DE USUARIO
-========================================================================== */
 
 .perfilMain {
     width: 100%;
@@ -575,7 +555,6 @@ select {
     color: white;
 }
 
-/* Tareas Pendientes en Perfil */
 .tareasPendientes {
     flex: 1.5;
     background-color: #5bb8ff;
@@ -711,7 +690,7 @@ select {
 .botonMisCursos a {
     display: inline-block;
     color: white;
-    background: linear-gradient(to right, #1e88e5, #0d47a1);
+    background-color: #1e88e5;
     padding: 14px 35px;
     border-radius: 50px;
     text-decoration: none;
@@ -728,10 +707,6 @@ select {
     border-color: #1e88e5;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.20);
 }
-
-/* ==========================================================================
-6. VISTAS GENERALES DE CURSOS
-========================================================================== */
 
 .h1cur {
     font-size: 30px;
@@ -930,10 +905,6 @@ select {
     margin-bottom: 8px;
     color: #1e1e3b;
 }
-
-/* ==========================================================================
-7. SISTEMA LMS
-========================================================================== */
 
 .lms-container {
     display: grid;
@@ -1134,10 +1105,6 @@ details.desplegable-miembros summary {
     color: #94a3b8;
     font-size: 0.88rem;
 }
-
-/* ==========================================================================
-8. CREACIÓN DE CURSOS
-========================================================================== */
 
 #Crearbot {
     display: flex;
@@ -1454,6 +1421,16 @@ details.desplegable-miembros summary {
     align-items: center;
 }
 
+.acciones-profesor button.btn-confirmar {
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: normal;
+    cursor: pointer;
+    border: none;
+    appearance: none;
+    -webkit-appearance: none;
+}
 
 .acciones-profesor .btn-confirmar {
     display: inline-flex;
@@ -1475,10 +1452,6 @@ details.desplegable-miembros summary {
     transform: translateY(-1px);
 }
 
-/* ==========================================================================
-9. VENTANAS MODALES
-========================================================================== */
-
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -1496,12 +1469,16 @@ details.desplegable-miembros summary {
     display: flex;
 }
 
+
 .modal-box {
     background: #ffffff;
     padding: 30px;
     border-radius: 12px;
+    width: min(450px, calc(100% - 32px));
     max-width: 450px;
-    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-sizing: border-box;
     color: #333333;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
     text-align: left;
@@ -1511,11 +1488,13 @@ details.desplegable-miembros summary {
     margin-top: 0;
     color: #1d4ed8;
     font-size: 1.4rem;
+    overflow-wrap: anywhere;
 }
 
 .modal-detalles p {
     margin: 8px 0;
     font-size: 0.95rem;
+    overflow-wrap: anywhere;
 }
 
 .modal-desc {
@@ -1526,54 +1505,95 @@ details.desplegable-miembros summary {
 
 .modal-acciones {
     margin-top: 20px;
-    display: flex;
-    gap: 15px;
-    align-items: center;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    align-items: stretch;
+    width: 100%;
+    box-sizing: border-box;
 }
 
-.btn-confirmar {
+.modal-acciones form {
+    display: flex;
+    min-width: 0;
+    width: 100%;
+    margin: 0;
+}
+
+.modal-acciones .btn-confirmar,
+.modal-acciones .btn-elim,
+.modal-acciones .btn-cancelar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-width: 0;
+    min-height: 44px;
+    box-sizing: border-box;
+    padding: 10px 12px;
+    border-radius: 6px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+}
+
+.modal-acciones .btn-confirmar {
     background-color: #2563eb;
     color: white;
     border: none;
-    padding: 10px 20px;
-    border-radius: 6px;
-    font-weight: bold;
     cursor: pointer;
-    text-decoration: none; 
 }
 
-.btn-confirmar:hover {
+.modal-acciones .btn-confirmar:hover {
     background-color: #1d4ed8;
 }
 
-.btn-cancelar {
+.modal-acciones .btn-cancelar {
     color: #dc2626;
-    text-decoration: none;
-    font-weight: bold;
-    padding: 10px 15px;
-}
-
-.btn-cancelar:hover {
-    text-decoration: underline;
-}
-
-.btn-elim {
-    background-color: #eb2525;
-    color: white;
+    background: transparent;
     border: none;
-    padding: 10px 20px;
-    border-radius: 6px;
-    font-weight: bold;
     cursor: pointer;
 }
 
-.btn-elim:hover {
+.modal-acciones .btn-cancelar:hover {
+    text-decoration: underline;
+}
+
+.modal-acciones .btn-elim {
+    background-color: #eb2525;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.modal-acciones .btn-elim:hover {
     background-color: red;
 }
 
-/* ==========================================================================
-10. LOGIN Y RECUPERACIÓN DE CONTRASEÑA
-========================================================================== */
+.modal-acciones > div[id^="paypal-button-curso-"] {
+    width: 100% !important;
+    min-width: 0;
+    max-width: 100%;
+    margin-top: 0 !important;
+    overflow: hidden;
+}
+
+.modal-acciones > div[id^="paypal-button-curso-"] iframe {
+    max-width: 100% !important;
+}
+
+@media (max-width: 480px) {
+    .modal-box {
+        padding: 20px;
+    }
+
+    .modal-acciones {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 10px;
+    }
+}
+
 
 .bodyLogin {
     background-image: url("../IMG/background2.png");
@@ -1586,7 +1606,7 @@ details.desplegable-miembros summary {
     height: calc(100% + 50px);
     margin: 40px auto;
     padding: 20px;
-    background: linear-gradient(#1e88e5, #0d47a1);
+    background-color: #1e88e5;
     border-radius: 10px;
 }
 
@@ -1932,9 +1952,6 @@ details.desplegable-miembros summary {
     text-align: center;
     font-size: 0.95rem;
 }
-/* ==========================================================================
-11. MANUAL DE USUARIO
-========================================================================== */
 
 .manualUsuario {
     margin: 0;
@@ -1992,10 +2009,6 @@ details.desplegable-miembros summary {
     border-radius: 7px;
 }
 
-/* ==========================================================================
-12. PIE DE PÁGINA (FOOTER)
-========================================================================== */
-
 .footerMain {
     flex-shrink: 0;
     margin-top: auto;
@@ -2006,7 +2019,7 @@ details.desplegable-miembros summary {
     align-items: center;
     flex-wrap: wrap;
     padding: 20px 10px;
-    background: linear-gradient(#1e88e5, #0d47a1);
+    background-color: #1e88e5;
     position: relative;
     z-index: 50;
 }
@@ -2088,15 +2101,12 @@ details.desplegable-miembros summary {
     margin: 0;
 }
 
-/* Margen superior para el contenedor principal de los archivos */
 .lista-recursos {
     display: flex;
     flex-direction: column;
     gap: 15px;                 /* Espacio uniforme entre cada archivo y carpeta */
     margin-top: 10px;
 }
-
-/* VALORACIONES */
 
 .resumen-valoraciones {
     margin-bottom: 20px;
@@ -2298,10 +2308,6 @@ details.desplegable-miembros summary {
     font-style: italic;
 }
 
-/* ==========================================================================
-13. PANEL DE ADMINISTRACIÓN Y GESTOR DE USUARIOS
-========================================================================== */
-
 .admin-sidebar {
     display: flex;
     flex-direction: column;
@@ -2359,7 +2365,6 @@ details.desplegable-miembros summary {
     box-shadow: 0 4px 12px rgba(30, 136, 229, 0.25);
 }
 
-/* Contenido Principal Administrador */
 .admin-main-content {
     margin-left: 280px !important;
     padding: 30px !important;
@@ -2374,7 +2379,6 @@ body.admin-active .footerMain {
     transition: margin-left 0.3s ease, width 0.3s ease;
 }
 
-/* Tabla de usuarios en tono blanco y azul */
 .tabla-usuarios {
     width: 100%;
     border-collapse: collapse;
@@ -2408,7 +2412,6 @@ body.admin-active .footerMain {
     background-color: #f5f9ff;
 }
 
-/* Campos de texto editables */
 .input-editable {
     width: 100%;
     padding: 8px 12px;
@@ -2435,7 +2438,6 @@ body.admin-active .footerMain {
     outline: none;
 }
 
-/* Botones de acción */
 .btn-accion {
     padding: 7px 14px;
     border: none;
@@ -2480,10 +2482,6 @@ body.admin-active .footerMain {
     background-color: #ffcdd2;
     color: #b71c1c;
 }
-
-/* ==========================================================================
-14. MEDIA QUERIES (DISEÑO RESPONSIVO)
-========================================================================== */
 
 @media (max-width: 1100px) {
     .lms-container {
@@ -2647,7 +2645,6 @@ body.admin-active .footerMain {
     }
 }
 
-/* ========== Proyectos educativos ========== */
 .main-proyectos {
     max-width: 1100px;
     margin: 0 auto;
@@ -2747,7 +2744,7 @@ body.admin-active .footerMain {
 }
 
 .btn-ir-curso {
-    background: linear-gradient(135deg, #0d47a1, #1565c0) !important;
+    background-color: #1e88e5 !important;
     text-decoration: none;
 }
 
@@ -2814,15 +2811,12 @@ body.admin-active .footerMain {
     }
 }
 
-/* ========== CARRITO ========== */
-
 .carrito-main {
     max-width: 920px;
     margin: 40px auto 80px;
     padding: 0 20px;
 }
 
-/* Estado vacío */
 .carrito-vacio {
     text-align: center;
     padding: 50px 25px;
@@ -2847,14 +2841,12 @@ body.admin-active .footerMain {
     opacity: 0.35;
 }
 
-/* Resumen superior */
 .carrito-resumen-top {
     margin-bottom: 22px;
     font-size: 1.05rem;
     color: #444;
 }
 
-/* Lista de cursos */
 .carrito-lista {
     display: flex;
     flex-direction: column;
@@ -2862,7 +2854,6 @@ body.admin-active .footerMain {
     margin-bottom: 30px;
 }
 
-/* Cada ítem del carrito */
 .carrito-item {
     display: flex;
     flex-wrap: wrap;
@@ -2880,7 +2871,6 @@ body.admin-active .footerMain {
     box-shadow: 0 6px 20px rgba(13, 71, 161, 0.12);
 }
 
-/* Imagen del curso */
 .carrito-item-img {
     width: 100px;
     height: 75px;
@@ -2897,7 +2887,6 @@ body.admin-active .footerMain {
     display: block;
 }
 
-/* Información del curso */
 .carrito-item-info {
     flex: 1;
     min-width: 200px;
@@ -2931,7 +2920,6 @@ body.admin-active .footerMain {
     font-size: 1.05rem;
 }
 
-/* Botón quitar */
 .form-quitar {
     flex-shrink: 0;
 }
@@ -2953,7 +2941,6 @@ body.admin-active .footerMain {
     border-color: #c62828;
 }
 
-/* Resumen / Total */
 .carrito-resumen {
     background: #f5f9ff;
     border: 2px solid #bbdefb;
@@ -2979,14 +2966,12 @@ body.admin-active .footerMain {
     color: #0d47a1;
 }
 
-/* Contenedor de PayPal */
 #paypal-button-container {
     width: 100%;
     max-width: 100%;
     margin-top: 10px;
 }
 
-/* Responsive */
 @media (max-width: 640px) {
     .carrito-item {
         flex-direction: column;
@@ -3061,7 +3046,6 @@ body.admin-active .footerMain {
     }
 }
 
-/* ===== Menú usuario (forzado / corregido) ===== */
 .userIconBtn {
     border: none;
     background: transparent;
@@ -3128,8 +3112,6 @@ body.admin-active .contenedorMain {
 body.admin-active {
     padding-top: 90px;
 }
-
-/* ===== Proyectos educativos: ajustes visuales ===== */
 
 .main-proyectos {
     width: 100%;
@@ -3303,11 +3285,6 @@ body.admin-active {
     font-size: 0.9rem;
 }
 
-/* ==========================================
-   APRENDOMO | MINI CHAT FAQ
-   Paleta: azul, azul oscuro y blanco
-========================================== */
-
 #faq-widget {
     --faq-blue: #1e88e5;
     --faq-dark: #120063;
@@ -3324,10 +3301,6 @@ body.admin-active {
     color: var(--faq-dark);
     font-family: inherit;
 }
-
-/* ==========================================
-   BOTÓN FLOTANTE COMPACTO
-========================================== */
 
 #faq-toggle {
     position: relative;
@@ -3396,10 +3369,6 @@ body.admin-active {
     white-space: nowrap;
 }
 
-/* ==========================================
-   VENTANA DEL CHAT
-========================================== */
-
 #faq-panel {
     position: absolute;
     right: 0;
@@ -3444,10 +3413,6 @@ body.admin-active {
     }
 }
 
-/* ==========================================
-   CABECERA CON DETALLE HEXAGONAL
-========================================== */
-
 .faq-header {
     position: relative;
     isolation: isolate;
@@ -3465,8 +3430,6 @@ body.admin-active {
 
     overflow: hidden;
 }
-
-/* Hexágonos decorativos de fondo */
 
 .faq-header::before,
 .faq-header::after {
@@ -3582,10 +3545,6 @@ body.admin-active {
     background: var(--faq-blue);
 }
 
-/* ==========================================
-   CUERPO BLANCO
-========================================== */
-
 .faq-body {
     flex: 1;
     min-height: 0;
@@ -3617,8 +3576,6 @@ body.admin-active {
     line-height: 1.75;
 }
 
-/* Título de la lista */
-
 .faq-section-title {
     display: flex;
     align-items: center;
@@ -3642,10 +3599,6 @@ body.admin-active {
     background: var(--faq-blue);
     border-radius: 4px;
 }
-
-/* ==========================================
-   PREGUNTAS
-========================================== */
 
 #faq-questions {
     display: flex;
@@ -3714,10 +3667,6 @@ body.admin-active {
     color: var(--faq-white);
     background: var(--faq-blue);
 }
-
-/* ==========================================
-   RESPUESTAS
-========================================== */
 
 #faq-answer-view[hidden],
 #faq-questions[hidden],
@@ -3806,10 +3755,6 @@ body.admin-active {
     white-space: pre-line;
 }
 
-/* ==========================================
-   PIE DEL CHAT
-========================================== */
-
 .faq-footer {
     padding: 11px 14px;
 
@@ -3831,10 +3776,6 @@ body.admin-active {
     vertical-align: -1px;
 }
 
-/* ==========================================
-   ACCESIBILIDAD Y TECLADO
-========================================== */
-
 #faq-toggle:focus-visible,
 #faq-close:focus-visible,
 .faq-question:focus-visible,
@@ -3842,10 +3783,6 @@ body.admin-active {
     outline: 3px solid var(--faq-blue);
     outline-offset: 3px;
 }
-
-/* ==========================================
-   RESPONSIVE
-========================================== */
 
 @media (max-width: 480px) {
     #faq-widget {
@@ -3924,10 +3861,6 @@ body.admin-active {
     width: 100%;
 }
 
-/* =========================================================
-   INICIO: CONTENIDO AMPLIO Y RESPONSIVO
-========================================================= */
-
 body.bodyMain main {
     width: 100%;
     max-width: none;
@@ -3967,7 +3900,6 @@ body.bodyMain .imagenPrincipal img {
     object-fit: contain;
 }
 
-/* Título de cursos populares */
 body.bodyMain .cursosPopularesTitulo {
     max-width: 1800px;
     margin: 50px auto 28px;
@@ -3975,7 +3907,6 @@ body.bodyMain .cursosPopularesTitulo {
     box-sizing: border-box;
 }
 
-/* Cuadrícula de cursos */
 body.bodyMain .cursosPopulares {
     width: 100%;
     max-width: 1800px;
@@ -3988,7 +3919,6 @@ body.bodyMain .cursosPopulares {
     gap: 25px;
 }
 
-/* Tarjetas */
 body.bodyMain .tarjetaCurso {
     min-width: 0;
     overflow: hidden;
@@ -4023,7 +3953,6 @@ body.bodyMain .informacionCurso p {
     overflow-wrap: anywhere;
 }
 
-/* Promedio y estrellas */
 body.bodyMain .popular-valoracion {
     display: flex;
     flex-wrap: wrap;
@@ -4071,7 +4000,6 @@ body.bodyMain .sin-cursos-populares {
     border-radius: 14px;
 }
 
-/* Pantallas medianas */
 @media (max-width: 1100px) {
     body.bodyMain .contenedorInicio {
         padding: 50px 35px;
@@ -4088,7 +4016,6 @@ body.bodyMain .sin-cursos-populares {
     }
 }
 
-/* Celulares */
 @media (max-width: 650px) {
     body.bodyMain .contenedorInicio {
         flex-direction: column;
@@ -4136,16 +4063,11 @@ body.bodyMain .sin-cursos-populares {
     }
 }
 
-/* =========================================================
-   COMENTARIOS DE ESTUDIANTES - CARRUSEL CONTINUO
-========================================================= */
-
 body.bodyMain .seccionComentarios {
     width: 100%;
     box-sizing: border-box;
     padding: 15px clamp(24px, 5vw, 80px) 15px;
     overflow: hidden;
-    /* background: #f7f9fd; */
 }
 
 body.bodyMain .comentariosTitulo {
@@ -4176,7 +4098,6 @@ body.bodyMain .comentariosTitulo p {
     line-height: 1.6;
 }
 
-/* Ventana que oculta las tarjetas fuera de pantalla */
 body.bodyMain .carruselComentarios {
     width: 100%;
     overflow: hidden;
@@ -4199,7 +4120,6 @@ body.bodyMain .carruselComentarios {
     );
 }
 
-/* Pista animada */
 body.bodyMain .pistaComentarios {
     display: flex;
     align-items: stretch;
@@ -4211,7 +4131,6 @@ body.bodyMain .pistaComentarios {
     will-change: transform;
 }
 
-/* Pausar cuando el cursor entra en el carrusel */
 body.bodyMain .carruselComentarios:hover .pistaComentarios,
 body.bodyMain .carruselComentarios:focus-within .pistaComentarios {
     animation-play-state: paused;
@@ -4223,11 +4142,10 @@ body.bodyMain .carruselComentarios:focus-within .pistaComentarios {
     }
 
     to {
-        transform: translateX(-100%);
+        transform: translateX(-20%);
     }
 }
 
-/* Tarjeta individual */
 body.bodyMain .tarjetaComentario {
     flex: 0 0 340px;
     width: 340px;
@@ -4256,7 +4174,6 @@ body.bodyMain .tarjetaComentario:hover {
     box-shadow: 0 15px 35px rgba(18, 0, 99, 0.12);
 }
 
-/* Autor */
 body.bodyMain .comentarioCabecera {
     display: flex;
     align-items: center;
@@ -4297,7 +4214,6 @@ body.bodyMain .comentarioAutor span {
     font-size: 0.78rem;
 }
 
-/* Estrellas */
 body.bodyMain .comentarioEstrellas {
     display: flex;
     align-items: center;
@@ -4324,7 +4240,6 @@ body.bodyMain .comentarioEstrellas strong {
     font-size: 0.85rem;
 }
 
-/* Texto del comentario */
 body.bodyMain .comentarioTexto {
     flex: 1;
     margin: 0 0 22px;
@@ -4337,7 +4252,6 @@ body.bodyMain .comentarioTexto {
     white-space: normal;
 }
 
-/* Curso al que corresponde */
 body.bodyMain .comentarioCurso {
     display: flex;
     align-items: center;
@@ -4391,7 +4305,6 @@ body.bodyMain .comentarioCurso strong {
     overflow-wrap: anywhere;
 }
 
-/* Estado sin comentarios */
 body.bodyMain .comentariosVacios {
     max-width: 700px;
     margin: 0 auto;
@@ -4427,7 +4340,6 @@ body.bodyMain .comentariosVacios a {
     text-decoration: none;
 }
 
-/* Adaptación a celulares */
 @media (max-width: 650px) {
     body.bodyMain .seccionComentarios {
         padding: 40px 20px 50px;
@@ -4445,7 +4357,6 @@ body.bodyMain .comentariosVacios a {
     }
 }
 
-/* Respetar la preferencia de movimiento reducido */
 @media (prefers-reduced-motion: reduce) {
     body.bodyMain .pistaComentarios {
         animation: none;
@@ -4479,22 +4390,15 @@ body.bodyMain .comentarioAvatar img {
     border-radius: 50%;
 }
 
-/* ========================================
-   SECCIÓN: CÓMO FUNCIONA APRENDOMO
-======================================== */
-
 .comoFunciona {
     overflow: hidden; 
 }
-
-/* Encabezado */
 
 .comoFuncionaEncabezado {
     width: 100%;
     box-sizing: border-box;
     padding: 15px clamp(24px, 5vw, 80px) 15px;
     overflow: hidden;
-    /* background: #f7f9fd; */
 }
 
 .comoFuncionaEtiqueta {
@@ -4524,8 +4428,6 @@ body.bodyMain .comentarioAvatar img {
     line-height: 1.7;
 }
 
-/* Contenedor de los tres pasos */
-
 .comoFuncionaPasos {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -4533,8 +4435,6 @@ body.bodyMain .comentarioAvatar img {
     max-width: 1150px;
     margin: 0 auto;
 }
-
-/* Tarjetas */
 
 .pasoAprendizaje {
     position: relative;
@@ -4549,8 +4449,6 @@ body.bodyMain .comentarioAvatar img {
         border-color 0.25s ease;
 }
 
-/* Emojis */
-
 .pasoIcono {
     display: flex;
     align-items: center;
@@ -4563,8 +4461,6 @@ body.bodyMain .comentarioAvatar img {
     font-size: 30px;
 }
 
-/* Número de cada paso */
-
 .pasoNumero {
     display: inline-block;
     margin-bottom: 12px;
@@ -4573,8 +4469,6 @@ body.bodyMain .comentarioAvatar img {
     font-weight: 700;
     letter-spacing: 1px;
 }
-
-/* Títulos y descripciones */
 
 .pasoAprendizaje h3 {
     margin: 0 0 12px;
@@ -4589,8 +4483,6 @@ body.bodyMain .comentarioAvatar img {
     font-size: 15px;
     line-height: 1.8;
 }
-
-/* Botón */
 
 .comoFuncionaAccion {
     text-align: center;
@@ -4628,12 +4520,6 @@ body.bodyMain .comentarioAvatar img {
     line-height: 1;
 }
 
-/* ========================================
-   DISEÑO RESPONSIVE
-======================================== */
-
-/* Tablets */
-
 @media (max-width: 900px) {
     .comoFunciona {
         padding: 65px 5%;
@@ -4655,8 +4541,6 @@ body.bodyMain .comentarioAvatar img {
         font-size: 19px;
     }
 }
-
-/* Celulares */
 
 @media (max-width: 650px) {
     .comoFunciona {
@@ -4709,8 +4593,6 @@ body.bodyMain .comentarioAvatar img {
     }
 }
 
-/* Accesibilidad: reducir animaciones */
-
 @media (prefers-reduced-motion: reduce) {
     .pasoAprendizaje,
     .btnComoFunciona {
@@ -4723,18 +4605,12 @@ body.bodyMain .comentarioAvatar img {
     }
 }
 
-/* ========================================
-   DOCENTES DESTACADOS
-======================================== */
-
 .docentesDestacados {
     box-sizing: border-box;
     width: 100%;
     padding: 75px 6%;
     /* background-color: #ffffff; */
 }
-
-/* Encabezado */
 
 .docentesEncabezado {
     display: flex;
@@ -4790,8 +4666,6 @@ body.bodyMain .comentarioAvatar img {
     font-size: 20px;
 }
 
-/* Contenedor de tarjetas */
-
 .docentesLista {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -4799,8 +4673,6 @@ body.bodyMain .comentarioAvatar img {
     max-width: 1150px;
     margin: 0 auto;
 }
-
-/* Tarjeta individual */
 
 .tarjetaDocente {
     display: flex;
@@ -4819,8 +4691,6 @@ body.bodyMain .comentarioAvatar img {
         box-shadow 0.25s ease,
         border-color 0.25s ease;
 }
-
-/* Foto de perfil */
 
 .docenteFoto {
     width: 112px;
@@ -4843,8 +4713,6 @@ body.bodyMain .comentarioAvatar img {
     object-position: center;
 }
 
-/* Rol */
-
 .docenteRol {
     display: inline-block;
     margin-bottom: 10px;
@@ -4857,8 +4725,6 @@ body.bodyMain .comentarioAvatar img {
     letter-spacing: 1px;
 }
 
-/* Nombre y descripción */
-
 .tarjetaDocente h3 {
     margin: 0 0 12px;
     color: #202b3c;
@@ -4866,8 +4732,6 @@ body.bodyMain .comentarioAvatar img {
     font-weight: 700;
     overflow-wrap: anywhere;
 }
-
-/* Cantidad de cursos */
 
 .docenteCursos {
     display: flex;
@@ -4883,8 +4747,6 @@ body.bodyMain .comentarioAvatar img {
 .docenteCursos span {
     font-size: 17px;
 }
-
-/* Botón */
 
 .docenteBoton {
     display: flex;
@@ -4916,8 +4778,6 @@ body.bodyMain .comentarioAvatar img {
     font-size: 18px;
 }
 
-/* Estado sin docentes */
-
 .docentesVacio {
     max-width: 650px;
     margin: 0 auto;
@@ -4944,10 +4804,6 @@ body.bodyMain .comentarioAvatar img {
     font-size: 14px;
     line-height: 1.7;
 }
-
-/* ========================================
-   DISEÑO RESPONSIVE
-======================================== */
 
 @media (max-width: 900px) {
     .docentesDestacados {
@@ -5009,8 +4865,6 @@ body.bodyMain .comentarioAvatar img {
     }
 }
 
-/* Accesibilidad */
-
 @media (prefers-reduced-motion: reduce) {
     .tarjetaDocente,
     .docentesVerTodos,
@@ -5022,7 +4876,6 @@ body.bodyMain .comentarioAvatar img {
         transform: none;
     }
 }
-
 
 .no-cursos {
     max-width: 1080px;
@@ -5048,4 +4901,601 @@ body.bodyMain .comentarioAvatar img {
     color: #2189e8;
     font-size: 17px;
     font-weight: bold;
+}
+
+/* ----- VENTANA MODAL DE TAREAS ----- */
+
+/* Fondo oscuro semitransparente */
+.modal-tarea-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(13, 71, 161, 0.4);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.modal-tarea-overlay.active {
+    display: flex;
+}
+
+/* Contenedor del modal */
+.modal-tarea-container {
+    background-color: white;
+    border: 2px solid #dceaf5;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 650px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    animation: modalTareaEntrada 300ms ease forwards;
+}
+
+/* Animación de entrada */
+@keyframes modalTareaEntrada {
+    from {
+        opacity: 0;
+        transform: translateY(-20px) scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* ----- ENCABEZADO ----- */
+
+.modal-tarea-container .modal-header {
+    padding: 20px 30px;
+    border-bottom: 2px solid #dceaf5;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-tarea-container .modal-header h2 {
+    color: #0d47a1;
+    font-size: 22px;
+    margin: 0;
+    font-weight: bold;
+}
+
+.modal-tarea-container .btn-cerrar {
+    background: none;
+    border: none;
+    font-size: 28px;
+    color: #1e88e5;
+    cursor: pointer;
+    line-height: 1;
+    transition: all 200ms ease;
+}
+
+.modal-tarea-container .btn-cerrar:hover {
+    color: #0d47a1;
+}
+
+/* ----- CUERPO DEL FORMULARIO ----- */
+
+.modal-tarea-container .modal-body {
+    padding: 25px 30px;
+}
+
+.modal-tarea-container .form-group {
+    margin-bottom: 18px;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-tarea-container .form-group label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #0d47a1;
+    margin-bottom: 6px;
+}
+
+/* Campos de texto, fechas, descripción y combobox */
+.modal-tarea-container .form-group input[type="text"],
+.modal-tarea-container .form-group input[type="url"],
+.modal-tarea-container .form-group input[type="datetime-local"],
+.modal-tarea-container .form-group textarea,
+.modal-tarea-container .form-group select {
+    width: 100%;
+    padding: 12px;
+    background-color: #f5f9fc;
+    border: 1px solid #dceaf5;
+    border-radius: 12px;
+    font-size: 14px;
+    color: #333;
+    box-sizing: border-box;
+    outline: none;
+    transition: all 300ms ease;
+    font-family: inherit;
+}
+
+/* Efecto al seleccionar un campo */
+.modal-tarea-container .form-group input:focus,
+.modal-tarea-container .form-group textarea:focus,
+.modal-tarea-container .form-group select:focus {
+    background-color: white;
+    border-color: #1e88e5;
+    box-shadow: 0 0 0 3px rgba(30, 136, 229, 0.15);
+}
+
+/* Combobox de carpetas */
+.modal-tarea-container .form-group select {
+    cursor: pointer;
+}
+
+/* ----- BOTÓN PARA ELEGIR ARCHIVOS ----- */
+
+.modal-tarea-container .form-group input[type="file"] {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background-color: #f5f9fc;
+    border: 2px dashed #1e88e5;
+    border-radius: 12px;
+    color: #555;
+    font-family: inherit;
+    font-size: 14px;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+/* Botón interno de elegir archivos */
+.modal-tarea-container .form-group input[type="file"]::file-selector-button {
+    background-color: #1e88e5;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 18px;
+    margin-right: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 300ms ease;
+}
+
+/* Efecto al pasar el cursor */
+.modal-tarea-container .form-group input[type="file"]::file-selector-button:hover {
+    background: #0d47a1;
+}
+
+/* ----- FILA DE FECHAS ----- */
+
+.modal-tarea-container .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+/* ----- PIE DEL MODAL ----- */
+
+.modal-tarea-container .modal-footer {
+    padding: 18px 30px;
+    border-top: 2px solid #dceaf5;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    background-color: #f5f9fc;
+    border-radius: 0 0 18px 18px;
+}
+
+/* Botón cancelar */
+.modal-tarea-container .btn-cancelar {
+    color: #555;
+    border: 2px solid #dceaf5;
+    border-radius: 50px;
+    background-color: white;
+    padding: 10px 22px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 300ms ease;
+}
+
+.modal-tarea-container .btn-cancelar:hover {
+    background-color: #e2e8f0;
+    color: #333;
+}
+
+/* Botón publicar */
+.modal-tarea-container .btn-publicar {
+    color: white;
+    background-color: #1e88e5;
+    border: 2px solid white;
+    border-radius: 50px;
+    padding: 10px 25px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: all 300ms ease;
+}
+
+.modal-tarea-container .btn-publicar:hover {
+    background: white;
+    color: #1e88e5;
+    border-color: #1e88e5;
+    box-shadow: 0 6px 15px rgba(30, 136, 229, 0.25);
+}
+
+/* ==========================================================================
+   ESTILOS DE TAREAS (tareas.php) - APRENDOMO
+   ========================================================================== */
+
+.pagina-tarea {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+.volver-tarea {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 22px;
+    color: #1e88e5;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.volver-tarea:hover {
+    color: #0d47a1;
+    text-decoration: underline;
+}
+
+/* Tarjetas principales de la vista de tarea */
+.tarjeta-tarea {
+    background: #ffffff;
+    padding: 30px;
+    margin-bottom: 25px;
+    border: 2px solid #dceaf5;
+    border-radius: 20px;
+    box-shadow: 0 8px 24px rgba(13, 71, 161, 0.08);
+    transition: box-shadow 0.3s ease;
+}
+
+.tarjeta-tarea:hover {
+    box-shadow: 0 12px 30px rgba(13, 71, 161, 0.12);
+}
+
+.tarjeta-tarea h1 {
+    color: #0d47a1;
+    font-size: 26px;
+    font-weight: 700;
+    margin: 10px 0 20px;
+    line-height: 1.3;
+}
+
+.tarjeta-tarea h2 {
+    color: #0d47a1;
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 30px 0 14px;
+    border-bottom: 2px solid #f5f9fc;
+    padding-bottom: 8px;
+}
+
+.curso-tarea {
+    display: inline-block;
+    color: #ffffff;
+    background-color: #1e88e5;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+}
+
+.datos-tarea {
+    background: #f5f9fc;
+    border: 1px solid #dceaf5;
+    border-radius: 14px;
+    padding: 16px 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+    margin: 15px 0 20px;
+}
+
+.datos-tarea p {
+    margin: 0;
+    color: #475569;
+    font-size: 0.92rem;
+}
+
+.datos-tarea strong {
+    color: #0d47a1;
+}
+
+.descripcion-tarea {
+    color: #334155;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 18px;
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+    font-size: 0.96rem;
+}
+
+/* Archivos adjuntos y entregas */
+.lista-archivos-tarea {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.archivo-tarea {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    padding: 14px 18px;
+    background: #f8fafc;
+    border: 1px solid #dceaf5;
+    border-radius: 12px;
+    overflow-wrap: anywhere;
+    transition: all 0.2s ease;
+}
+
+.archivo-tarea:hover {
+    background: #f5f9fc;
+    border-color: #1e88e5;
+}
+
+.archivo-tarea span {
+    font-weight: 500;
+    color: #1e293b;
+}
+
+.archivo-tarea a {
+    color: #1e88e5;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+    padding: 6px 12px;
+    background: #e3f2fd;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.archivo-tarea a:hover {
+    background: #1e88e5;
+    color: #ffffff;
+}
+
+/* Formularios de entrega y calificación */
+.formulario-entrega {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 22px;
+    background: #f8fafc;
+    border: 1px solid #dceaf5;
+    border-radius: 14px;
+    padding: 20px;
+}
+
+.formulario-entrega label {
+    font-size: 0.92rem;
+    font-weight: bold;
+    color: #0d47a1;
+    margin-top: 5px;
+    margin-bottom: 4px;
+}
+
+.formulario-entrega input[type="text"],
+.formulario-entrega input[type="url"],
+.formulario-entrega input[type="number"],
+.formulario-entrega textarea {
+    width: 100%;
+    padding: 12px 14px;
+    background-color: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    box-sizing: border-box;
+    font-family: inherit;
+    font-size: 0.95rem;
+    color: #333;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.formulario-entrega input:focus,
+.formulario-entrega textarea:focus {
+    border-color: #1e88e5;
+    box-shadow: 0 0 0 3px rgba(30, 136, 229, 0.15);
+}
+
+.formulario-entrega textarea {
+    resize: vertical;
+    min-height: 90px;
+}
+
+/* Input file estilizado para entregas */
+.formulario-entrega input[type="file"] {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #ffffff;
+    border: 2px dashed #1e88e5;
+    border-radius: 10px;
+    color: #555;
+    font-family: inherit;
+    font-size: 0.9rem;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.formulario-entrega input[type="file"]::file-selector-button {
+    background-color: #1e88e5;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 16px;
+    margin-right: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.formulario-entrega input[type="file"]::file-selector-button:hover {
+    background: #0d47a1;
+}
+
+/* Botones principales de tarea */
+.boton-tarea {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    padding: 12px 24px;
+    border: 2px solid white;
+    border-radius: 50px;
+    background-color: #1e88e5;
+    color: #ffffff;
+    text-decoration: none;
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: bold;
+    font-size: 0.95rem;
+    box-shadow: 0 4px 12px rgba(13, 71, 161, 0.2);
+    transition: all 300ms ease;
+    margin-top: 10px;
+}
+
+.boton-tarea:hover {
+    background: #ffffff;
+    color: #1e88e5;
+    border-color: #1e88e5;
+    box-shadow: 0 6px 15px rgba(30, 136, 229, 0.25);
+}
+
+/* Mensajes de notificación y alertas */
+.mensaje-tarea {
+    padding: 14px 18px;
+    border-radius: 12px;
+    margin: 15px 0;
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+.mensaje-exito {
+    background: #dcfce7;
+    color: #166534;
+    border: 1px solid #bbf7d0;
+}
+
+.mensaje-aviso {
+    background: #fef3c7;
+    color: #92400e;
+    border: 1px solid #fde68a;
+}
+
+.ayuda-entrega {
+    color: #64748b;
+    font-size: 0.88rem;
+    line-height: 1.5;
+    margin-top: 4px;
+}
+
+/* Bloques de entregas de alumnos (vista docente) */
+.entrega-alumno {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-left: 4px solid #1e88e5;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+}
+
+.entrega-alumno h3 {
+    color: #0d47a1;
+    font-size: 1.15rem;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.entrega-alumno p {
+    margin: 6px 0;
+    color: #475569;
+    font-size: 0.92rem;
+}
+
+.entrega-alumno hr {
+    border: 0;
+    border-top: 1px solid #e2e8f0;
+    margin: 20px 0 10px 0;
+}
+
+/* Responsive para dispositivos móviles */
+@media (max-width: 600px) {
+    .pagina-tarea {
+        padding: 0 12px;
+        margin: 20px auto;
+    }
+
+    .tarjeta-tarea {
+        padding: 20px;
+        border-radius: 14px;
+    }
+
+    .archivo-tarea {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .archivo-tarea a {
+        width: 100%;
+        text-align: center;
+    }
+
+    .datos-tarea {
+        grid-template-columns: 1fr;
+    }
+}
+.encabezado-entrega {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 15px;
+}
+
+.foto-estudiante-entrega,
+.foto-estudiante-sin-foto {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.foto-estudiante-entrega {
+    object-fit: cover;
+}
+
+.foto-estudiante-sin-foto {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #1e88e5;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.encabezado-entrega h3 {
+    margin: 0;
 }
