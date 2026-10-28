@@ -49,7 +49,7 @@ $acesso = !empty($rolper) && ($rolper === 'docente' || $rolper === 'administrado
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aprendomo - Cursos</title>
+    <title>Cursos | Aprendomo</title>
     
     <link rel="stylesheet" href="../CSS/animaciones.css">
     <link rel="stylesheet" href="../CSS/estilo.css">
@@ -187,7 +187,7 @@ $acesso = !empty($rolper) && ($rolper === 'docente' || $rolper === 'administrado
                                         <!-- Si el curso es gratuito -->
                                         <form action="../PHP conexiones/inscripcion.php" method="POST">
                                             <input type="hidden" name="ID_Curso" value="<?= $curso['ID_Curso'] ?>">
-                                            <button type="submit" class="btn-confirmar btn-inscribir-gratis">Inscribirme gratis</button>
+                                            <button type="submit" class="btn-confirmar btn-inscribir-gratis">Inscribirme</button>
                                         </form>
                                     <?php endif; ?>
 
