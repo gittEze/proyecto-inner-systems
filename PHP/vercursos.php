@@ -230,11 +230,17 @@ $tareas = $stmtTareas->fetchAll(PDO::FETCH_ASSOC);
                             <a href="proyectos.php">Proyectos educativos</a>.
                         </div>
                     <?php endif; ?>
+                    <?php if (isset($_GET['msg']) && $_GET['msg'] === 'eliminado'): ?>
+                        <div class="logrado" style="margin-bottom: 15px;">Material eliminado correctamente.</div>
+                    <?php endif; ?>
+                    <?php if (isset($_GET['msg']) && $_GET['msg'] === 'sustituido'): ?>
+                        <div class="logrado" style="margin-bottom: 15px;">Material sustituido correctamente.</div>
+                    <?php endif; ?>
 
                     <div class="lista-recursos">
                         <!-- Materiales sueltos -->
                         <?php foreach ($materialesSueltos as $mat): ?>
-                            <div class="item-recurso material">
+                            <div class="item-recurso material" style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
                                 <?php if ($mat['Tipo_Material'] == 'enlace'): ?>
                                     <span class="icon">🔗</span>
                                     <a href="<?= htmlspecialchars($mat['Contenido_URL']) ?>" target="_blank">
@@ -244,6 +250,29 @@ $tareas = $stmtTareas->fetchAll(PDO::FETCH_ASSOC);
                                     <span class="icon">📄</span>
                                     <a href="Subidas/archivos/<?= htmlspecialchars($mat['Contenido_URL']) ?>" download>
                                         <?= htmlspecialchars($mat['Titulo_Material']) ?>
+                                    </a>
+                                <?php endif; ?>
+
+                                <?php if ($esCreadorCurso): ?>
+                                    <form action="../PHP conexiones/eliminarMaterial.php" method="POST" style="display:inline; margin:0;"
+                                        onsubmit="return confirm('¿Seguro que deseas eliminar este material?');">
+                                        <input type="hidden" name="ID_Material" value="<?= (int)$mat['ID_Material'] ?>">
+                                        <input type="hidden" name="ID_Curso" value="<?= (int)$idCurso ?>">
+                                        <button type="submit" class="btn-elim-material">Eliminar</button>
+
+                                    <a href="#modal-sustituir"
+                                        class="btn-sustituir-material btn-abrir-sustituir"
+                                        data-id="..."
+                                        data-titulo="..."
+                                        data-tipo="..."
+                                        data-url="...">
+                                            Sustituir
+                                        </a>
+                                    data-id="<?= (int)$mat['ID_Material'] ?>"
+                                    data-titulo="<?= htmlspecialchars($mat['Titulo_Material'], ENT_QUOTES, 'UTF-8') ?>"
+                                    data-tipo="<?= htmlspecialchars($mat['Tipo_Material'], ENT_QUOTES, 'UTF-8') ?>"
+                                    data-url="<?= htmlspecialchars($mat['Contenido_URL'] ?? '', ENT_QUOTES, 'UTF-8') ?>">
+                                        Sustituir
                                     </a>
                                 <?php endif; ?>
                             </div>
@@ -266,19 +295,38 @@ $tareas = $stmtTareas->fetchAll(PDO::FETCH_ASSOC);
                                         <p style="padding:10px; color:#888;">Carpeta vacía</p>
                                     <?php else:
                                         foreach ($matsCarpeta as $mat): ?>
-                                            <div class="item-recurso material" style="margin-left:20px;">
-                                            <?php if ($mat['Tipo_Material'] === 'enlace'): ?>
-                                                <span class="icon">🔗</span>
-                                                <a href="<?= htmlspecialchars($mat['Contenido_URL'], ENT_QUOTES, 'UTF-8') ?>" target="_blank" rel="noopener noreferrer" >
-                                                    <?= htmlspecialchars($mat['Titulo_Material'], ENT_QUOTES, 'UTF-8') ?>
-                                                </a>
-                                            <?php else: ?>
-                                                <span class="icon">📄</span>
-                                                <a href="Subidas/archivos/<?= rawurlencode($mat['Contenido_URL']) ?>" download >
-                                                    <?= htmlspecialchars($mat['Titulo_Material'], ENT_QUOTES, 'UTF-8') ?>
-                                                </a>
-                                            <?php endif; ?>
-                                        </div>
+                                            <div class="item-recurso material" style="margin-left:20px; display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+                                                <?php if ($mat['Tipo_Material'] === 'enlace'): ?>
+                                                    <span class="icon">🔗</span>
+                                                    <a href="<?= htmlspecialchars($mat['Contenido_URL'], ENT_QUOTES, 'UTF-8') ?>" target="_blank" rel="noopener noreferrer">
+                                                        <?= htmlspecialchars($mat['Titulo_Material'], ENT_QUOTES, 'UTF-8') ?>
+                                                    </a>
+                                                <?php else: ?>
+                                                    <span class="icon">📄</span>
+                                                    <a href="Subidas/archivos/<?= rawurlencode($mat['Contenido_URL']) ?>" download>
+                                                        <?= htmlspecialchars($mat['Titulo_Material'], ENT_QUOTES, 'UTF-8') ?>
+                                                    </a>
+                                                <?php endif; ?>
+
+                                                <?php if ($esCreadorCurso): ?>
+                                                    <form action="../PHP conexiones/eliminarMaterial.php" method="POST" style="display:inline; margin:0;"
+                                                        onsubmit="return confirm('¿Seguro que deseas eliminar este material?');">
+                                                        <input type="hidden" name="ID_Material" value="<?= (int)$mat['ID_Material'] ?>">
+                                                        <input type="hidden" name="ID_Curso" value="<?= (int)$idCurso ?>">
+                                                        <button type="submit" class="btn-elim-material">Eliminar</button>
+                                                    </form>
+
+                                                    <a href="#modal-sustituir"
+                                                    class="btn-confirmar btn-abrir-sustituir"
+                                                    style="padding:4px 10px; font-size:0.85rem;"
+                                                    data-id="<?= (int)$mat['ID_Material'] ?>"
+                                                    data-titulo="<?= htmlspecialchars($mat['Titulo_Material'], ENT_QUOTES, 'UTF-8') ?>"
+                                                    data-tipo="<?= htmlspecialchars($mat['Tipo_Material'], ENT_QUOTES, 'UTF-8') ?>"
+                                                    data-url="<?= htmlspecialchars($mat['Contenido_URL'] ?? '', ENT_QUOTES, 'UTF-8') ?>">
+                                                        Sustituir
+                                                    </a>
+                                                <?php endif; ?>
+                                            </div>
                                         <?php endforeach;
                                         
                                     endif; ?>
@@ -322,7 +370,9 @@ $tareas = $stmtTareas->fetchAll(PDO::FETCH_ASSOC);
                         foreach ($tareasSueltas as $tarea): ?>
                             <div class="item-recurso">
                                 <span class="icon">📝</span>
-                                <strong><?= htmlspecialchars($tarea['Nombre_Tarea']) ?></strong>
+                                <a href="tarea.php?ID_Tarea=<?= (int)$tarea['ID_Tarea'] ?>">
+                                    <?= htmlspecialchars($tarea['Nombre_Tarea'], ENT_QUOTES, 'UTF-8') ?>
+                                </a>
                                 <small> — Vence: <?= date('d/m/Y H:i', strtotime($tarea['Fecha_Vencimiento'])) ?></small>
                             </div>
                         <?php endforeach; ?>
@@ -347,9 +397,11 @@ $tareas = $stmtTareas->fetchAll(PDO::FETCH_ASSOC);
                     <?php if (!empty($tareas)): ?>
                         <div class="lista-tareas">
                             <?php foreach ($tareas as $tarea): ?>
-                                <div class="item-recurso">
+                                <div class="item-recurso" style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
                                     <span class="icon">📝</span>
-                                    <strong><?= htmlspecialchars($tarea['Nombre_Tarea']) ?></strong>
+                                    <a href="tarea.php?ID_Tarea=<?= (int)$tarea['ID_Tarea'] ?>">
+                                        <strong><?= htmlspecialchars($tarea['Nombre_Tarea']) ?></strong>
+                                    </a>
                                     <small> — Vence: <?= date('d/m/Y H:i', strtotime($tarea['Fecha_Vencimiento'])) ?></small>
                                 </div>
                             <?php endforeach; ?>
@@ -553,6 +605,36 @@ $tareas = $stmtTareas->fetchAll(PDO::FETCH_ASSOC);
                 </form>
             </div>
         </div>
+
+        <!-- Modal Sustituir Material -->
+        <div id="modal-sustituir" class="modal-overlay">
+            <div class="modal-box">
+                <h2>Sustituir material</h2>
+                <form action="../PHP conexiones/sustituirMaterial.php" method="POST" enctype="multipart/form-data" id="formSustituir">
+                    <input type="hidden" name="ID_Curso" value="<?= $idCurso ?>">
+                    <input type="hidden" name="ID_Material" id="sustituir_ID_Material" value="">
+
+                    <label>Título del material:</label>
+                    <input type="text" name="Titulo_Material" id="sustituir_Titulo" required>
+
+                    <div id="sustituir_grupo_archivo">
+                        <label>Nuevo archivo:</label>
+                        <input type="file" name="archivo_adjunto" id="sustituir_archivo">
+                        <small>Se reemplazará el archivo actual por este.</small>
+                    </div>
+
+                    <div id="sustituir_grupo_enlace" style="display:none;">
+                        <label>Nueva URL / Enlace:</label>
+                        <input type="url" name="Contenido_URL" id="sustituir_url" placeholder="https://ejemplo.com/recurso">
+                    </div>
+
+                    <div class="modal-acciones">
+                        <button type="submit" class="btn-confirmar">Sustituir</button>
+                        <a href="#" class="btn-cancelar">Cancelar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
     <?php endif; ?>
 
     <!-- ==================== MODAL CREAR TAREA ==================== -->
@@ -720,6 +802,37 @@ $tareas = $stmtTareas->fetchAll(PDO::FETCH_ASSOC);
             tipoMaterial.addEventListener('change', actualizarTipoMaterial);
             actualizarTipoMaterial();
         }
+
+        document.querySelectorAll('.btn-abrir-sustituir').forEach(function(btn) {
+            btn.addEventListener('click', function(e) {
+                var id     = this.getAttribute('data-id');
+                var titulo = this.getAttribute('data-titulo');
+                var tipo   = this.getAttribute('data-tipo');
+                var url    = this.getAttribute('data-url') || '';
+
+                document.getElementById('sustituir_ID_Material').value = id;
+                document.getElementById('sustituir_Titulo').value = titulo;
+
+                var grupoArchivo = document.getElementById('sustituir_grupo_archivo');
+                var grupoEnlace  = document.getElementById('sustituir_grupo_enlace');
+                var inputArchivo = document.getElementById('sustituir_archivo');
+                var inputUrl     = document.getElementById('sustituir_url');
+
+                if (tipo === 'enlace') {
+                    grupoArchivo.style.display = 'none';
+                    grupoEnlace.style.display  = 'block';
+                    inputArchivo.removeAttribute('required');
+                    inputUrl.setAttribute('required', 'required');
+                    inputUrl.value = url;
+                } else {
+                    grupoArchivo.style.display = 'block';
+                    grupoEnlace.style.display  = 'none';
+                    inputArchivo.setAttribute('required', 'required');
+                    inputUrl.removeAttribute('required');
+                    inputUrl.value = '';
+                }
+            });
+        });
     </script>
 </body>
 </html>

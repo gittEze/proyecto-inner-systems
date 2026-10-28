@@ -2789,15 +2789,56 @@ body.admin-active .footerMain {
     margin-bottom: 20px;
 }
 
+.btn-volver-listado {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 18px;
+    padding: 10px 16px;
+    background: #f1f5f9;
+    color: #334155;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+}
+
+.btn-volver-listado:hover {
+    background: #e2e8f0;
+    color: #1e293b;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.08);
+}
+
 .proyecto-acciones {
     display: flex;
     flex-wrap: wrap;
     gap: 12px;
+    margin-top: 8px;
 }
 
 .proyecto-acciones .btn-confirmar {
-    text-decoration: none; 
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 12px 20px;
+    background-color: #2563eb;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.proyecto-acciones .btn-confirmar:hover {
+    background-color: #1d4ed8;
+    transform: translateY(-1px);
 }
 
 @media (max-width: 600px) {
@@ -2839,6 +2880,28 @@ body.admin-active .footerMain {
     height: auto;
     margin: 0 auto 18px;
     opacity: 0.35;
+}
+
+.carrito-vacio .btn-confirmar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 12px 24px;
+    background-color: #2563eb;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.carrito-vacio .btn-confirmar:hover {
+    background-color: #1d4ed8;
+    transform: translateY(-1px);
 }
 
 .carrito-resumen-top {
@@ -5498,4 +5561,51 @@ body.bodyMain .comentarioAvatar img {
 
 .encabezado-entrega h3 {
     margin: 0;
+}
+
+/* ============================================================
+   Botones de acción en materiales (Eliminar / Sustituir)
+   ============================================================ */
+
+.item-recurso.material .btn-elim-material,
+.item-recurso.material .btn-sustituir-material {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 12px;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    border: none;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    line-height: 1.2;
+    white-space: nowrap;
+}
+
+/* Eliminar: rojo, sin sombra */
+.item-recurso.material .btn-elim-material {
+    background-color: #dc2626;
+    color: #ffffff;
+    box-shadow: none;
+}
+
+.item-recurso.material .btn-elim-material:hover {
+    background-color: #b91c1c;
+    box-shadow: none;
+    transform: none;
+}
+
+/* Sustituir: color distinto (ámbar / naranja) */
+.item-recurso.material .btn-sustituir-material {
+    background-color: #d97706;
+    color: #ffffff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+
+.item-recurso.material .btn-sustituir-material:hover {
+    background-color: #b45309;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+    transform: translateY(-1px);
 }
