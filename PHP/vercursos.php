@@ -109,7 +109,6 @@ $tareas = $stmtTareas->fetchAll(PDO::FETCH_ASSOC);
     <title><?= htmlspecialchars($curso['Titulo_Curso']) ?> | Aprendomo</title>
     <link rel="stylesheet" href="../CSS/estilo.css">
     <link rel="stylesheet" href="../CSS/animaciones.css"> 
-    <link rel="stylesheet" href="../CSS/tareaEstilo.css">
     <link rel="icon" href="../IMG/Icono.ico">
 </head>
 <body>
@@ -297,18 +296,12 @@ $tareas = $stmtTareas->fetchAll(PDO::FETCH_ASSOC);
 
                                     foreach ($tareasCarpeta as $tarea): ?>
                                         <div class="item-recurso material" style="margin-left:20px;">
-                                        <?php if ($mat['Tipo_Material'] === 'enlace'): ?>
-                                            <span class="icon">🔗</span>
-                                            <a href="<?= htmlspecialchars($mat['Contenido_URL'], ENT_QUOTES, 'UTF-8') ?>" target="_blank" rel="noopener noreferrer">
-                                                <?= htmlspecialchars($mat['Titulo_Material']) ?>
+                                            <span class="icon">📝</span>
+                                            <a href="tarea.php?ID_Tarea=<?= (int)$tarea['ID_Tarea'] ?>">
+                                                <?= htmlspecialchars($tarea['Nombre_Tarea'], ENT_QUOTES, 'UTF-8') ?>
                                             </a>
-                                        <?php else: ?>
-                                            <span class="icon">📄</span>
-                                            <a href="Subidas/archivos/<?= rawurlencode($mat['Contenido_URL']) ?>" download >
-                                                <?= htmlspecialchars($mat['Titulo_Material']) ?>
-                                            </a>
-                                        <?php endif; ?>
-                                    </div>
+                                            <small> — Vence: <?= date('d/m/Y H:i', strtotime($tarea['Fecha_Vencimiento'])) ?></small>
+                                        </div>
                                     <?php endforeach; ?>
 
                                 </div>

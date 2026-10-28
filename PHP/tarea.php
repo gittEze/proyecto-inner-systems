@@ -207,7 +207,6 @@ $puedeEntregar = (
 
     <link rel="stylesheet" href="../CSS/animaciones.css">
     <link rel="stylesheet" href="../CSS/estilo.css">
-    <link rel="stylesheet" href="../CSS/tareaEstilo.css">
     <link rel="icon" href="../IMG/Icono.ico">
 </head>
 
