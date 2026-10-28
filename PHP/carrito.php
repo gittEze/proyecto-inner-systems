@@ -7,6 +7,8 @@ if (!isset($_SESSION['Sesion']) || !isset($_SESSION['ID_Usuario'])) {
     exit();
 }
 
+$esAdmin = (strtolower(trim($_SESSION['Rol'] ?? '')) === 'administrador');
+
 $carritoIds = isset($_SESSION['carrito']) && is_array($_SESSION['carrito'])
     ? array_map('intval', $_SESSION['carrito'])
     : [];
@@ -108,11 +110,22 @@ $cantidad = count($cursosCarrito);
             <?php endif; ?>
 
             <div class="carrito-acciones">
-                <form action="../PHP conexiones/inscribirCarrito.php" method="POST" class="form-finalizar">
-                    <button type="submit" class="btn-confirmar" style="background:#444;">
-                        <?= $totalPrecio > 0 ? 'Finalizar compra (Inscripción directa)' : 'Inscribirse gratis al carrito' ?>
-                    </button>
-                </form>
+                <?php if ($totalPrecio > 0): ?>
+                    <?php if ($esAdmin): ?>
+                        <form action="../PHP conexiones/inscribirCarrito.php" method="POST" class="form-finalizar">
+                            <button type="submit" class="btn-confirmar" style="background:#444;">
+                                Inscripción directa
+                            </button>
+                        </form>
+                    <?php endif; ?>
+                <?php else: ?>
+                    <form action="../PHP conexiones/inscribirCarrito.php" method="POST" class="form-finalizar">
+                        <button type="submit" class="btn-confirmar" style="background:#444;">
+                            Inscribirse gratis al carrito
+                        </button>
+                    </form>
+                <?php endif; ?>
+
                 <a href="cursos.php" class="btn-seguir-explorando">
                     Seguir explorando cursos →
                 </a>
