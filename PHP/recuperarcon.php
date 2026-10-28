@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recuperar Contraseña</title>
+    <title>Recuperar Contraseña | Aprendomo</title>
     <link rel="stylesheet" href="../CSS/estilo.css">
 
 </head>

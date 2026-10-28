@@ -880,6 +880,19 @@ select {
     font-size: 1.1rem;
 }
 
+.precio-gratis-badge {
+    color: #008531;
+    font-weight: bold;
+}
+
+.btn-inscribir-gratis {
+    background-color: #009436 !important;
+}
+
+.btn-inscribir-gratis:hover {
+    background-color: #005a21 !important;
+}
+
 .grid-cursos {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));

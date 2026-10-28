@@ -2,7 +2,7 @@
 $server   = "localhost";
 $usuario  = "root";
 $contraseña = "";                
-$database = "softwaredesarrollo";
+$database = "aprendomo";
 
 try {
     $dsn = "mysql:host=$server;dbname=$database;charset=utf8mb4";
