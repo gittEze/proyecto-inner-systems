@@ -36,7 +36,7 @@ $phpBase = $isAdminPanel ? '../' : '';
         <div class="footerIcono">●</div>
         <div>
             <h3>Ubicación:</h3>
-            <p>Casa de Luquitas</p>
+            <p>Florencio Sánchez 398, Salto,<br>Departamento de Salto, Uruguay.</p>
         </div>
     </div>
 
