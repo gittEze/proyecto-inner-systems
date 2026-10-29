@@ -2215,6 +2215,40 @@ details.desplegable-miembros summary {
     border-color: #1e88e5;
 }
 
+
+.form-valoracion .btn-confirmar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 11px 22px;
+    background: #0d47a1;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-valoracion .btn-confirmar:hover {
+    background: #1565c0;
+    box-shadow: 0 4px 10px rgba(13, 71, 161, 0.2);
+    transform: translateY(-1px);
+}
+
+.form-valoracion .btn-confirmar:active {
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+.form-valoracion .btn-confirmar:focus-visible {
+    outline: 3px solid #90caf9;
+    outline-offset: 3px;
+}
+
+
 .mensaje-ok {
     background: #e8f5e9;
     color: #2e7d32;
@@ -5642,3 +5676,357 @@ body.bodyMain .comentarioAvatar img {
     transform: translateY(-1px);
 }
   
+/* ============================================================
+   RESPONSIVE MÓVIL - COMPLETO
+   Agregar al final de estilo.css
+   ============================================================ */
+
+/* Base: evita scroll horizontal y hace que las imágenes no se desborden */
+html {
+    overflow-x: hidden;
+}
+
+img, video, iframe {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Tablet / pantallas medianas */
+@media (max-width: 900px) {
+    body {
+        background-attachment: scroll; /* fixed suele fallar en móvil */
+        background-size: 400px;
+    }
+
+    .contenedorMain {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+        padding: 10px 12px;
+    }
+
+    #logoMain {
+        width: 140px;
+        max-width: 45%;
+        margin: 0 auto;
+    }
+
+    #logoMainImg {
+        width: 100%;
+    }
+
+    .Serv {
+        display: block;
+        width: 100%;
+        text-align: center;
+        padding: 12px 10px;
+        font-size: 0.95rem;
+        border-radius: 10px;
+    }
+
+    #formBuscador,
+    #buscador {
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
+        box-sizing: border-box;
+    }
+
+    #buscador {
+        padding: 12px 14px;
+    }
+
+    .usuario {
+        align-self: center;
+    }
+
+    .userMenu {
+        width: min(350px, 92vw);
+        right: 50%;
+        transform: translateX(50%);
+    }
+
+    .contenedorLogin {
+        width: 94% !important;
+        max-width: 480px;
+        margin: 20px auto;
+        padding: 18px 16px;
+        height: auto;
+    }
+
+    #logoLogin {
+        height: 70px;
+    }
+
+    #logoLogin img {
+        max-height: 70px;
+        width: auto;
+    }
+
+    .contenedorInicio {
+        flex-direction: column;
+        padding: 40px 16px;
+        gap: 24px;
+        text-align: center;
+    }
+
+    .textoPrincipal {
+        margin-left: 0 !important;
+    }
+
+    .textoPrincipal h2,
+    .textoPrincipal span {
+        font-size: 2.1rem;
+    }
+
+    .textoPrincipal p {
+        max-width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .imagenPrincipal {
+        margin-right: 0 !important;
+    }
+
+    .imagenPrincipal img {
+        width: 100%;
+        max-width: 420px;
+    }
+
+    .btnPrincipal {
+        width: 100%;
+        max-width: 280px;
+        height: auto;
+        min-height: 44px;
+        justify-content: center;
+        margin-left: auto;
+        margin-right: auto;
+        font-size: 1rem;
+    }
+
+    .cursosPopularesTitulo {
+        margin: 30px 16px 16px !important;
+        padding: 0 !important;
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+
+    .cursosPopulares {
+        margin: 0 16px !important;
+        padding: 0 0 20px !important;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    body.bodyMain .cursosPopulares {
+        grid-template-columns: 1fr !important;
+    }
+
+    .listaCursosPerfil,
+    .grid-proyectos {
+        grid-template-columns: 1fr !important;
+    }
+
+    .lms-container {
+        grid-template-columns: 1fr !important;
+        padding: 0 12px;
+        gap: 16px;
+    }
+
+    .sidebar-left,
+    .sidebar-right {
+        order: 2;
+    }
+
+    .perfilMain,
+    .main-proyectos,
+    .pagina-tarea {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    .footerMain {
+        flex-direction: column;
+        text-align: center;
+        gap: 12px;
+        padding: 20px 16px;
+    }
+}
+
+/* Celular */
+@media (max-width: 600px) {
+    * {
+        font-size: 14px;
+    }
+
+    body {
+        background-size: 280px;
+    }
+
+    .contenedorMain {
+        padding: 8px 10px;
+        gap: 6px;
+    }
+
+    #logoMain {
+        width: 120px;
+    }
+
+    .Serv {
+        padding: 11px 8px;
+        font-size: 0.9rem;
+    }
+
+    .userIcon {
+        width: 46px;
+        height: 46px;
+    }
+
+    .userMenu {
+        width: 94vw;
+        right: 50%;
+        transform: translateX(50%);
+        max-height: none;
+    }
+
+    .open-menu {
+        max-height: 70vh;
+        overflow-y: auto;
+    }
+
+    .userMenuBox {
+        padding: 14px;
+    }
+
+    .contenedorLogin {
+        width: 96% !important;
+        margin: 12px auto;
+        padding: 16px 12px;
+        border-radius: 12px;
+    }
+
+    #btnIniciarSesion,
+    #volver,
+    .btnDato,
+    .loginBtn {
+        width: 100%;
+        text-align: center;
+        box-sizing: border-box;
+    }
+
+    .textoPrincipal h2,
+    .textoPrincipal span {
+        font-size: 1.7rem;
+        line-height: 1.25;
+    }
+
+    .textoPrincipal p {
+        font-size: 0.95rem;
+        margin-bottom: 24px;
+    }
+
+    .btnPrincipal {
+        max-width: 100%;
+        font-size: 0.95rem;
+        padding: 12px 14px;
+    }
+
+    .cursosPopularesTitulo h2,
+    .docentesEncabezado h2 {
+        font-size: 1.4rem !important;
+    }
+
+    .tarjetaCurso,
+    .tarjeta-curso,
+    .card-proyecto,
+    .cursoPerfil {
+        width: 100%;
+    }
+
+    .imagenCurso {
+        height: 160px;
+    }
+
+    .informacionCurso {
+        padding: 14px;
+    }
+
+    .informacionCurso h3 {
+        font-size: 1.05rem;
+    }
+
+    .proyecto-portada {
+        height: 140px;
+    }
+
+    /* Formularios y tablas */
+    input,
+    select,
+    textarea {
+        font-size: 16px; /* evita zoom automático en iOS */
+    }
+
+    table {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .datos-tarea,
+    .modal-acciones {
+        grid-template-columns: 1fr !important;
+    }
+
+    .archivo-tarea {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .archivo-tarea a {
+        width: 100%;
+        text-align: center;
+    }
+
+    /* Recuperar contraseña / formularios especiales */
+    .recuperar-container {
+        max-width: 100%;
+        clip-path: none;
+        border-radius: 16px;
+    }
+
+    .recuperar-header,
+    .recuperar-form-container {
+        padding: 20px 16px;
+    }
+
+    .recuperar-titulo {
+        font-size: 1.3rem;
+    }
+
+    /* Botones de materiales */
+    .item-recurso.material .btn-elim-material,
+    .item-recurso.material .btn-sustituir-material {
+        width: 100%;
+        margin-top: 6px;
+    }
+}
+
+/* Móviles muy chicos */
+@media (max-width: 380px) {
+    .textoPrincipal h2,
+    .textoPrincipal span {
+        font-size: 1.45rem;
+    }
+
+    #logoMain {
+        width: 100px;
+    }
+
+    .Serv {
+        font-size: 0.85rem;
+        padding: 10px 6px;
+    }
+}

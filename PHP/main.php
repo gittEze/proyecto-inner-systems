@@ -4,7 +4,6 @@ require_once '../PHP conexiones/conexion.php';
 
 $tieneSesion = isset($_SESSION['Sesion']) && isset($_SESSION['ID_Usuario']);
 
-
 $cursosInscritos = [];
 
 if ($tieneSesion) {
