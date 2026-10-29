@@ -87,12 +87,7 @@ $phpBase = $isAdminPanel ? '../' : '';
                 </div>
             </div>
 
-            <button
-                type="button"
-                id="faq-close"
-                aria-label="Cerrar preguntas frecuentes">
-                &times;
-            </button>
+            <button type="button" id="faq-close" aria-label="Cerrar preguntas frecuentes"> &times; </button>
 
         </div>
 
