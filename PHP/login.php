@@ -44,7 +44,13 @@
                         <input type="email" id="Correo" name="Correo" placeholder="Ingrese su correo">
 
                         <label for="Contrasena">Contraseña:</label>
-                        <input type="password" id="Contrasena" name="Contrasenia" placeholder="Ingrese su contraseña">
+                        <div class="campoContrasena">
+                            <input type="password" id="Contrasena" name="Contrasenia" placeholder="Ingrese su contraseña">
+
+                            <button type="button" class="btnVerContrasena" onclick="mostrarContrasena()">
+                                <img id="iconoContrasena" src="../IMG/showContra.png" alt="Mostrar contraseña">
+                            </button>
+                        </div>
 
                         <a id="recuperarContrasenia" href="recuperarcon.php">Recuperar contraseña.</a>
 
@@ -83,7 +89,11 @@
                             ⚠️ Error: Cédula y Teléfono deben ser números.
                         </div>
                     <?php } ?>
-
+                    <?php if (isset($_GET['error']) && $_GET['error'] == 'cedula_invalida') { ?>
+                        <div class="mensaje-error" style="background-color: #ffdddd; color: #d8000c; border: 1px solid #d8000c; padding: 10px; border-radius: 5px; margin-bottom: 15px; text-align: center;">
+                            ⚠️ Error: La cédula ingresada no es válida.
+                        </div>
+                    <?php } ?>
                     <form id="contenedorRegister" action="../PHP conexiones/consreg.php" method="post">
                         <label for="Nm">Nombre</label>
                         <input type="text" id="Nm" name="Nombre" placeholder="Ej: Juan">
@@ -92,7 +102,7 @@
                         <input type="text" id="Ap" name="Apellido" placeholder="Ej: Zorrilla">
                         
                         <label for="Cedula">Cédula</label>
-                        <input type="text" id="Cedula" name="Cedula" placeholder="Ej: 1234567890">
+                        <input type="text" id="Cedula" name="Cedula" placeholder="Ej: 12345671" required>
 
                         <label for="Fecha">Fecha de nacimiento</label>
                         <input type="date" id="Fecha" name="Fecha_De_Nacimiento" placeholder="Ej: 01/01/2000">
@@ -100,8 +110,16 @@
                         <label for="Correo">Correo electrónico</label>
                         <input type="email" id="Correo" name="Correo" placeholder="ejemplo@correo.com" required>
 
-                        <label for="Contrasena">Contraseña</label>
-                        <input type="password" id="Contrasena" name="Contrasenia" placeholder="Ingrese su contraseña" required>
+                        
+                        <label for="Contrasena">Contraseña:</label>
+                        <div class="campoContrasena">
+                            <input type="password" id="Contrasena" name="Contrasenia" placeholder="Ingrese su contraseña">
+
+                            <button type="button" class="btnVerContrasena" onclick="mostrarContrasena()">
+                                <img id="iconoContrasena" src="../IMG/showContra.png" alt="Mostrar contraseña">
+                            </button>
+                        </div>
+
 
                         <label for="Telefono">Teléfono</label>
                         <input type="tel" id="Telefono" name="Telefono" placeholder="099123456">
@@ -132,3 +150,19 @@
         </main>
     </body>
 </html>
+
+
+<script>
+    function mostrarContrasena() {
+        let contrasena = document.getElementById("Contrasena");
+        let icono = document.getElementById("iconoContrasena");
+
+        if (contrasena.type === "password") {
+            contrasena.type = "text";
+            icono.src = "../IMG/hideContra.png";
+        } else {
+            contrasena.type = "password";
+            icono.src = "../IMG/showContra.png";
+        }
+    }
+</script>
