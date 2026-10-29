@@ -40,6 +40,7 @@ $nombreCompleto = htmlspecialchars(trim(($usuario['Nombre'] ?? '') . ' ' . ($usu
     <a class="Serv" href="<?php echo $phpBase; ?>main.php">Inicio</a>
     <a class="Serv" href="<?php echo $phpBase; ?>cursos.php">Cursos</a>
     <a class="Serv" href="<?php echo $phpBase; ?>proyectos.php">Proyectos educativos</a>
+    <a class="Serv" href="<?php echo $phpBase; ?>carrito.php">
     <a class="Serv" href="<?php echo $adminBase; ?>menuAdmin.php">Panel de Administración</a>
 
 <?php } elseif ($tieneSesion) { ?>

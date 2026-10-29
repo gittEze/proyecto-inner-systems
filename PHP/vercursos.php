@@ -292,7 +292,6 @@ $tareas = $stmtTareas->fetchAll(PDO::FETCH_ASSOC);
                                     $matsCarpeta = $stmtMatCarpeta->fetchAll(PDO::FETCH_ASSOC);
 
                                     if (empty($matsCarpeta)): ?>
-                                        <p style="padding:10px; color:#888;">Carpeta vacía</p>
                                     <?php else:
                                         foreach ($matsCarpeta as $mat): ?>
                                             <div class="item-recurso material" style="margin-left:20px; display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
