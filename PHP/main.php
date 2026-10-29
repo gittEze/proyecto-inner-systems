@@ -4,6 +4,23 @@ require_once '../PHP conexiones/conexion.php';
 
 $tieneSesion = isset($_SESSION['Sesion']) && isset($_SESSION['ID_Usuario']);
 
+
+$cursosInscritos = [];
+
+if ($tieneSesion) {
+    $stmtInscritos = $pdo->prepare("
+        SELECT ID_Curso
+        FROM inscripciones
+        WHERE ID_Usuario = :ID_Usuario
+    ");
+
+    $stmtInscritos->execute([
+        ':ID_Usuario' => $_SESSION['ID_Usuario']
+    ]);
+
+    $cursosInscritos = $stmtInscritos->fetchAll(PDO::FETCH_COLUMN);
+}
+
 // Obtener los 4 cursos mejor valorados
 $sqlPopulares = "
     SELECT
@@ -101,7 +118,7 @@ $docentesDestacados = $stmtDocentes->fetchAll(PDO::FETCH_ASSOC);
                         Tu conocimiento,<br><span>tu futuro</span>
                     </h2>
 
-                    <p>En Aprendomo tienes acceso a cursos, proyectos educativos y mentorias al mejor precio. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Commodi omnis in eveniet, cumque assumenda eum nostrum reiciendis facere dolores recusandae consequatur placeat dolorum voluptatibus quisquam totam fugiat autem cupiditate expedita?</p>
+                    <p>Aprende a tu ritmo con cursos diseñados para desarrollar tus habilidades, participa en proyectos educativos y conecta con docentes que pueden acompañarte en tu crecimiento. En Aprendomo encontrarás nuevas oportunidades para aprender, compartir conocimientos y llevar tus ideas más lejos.</p>
                     
                     <a class="btnPrincipal" href="cursos.php">
                         Explorar cursos
@@ -279,15 +296,28 @@ $docentesDestacados = $stmtDocentes->fetchAll(PDO::FETCH_ASSOC);
                                         )) ?>”
                                     </p>
 
+                                    
                                     <a
                                         class="comentarioCurso"
-                                        href="<?= $tieneSesion
-                                            ? 'vercursos.php?ID_Curso=' . (int) $comentario['ID_Curso'] . '&tab=valoraciones'
-                                            : 'login.php'
+                                        href="<?php
+                                            $idCursoComentario = (int) $comentario['ID_Curso'];
+
+                                            if (!$tieneSesion) {
+                                                echo 'login.php';
+                                            } elseif (in_array($idCursoComentario, array_map('intval', $cursosInscritos), true)) {
+                                                echo 'vercursos.php?ID_Curso=' . $idCursoComentario . '&tab=valoraciones';
+                                            } else {
+                                                echo 'cursos.php#modal-' . $idCursoComentario;
+                                            }
                                         ?>"
-                                        title="<?= $tieneSesion
-                                            ? 'Ver las valoraciones de este curso'
-                                            : 'Iniciá sesión para ver el curso'
+                                        title="<?php
+                                            if (!$tieneSesion) {
+                                                echo 'Iniciá sesión para inscribirte';
+                                            } elseif (in_array((int) $comentario['ID_Curso'], array_map('intval', $cursosInscritos), true)) {
+                                                echo 'Entrar al curso';
+                                            } else {
+                                                echo 'Inscribirte a este curso';
+                                            }
                                         ?>"
                                     >
                                         <span class="comentarioCursoIcono">↗</span>
@@ -408,9 +438,9 @@ $docentesDestacados = $stmtDocentes->fetchAll(PDO::FETCH_ASSOC);
                         </p>
                     </div>
 
-                    <a href="cursos.php" class="docentesVerTodos">
+                    <!-- <a href="cursos.php" class="docentesVerTodos">
                         Explorar cursos <span aria-hidden="true">→</span>
-                    </a>
+                    </a> -->
                 </div>
 
                 <?php if (!empty($docentesDestacados)): ?>
