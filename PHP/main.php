@@ -101,7 +101,7 @@ $docentesDestacados = $stmtDocentes->fetchAll(PDO::FETCH_ASSOC);
                         Tu conocimiento,<br><span>tu futuro</span>
                     </h2>
 
-                    <p>En Aprendomo tienes acceso a cursos, proyectos educativos y mentorias al mejor precio. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Commodi omnis in eveniet, cumque assumenda eum nostrum reiciendis facere dolores recusandae consequatur placeat dolorum voluptatibus quisquam totam fugiat autem cupiditate expedita?</p>
+                    <p>En Aprendomo encontrarás un espacio pensado para impulsar tu aprendizaje y desarrollo personal y profesional. Accede a una amplia variedad de cursos, proyectos educativos y mentorías a precios accesibles, diseñados para ayudarte a adquirir nuevos conocimientos, desarrollar habilidades y alcanzar tus objetivos.</p>
                     
                     <a class="btnPrincipal" href="cursos.php">
                         Explorar cursos
